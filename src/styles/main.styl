@@ -1,0 +1,845 @@
+@import './css/bootstrap.css'
+@import './css/font-awesome.min.css'
+
+/*variables*/
+N0 = #051C48
+N1 = #374A6D
+N4 = #A0A5B5
+blanco = #fff
+B0 = #4A90E2
+B1 = #DCEEF8
+Yell-0 = #F9BE00
+Yell-4 = #FADE8A
+Yell-8 = #FEF8E7
+blac-0 = #000000
+blac-2 = #666666
+verde = #8DC63F
+S0 = #D2CFCD
+S1 = #E5E6E7
+S2 = #F4F5F6
+K1 = #666666
+K4 = #7F7F7F
+P0 = #E182AF
+*
+ margin auto
+
+@font-face
+ font-family Gotham
+ font-style normal
+ font-weight normal
+ src url(fonts/gotham-light.eot)
+ src url(fonts/gotham-light.eot?#iefix)format("embedded-opentype")
+ src url(fonts/gotham-light.ttf)format("truetype")
+ src url(fonts/gotham-light.svg)format("svg")
+ src url(fonts/gotham-light.woff)format("woff")
+
+@font-face
+ font-family Gotham Light
+ src url(fonts/gotham-light.ttf)
+ font-weight lighter
+@font-face
+ font-family Gotham Medium
+ src url(fonts/gotham-medium.ttf)
+ font-weight  medium
+
+
+body
+ background-color #F6F6F5
+ font-family Gotham Light
+
+
+header
+ background N0
+ color blanco
+ font-family Gotham
+ height 90px
+ width 100%
+ position fixed
+ z-index 9000
+
+
+#logo-bursanet
+  margin 8px 0px 0px 0px
+
+ /*** CONTENEDOR PRINCIPAL ***/
+#wrapper
+  margin-top 180px
+  height 800px
+
+#content-header
+  padding-top 12px
+
+.btn-text-contrato
+  background #F9BE00
+  font-size 12px
+  border-top-left-radius 5px
+  border-bottom-left-radius 5px
+  padding 4px 10px
+  text-transform none
+
+.dropdown-contratos
+  background #FCE7B9 !important
+  font-size 12px
+  border-top-right-radius 5px
+  border-bottom-right-radius 5px
+  padding 4px 25px
+  text-transform none
+  box-shadow none !important
+
+ div.hw
+   width 90%
+
+   div.hw2
+     min-width 1024px
+     margin 0 auto
+
+ img
+   width 150px
+   margin  0 auto
+   float  left
+
+ .contrato
+   width  300px
+   height  100%
+   margin  12px auto 0px auto
+
+   .input-group
+     width auto
+     height auto
+     padding-top 12px
+     position relative
+     display inline-block
+     border-collapse separate
+     span
+       width 100px
+       float left
+       border-radius 3px 0 0 3px
+       padding 6px 10px
+       background Yell-0
+       color blac-0
+       text-align center
+       font-size 11px
+       letter-spacing 1px
+       font-weight 700
+
+     .select-style
+       width 170px
+       height 15px
+       padding 5px
+       border-radius 0 3px 3px 0
+       float left
+       overflow hidden
+       background-color #FCE7B9!important
+       background url("img/arrowdown.png") no-repeat 95% 50%
+       select
+         width 130%
+         padding 0
+         font-size 14px
+         border none
+         box-shadow none
+         background-color transparent
+         background-image none
+         -webkit-appearance none
+         -moz-appearance none
+         appeareance none
+         color N0
+
+       select focus
+         outline none
+
+ .sesion
+     width  300px
+     height  100%
+     float  right
+     font-size 11px
+     letter-spacing .5px
+     text-align right
+     margin-top -5px
+     p
+       line-height 7px
+       float right
+       span
+         font-size 13px
+         color Yell-0
+         font-family Gotham Medium
+       b
+         font-family Gotham Medium
+       img
+         width 15px
+         float right
+         margin-left 3%
+         margin-top: 1px
+       button
+         padding 7px 10px 7px 10px
+         color blanco
+         background-color #040F21
+         border-radius 5px
+         border none
+         font-family Gotham Light
+         letter-spacing .5px
+         margin-top 10px
+
+footer
+ width 100%
+ height 100px
+ background #E5E6E7
+ bottom 0
+ left 0
+ bottom 0
+ position fixed
+ clear both
+ div.sec
+   width:90%; margin: 0 auto
+ div.foowrap
+   min-width:1200px
+   margin 0 auto
+   width 100%
+ div.wrapsec1
+   width 410px
+   float left
+   display block
+   padding 10px 0px
+   border-right 2px solid #fff
+   margin-top 10px
+   p
+     font-size 20px
+     letter-spacing 1.5px
+     color Yell-0
+     font-weight 700
+     letter-spacing 1.5px
+   div.contenedor
+     float left
+     display block
+     width 190px
+   div.contenedor2
+     float left
+     display block
+     width 190px
+     margin-left 20px
+   div.conttitle
+     float left
+     font-size 10px
+     color #939597
+     padding-top 10px
+     font-weight 700
+   div.numeros
+     font-size 18px
+     color #051c48
+     letter-spacing 1px
+     font-weight 700
+     font-weight medium
+     clear left
+ div.fcont3
+   float left
+   display block
+   width 470px
+   margin-top 2em
+   margin-left 20px
+   p.flegal
+     font-weight 700
+     font-size 11px
+     color rgb(147, 149, 151)
+ div.copywrite
+   width 270px
+   float right
+   display block
+   margin-left 10px
+   text-align left
+   font-size 10px
+   margin-top 1em
+   img
+     width 70px
+
+section
+ width 90%
+ margin 0 auto
+ margin-top 50px
+ display table
+ h1
+   color N0
+   float left
+   margin-left 1%
+ .tabs
+   width auto
+   height auto
+   float right
+   margin-top 5px
+   ul
+     clear left
+     float left
+     list-style none
+     position relative
+     margin-right 10px
+     li
+       display block
+       float left
+       list-style none
+       position relative
+       margin-left 10px
+       padding 4px 10px 4px 10px
+       background S1
+       border-radius 5px 5px 0 0
+       font-size 11px
+       font-family Gotham Medium
+
+       label
+         float right
+         padding 3px
+         border-radius 3px
+       .oval
+         font-family Gotham Light
+         background verde
+         color blanco
+         margin-left 5px
+       img
+         width 15px
+         float left
+         margin-right 5px
+         margin-top -2px
+       p
+         float left
+         color blac-2
+         margin-right 10px
+         margin 4px 10px 4px 0
+         font-family Gotham
+       b
+         font-size 14px
+         color N0
+         float left
+         font-family Gotham Medium
+    .text
+      padding-top 8px
+      height 16px
+    .help
+       float right
+       border 1px solid S1
+       background blanco
+       padding 3px 3px 4px 4px
+ article
+   height auto
+   width 99%
+   background blanco
+   margin 0 auto
+   float left
+   margin-left 1%
+   padding-bottom 10px
+   .MenuContentData
+     width 100%
+     height auto
+     background-color #DCDEE4
+     float left
+     ul
+       clear left
+       float left
+       list-style none
+       position relative
+     .secciones
+       width 99%
+       li
+         display block
+         float left
+         list-style none
+         position relative
+         padding 5px 15px 5px 15px
+         &:first-child
+           margin-left -40px
+           padding 5px 10px 5px 10px
+           color red
+         a
+           text-decoration none
+           font-family Gotham Medium
+           color N0
+           font-size 13px
+           letter-spacing .5px
+       .activo
+         background blanco
+         border-left 1px solid #ffffff
+   .tablaInversion      /* estilos añadidos*/
+     width 70%
+     height 340px
+     border 1px solid gray
+     float left
+     margin 5px 10px 0 10px
+     background K4
+     overflow auto
+     .MenuTableInterna
+       width 99%
+       height auto
+       float left
+       background S2
+       font-family Gotham Medium
+       padding 4px
+       ul
+         clear left
+         float left
+         list-style none
+         position relative
+         font-size 10px
+         li
+           display block
+           float left
+           list-style none
+           position relative
+           padding 5px
+           text-align center
+     .tablas
+        width 100%
+        background K4
+        color blanco
+        font-family Arial
+        font-size 11px
+        img
+          width 15px
+          padding-top 2px
+
+   .muneco
+     width 340px
+     height 310px
+     float left
+     background Yell-8
+     margin-top 5px
+     .compraVenta
+       padding 10px
+       border 1px solid S0
+       float right
+       background blanco
+       text-align center
+       width 43.5%
+       color B0
+       font-family Gotham Medium
+       font-size 14px
+
+   .cajaMuneco
+     float right
+     width 340px
+     margin 0 8px 0 0
+     .newmuneco
+       width 99%
+       height 32px
+       list-style none
+       font-size 11px
+       font-family Gotham Medium
+       letter-spacing .5px
+       margin 5px 10px 0 0
+       padding 0
+       li
+         width 49.35%
+         height 31px
+         float left
+         margin 0
+         padding 0
+         line-height 31px
+         text-align center
+         border 1px solid S0
+         border-bottom none
+         &:last-child
+           border-left none
+         a
+           text-decoration none
+           color B0
+           display block
+           font-size 1.3em
+           padding 0 20px
+           outline none
+         .colored
+             color P0
+
+       .seleccion
+         background B1
+         border-bottom 1px B1 solid
+         color blue
+
+   .contenedor
+     width 98%
+     height 310px
+     margin 0
+     padding .5%
+     border-top none
+     background Yell-8
+
+     .ContVender
+       width 100%
+       height 100%
+       background B1
+       .textEmisora
+         width auto
+         float left
+         margin 10px 0 0 5px
+
+       p
+         font-size 12px
+         float left
+         margin 5px
+
+       input
+         float left
+         margin 5px
+         height 20px
+         border-radius 3px
+         border 1px solid #ccc
+       .price
+         width 48%
+         height auto
+         margin 5px 0 0 0
+         border-right none
+         float right
+         background Yell-4
+         line-height 10px
+         border-radius 3px
+         padding 2px 0 0 10px
+         p
+           font-size 11px
+           b
+             font-family Gotham Medium
+             color N0
+         label
+           padding-bottom 12px
+           color N0
+           font-size 16px
+           font-family Gotham Medium
+       .dataOrden
+         width 90%
+         height 50px
+         border 1px solid S0
+         border-radius 4px
+         margin 0 auto
+         padding 5px
+         display table
+         background S2
+       .otherSelect
+         width 90%
+         margin-left 4%
+         margin 10px
+       .textInput-Orden
+         width 100%
+         float left
+         display table
+         p
+           width 26%
+           text-align left
+         input
+           width 25%
+       .radioMuneco
+         float left
+         border 1px solid green
+         margin-top 0px
+       .radios2
+         width 97%
+         height 20px
+         padding 5px 0 0 5px
+       .botones
+         width auto
+         margin-top 50px
+         padding-right 10px
+         float right
+         button
+           padding 5px 12px 5px 12px
+           margin 0 5px 0 0
+           letter-spacing 1px
+           border-radius 3px
+           border none
+           color blanco
+           background N4
+           font-family Gotham Medium
+           &:first-child
+             background #374A6D
+
+     .forMuneco
+         width 99%
+         height 87%
+         float left
+     li
+       float left
+       margin 0
+       padding 0
+       height 31px
+       line-height 31px
+       border 1px solid blue
+       overflow hidden
+       position relative
+       background yellow
+       width 48%
+       text-align center
+       &:last-child
+         border-left none
+       a
+         text-decoration none
+         color red
+         display block
+         font-size 1.3em
+         padding 0 20px
+         outline none
+     img
+       width 22%
+       padding-top 5px
+       margin-left 35%
+     p
+       color K1
+       text-align center
+       letter-spacing .5px
+       b
+         font-family Gotham Medium
+     h3
+       text-align center
+       font-family Gotham Medium
+       padding 5px 0 20px 0
+       color N0
+     .leyend
+         font-size 10px
+         width 90%
+         margin 0 auto
+         margin-top 10px
+         padding-top 10px
+         border-top 1px solid S0
+         img
+           width 35px
+           float left
+           position absolute
+           margin-left -15px
+           margin-top -14px
+         p
+           width 272px
+
+.wrapper-dropdown-5
+
+   /* Size & position */
+   position  relative
+   text-align left
+   font-size 11px
+   width  180px
+   margin  0 auto
+   padding  4px 10px
+   color #000
+   float left
+   white-space nowrap
+
+   /* Styles */
+   background  #FCE7B9
+   border-top-right-radius 5px
+   border-bottom-right-radius 5px
+   box-shadow  0 1px 0 rgba(0,0,0,0.2)
+   cursor  pointer
+   outline  none
+   -webkit-transition  all 0.3s ease-out
+   -moz-transition  all 0.3s ease-out
+   -ms-transition  all 0.3s ease-out
+   -o-transition  all 0.3s ease-out
+   transition  all 0.3s ease-out
+
+/* Little arrow */
+.wrapper-dropdown-5:after
+   content  ""
+   width  0
+   height  0
+   position  absolute
+   top  50%
+   right  10px
+   margin-top  -3px
+   border-width  6px 6px 0 6px
+   border-style  solid
+   border-color  N0 transparent
+
+.wrapper-dropdown-5 .dropdown
+
+   /* Size & position */
+   position  absolute
+   top  100%
+   left  0
+   right  0
+   z-index 99
+
+   /* Styles */
+   background  #fff
+   border-radius  0 0 5px 5px
+   border  1px solid rgba(0,0,0,0.2)
+   border-top  none
+   border-bottom  none
+   list-style  none
+   -webkit-transition  all 0.3s ease-out
+   -moz-transition  all 0.3s ease-out
+   -ms-transition  all 0.3s ease-out
+   -o-transition  all 0.3s ease-out
+   transition  all 0.3s ease-out
+
+   /* Hiding */
+   max-height  0
+   overflow  hidden
+   padding-left 0px
+
+.wrapper-dropdown-5 .dropdown li
+   padding  0 10px
+     &:hover
+       background-color: #dceef8
+
+.wrapper-dropdown-5 .dropdown li a
+   display  block
+   text-decoration  none
+   color  #333
+   padding  10px 0
+   transition  all 0.3s ease-out
+   border-bottom  1px solid #e6e8ea
+
+.wrapper-dropdown-5 .dropdown li :last-of-type a
+   border  none
+
+/* Hover */
+.wrapper-dropdown-5 .dropdown li a
+   color  #051c48
+   padding-left 10px
+   &:hover
+     background-color: #dceef8
+
+/* Active */
+.wrapper-dropdown-5.active
+   border-radius 0px 5px 0 0
+   background  #4a90e2
+   box-shadow  none
+   border-bottom  none
+   color  white
+
+.wrapper-dropdown-5.active after
+   border-color #82d1ff transparent
+
+.wrapper-dropdown-5.active .dropdown
+   border-bottom 1px solid rgba(0,0,0,0.2)
+   max-height 400px
+
+.header_left
+ width 33%
+ float left
+ text-align center
+ margin-top 10px
+
+.header_center
+ display inline-block
+ width 33%
+ text-align center
+ margin-top 10px
+
+.header_right
+ float right
+ width 33%
+ text-align center
+ margin-top 10px
+
+.cf:before, .cf:after
+ content " " /* 1 */
+ display table /* 2 */
+.cf:after
+ clear both
+/**
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+.cf
+ *zoom 1
+#menu_wrapper
+ width 100%
+ background-color #374A6D
+ font-weight 700
+ border-top 1px solid #F6BD16
+ margin-top 3px
+ font-size 12px
+ div.mwrap
+     width 90%
+     margin 0 auto
+     ul.stlvl
+       width: 1024px;
+       margin: 0 auto;
+
+#menu_wrapper ul.stlvl
+ list-style none
+ padding 0
+ margin 0
+ z-index 98
+
+#menu_wrapper li.stlvl ul
+ list-style none
+ padding 0
+ margin 0
+ z-index 98
+ width 100%
+ li
+   padding 10px
+   background white
+   border-bottom 1px solid #d2cfcd
+   border-left: 2px solid white
+   &:hover
+     background #FDF4E4
+     border-left: 2px solid #f8ca45
+     cursor pointer
+   a
+     color #7f7f7f
+     text-decoration none
+
+#menu_wrapper ul.stlvl li.stlvl
+ display block
+ position relative
+ float: left
+ background: #374A6D
+ border-left 1px solid #121D46
+ margin 8px 0px
+ &:hover
+   margin 0px
+
+#menu_wrapper ul.stlvl li.stlvl
+ &:last-child
+   border-right 1px solid #121D46
+
+#menu_wrapper li.stlvl ul
+ display none
+
+#menu_wrapper ul.stlvl li.stlvl a.stlvl
+ display block
+ padding 0px 31px
+ -webkit-padding 0px 31px
+ text-decoration none
+ white-space nowrap
+ color #fff
+ &:hover
+   background #051c48 !important
+   padding-top 8px !important
+   padding-bottom 8px !important
+
+/* Display the dropdown */
+
+#menu_wrapper li.stlvl:hover > ul
+ display inline
+ position absolute
+
+
+#menu_wrapper li.stlvl:hover > a.stlvl
+ background #051c48
+ padding-top 8px !important
+ padding-bottom 8px !important
+
+#menu_wrapper .main-navigation li.stlvl ul li
+ border-top 0
+
+#menu_wrapper ul.stlvl ul ul
+ left 100%
+ top 0
+
+#menu_wrapperul:before,
+#menu_wrapper ul.stlvl:after
+ content " " /* 1 */
+ display table /* 2 */
+
+#menu_wrapper ul.stlvl:after
+ clear both
+
+
+@media (min-width: 1287px), (max-width: 1300px)
+ section article .tablaInversion
+   width 70%
+
+@media (max-width: 1286px)
+ section article .tablaInversion
+   background-color red
+   width 68%
+@media (max-width: 1134px)
+ section article .tablaInversion
+   width 65%
+@media (max-width: 1102px)
+ section article .tablaInversion
+   width 62.2%
