@@ -6880,3 +6880,18 @@ x}
   width: 100%;
   padding:8px;
 }
+.textoInfoBoletos{
+  color: #8c1700 !important;
+  font-size: 14px !important;
+  margin-top:10px;
+  margin-bottom: -10px;
+}
+.userWelcome{
+  font-size: 18px !important;
+  font-weight: bold;
+}
+.registerDateLimit{
+  font-size: 14px !important;
+  font-weight: bold;
+  margin-top:-15px;
+}

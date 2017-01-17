@@ -16,7 +16,7 @@ var imageop = require('gulp-image-optimization');
 var config = {
   styles:{
     main:'./src/styles/main.styl',
-    watch:'./src/styles/**/*.styl',
+    watch:'./src/styles/**/*.*',
     output:'./build/css'
   },
   indexMain:{
