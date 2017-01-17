@@ -1,24 +1,9 @@
 'use strict';
 module.exports = function () {
-    var serverPath = "http://vsdlapafro02.actinver.com.mx/fichaValor_App/jaxrs";
+    var serverPath = "";
     var services = {
         issuerByStockExchange: {
             getPath: "/CapitalMarketRest/cmc01"
-        },
-        issuerOperationByPeriodQuery:{
-            getPath: "/CapitalMarketRest/cmc02"
-        },
-        factsbyIssuerQuery:{
-            getPath: "/CapitalMarketRest/cmc03"
-        },
-        issuerGeneralInfoQuery:{
-            getPath: "/CapitalMarketRest/cmc04"
-        },
-        issuerHystoricalInfoQuery:{
-            getPath: "/FtpConnectionRest/ftp01"
-        },
-        marketInfo:{
-            getPath: "/MarketInfoRest/mki01"
         }
     };
 

@@ -12,6 +12,10 @@ app.config(function($routeProvider) {
       templateUrl: 'views/indexPrivado.html',
       controller: 'indexPrivado'
     })
+    .when('/login', {
+      templateUrl: 'views/login.html',
+      controller: 'loginCtrl'
+    })
     /*.when('/scordValue', {
       templateUrl: 'views/scordvalue.html',
       controller: 'MainCtrl'

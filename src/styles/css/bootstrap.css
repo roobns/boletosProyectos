@@ -6759,3 +6759,124 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+.navbar-default {
+  background-color: #41a8f5;
+x}
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+  background-color: #41a8f5;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+  color: #ecdbff;
+  background-color: #1d4f74;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #1d4f74;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+  color: #ecdbff;
+  background-color: #1d4f74;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ecdbff;
+  background-color: #1d4f74;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ecdbff;
+  background-color: #1d4f74;
+}
+.navbar-default .navbar-toggle {
+  border-color: #1d4f74;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #1d4f74;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #ecdbff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ecf0f1;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ecdbff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ecdbff;
+    background-color: #1d4f74;
+  }
+}
+
+.loginBox{
+
+  -webkit-box-shadow: 0px 0px 26px 4px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 0px 26px 4px rgba(0,0,0,0.15);
+  box-shadow: 0px 0px 26px 4px rgba(0,0,0,0.15);
+  border: 1px solid #41a8f5;
+}
+.loginBoxHeader{
+  background-color: #41a8f5;
+  font-size: 17px;
+  color: #FFF;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+  padding:8px;
+}
+.loginBoxBody{
+  font-size: 17px;
+  color: #555;
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+}
+.loginBoxFooter{
+  background-color: #41a8f5;
+  font-size: 17px;
+  color: #FFF;
+  font-weight: bold;
+  height: 10px;
+  width: 100%;
+  padding:8px;
+}
