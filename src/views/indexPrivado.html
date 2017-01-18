@@ -14,11 +14,17 @@
         <img alt="Banner" src="../img/banner.png" />
     </div>
 </div>
+
+
 <div class="row" style="max-width:960px; margin:0 auto;">
+
     <div class="col-md-12">
+        <a class="btn btn-primary btn-lg pull-right" href="#" role="button"  data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
         <div class="loginBox" style="margin-top:50px;">
+
             <div class="loginBoxHeader">
                 <i class="fa fa-ticket" aria-hidden="true"></i> Tus Boletos
+
             </div>
             <div class="loginBoxBody">
                 <div class="row" style="max-width:960px; margin:0 auto;">
@@ -62,4 +68,103 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Vender boleto a..</h4>
+      </div>
+      <div class="modal-body">
+
+            <form>
+                <div class="form-group">
+                    <label for="folio">Folio</label>
+                    <input type="text" class="form-control" id="folio" placeholder="Folio" ng-model="folio">
+                </div>
+                <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre" ng-model="nombre">
+                        </div>
+                        </div>
+                  <div class="col-md-6 ">
+                      <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" ng-model="apellidos">
+                      </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="ciudad">Ciudad</label>
+                            <input type="text" class="form-control" id="ciudad" placeholder="Ciudad" ng-model="ciudad">
+                          </div>
+                    </div>
+                  <div class="col-md-6 ">
+                      <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <input type="text" class="form-control" id="estado" placeholder="Estado" ng-model="estado">
+                      </div>
+
+                  </div>
+                </div>
+
+                 <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" class="form-control" id="telefono" placeholder="Telefono" ng-model="telefono">
+                          </div>
+                    </div>
+                  <div class="col-md-6 ">
+                      <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="email">
+                      </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="idUsuario">idUsuario</label>
+                            <input type="text" class="form-control" id="idUsuario" placeholder="IdUsuario" ng-model="idUsuario">
+                          </div>
+                    </div>
+                  <div class="col-md-6 ">
+                     <div class="form-group">
+                        <label for="exampleInputFile">Imagen</label>
+                        <input type="file" id="imagenInputFile">
+                        <p class="help-block">Example block-level help text here.</p>
+                      </div>
+                  </div>
+                </div>
+ 
+              <div class="form-group">
+                <label for="exampleInputFile">Imagen 2</label>
+                <input type="file" id="imagen2InputFile">
+                <p class="help-block">Example block-level help text here.</p>
+              </div>
+              
+            </form>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" ng-click="saveTikect();">Guardar</button>
+      </div>
+    </div>
+  </div>
 </div>

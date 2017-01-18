@@ -4,6 +4,9 @@ module.exports = function($scope, $filter, dataServices, callRestFactory, errorM
 
 $scope.init = function(){
 
+	
+
+
 };
   $scope.users = [{"id":1,"nombre":"Wayne","apellidos":"Cook","ciudad":"Hartford","estado":"Connecticut","telefono":"1-(860)345-0051","email":"wcook0@youtu.be"},
 {"id":2,"nombre":"Phillip","apellidos":"Fowler","ciudad":"Savannah","estado":"Georgia","telefono":"1-(912)552-2771","email":"pfowler1@whitehouse.gov"},
@@ -1021,4 +1024,28 @@ $scope.usersTable = new ngTableParams({
 
 
   $scope.init();
+
+
+  $scope.saveTikect = function(){
+
+
+
+
+  	console.log();
+
+
+
+  	 
+	console.log($scope.folio );       
+                
+console.log($scope.idUsuario);
+console.log($scope.email);
+console.log($scope.telefono);
+console.log($scope.estado);
+console.log($scope.ciudad);
+console.log($scope.apellidos);
+console.log($scope.nombre);
+
+  }
+
 };

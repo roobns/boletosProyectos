@@ -1,0 +1,72 @@
+<div class="row" style="max-width:960px; margin:0 auto;">
+    <div class="col-md-7">
+        <img alt="Logo" src="../img/logo.jpg" responsive/>
+        <div class="clearfix"></div>
+        <br>
+        <p class="userWelcome">
+            Bienvenido "Aadmin"
+        </p>
+        <p class="registerDateLimit">
+            Fecha límite para registrar tus boletos: <span class="textoInfoBoletos">28 de enero de 2017</span>
+        </p>
+    </div>
+    <div class="col-md-5">
+        <img alt="Banner" src="../img/banner.png" />
+    </div>
+</div>
+
+
+<div class="row" style="max-width:960px; margin:0 auto;">
+
+    <div class="col-md-12">
+        <a class="btn btn-primary btn-lg pull-right" href="#" role="button"  data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
+        <div class="loginBox" style="margin-top:50px;">
+
+            <div class="loginBoxHeader">
+                <i class="fa fa-ticket" aria-hidden="true"></i> Tus Boletos
+
+            </div>
+            <div class="loginBoxBody">
+                <div class="row" style="max-width:960px; margin:0 auto;">
+                    <div class="col-md2 col-xs-3 col-sm-3">
+                        <p class="textoInfoBoletos">Boletos Adquiridos: 2</p>
+                    </div>
+                    <div class="col-md2 col-xs-3 col-sm-3">
+                        <p class="textoInfoBoletos">Boletos Asignados: 2</p>
+                    </div>
+                    <div class="col-md3 col-xs-3 col-sm-3">
+                        <p class="textoInfoBoletos">Disponibles: 2</p>
+                    </div>
+                    <div class="col-md3 col-xs-3 col-sm-3"></div>
+                </div>
+                <br>
+                <table ng-table="usersTable" class="table table-striped" >
+                    <tr ng-repeat="user in data">
+                        <td data-title="'Id'">
+                            <span class="registerDateLimit">{{user.id}}</span>
+                        </td>
+                        <td data-title="'Nombre'" sortable="'nombre'">
+                            <span class="registerDateLimit">{{user.nombre}}</span>
+                        </td>
+                        <td data-title="'Apellidos'">
+                            <span class="registerDateLimit">{{user.apellidos}}</span>
+                        </td>
+                        <td data-title="'Ciudad'">
+                            <span class="registerDateLimit">{{user.ciudad}}</span>
+                        </td>
+                        <td data-title="'Estado'">
+                            <span class="registerDateLimit">{{user.estado}}</span>
+                        </td>
+                        <td data-title="'Teléfono'">
+                            <span class="registerDateLimit">{{user.telefono}}</span>
+                        </td>
+                        <td data-title="'E-Mail'">
+                            <span class="registerDateLimit">{{user.email}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
