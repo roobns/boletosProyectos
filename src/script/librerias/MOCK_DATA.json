@@ -1,11 +1,4 @@
-'use strict';
-
-module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams) {
-
-$scope.init = function(){
-
-};
-  $scope.users = [{"id":1,"nombre":"Wayne","apellidos":"Cook","ciudad":"Hartford","estado":"Connecticut","telefono":"1-(860)345-0051","email":"wcook0@youtu.be"},
+[{"id":1,"nombre":"Wayne","apellidos":"Cook","ciudad":"Hartford","estado":"Connecticut","telefono":"1-(860)345-0051","email":"wcook0@youtu.be"},
 {"id":2,"nombre":"Phillip","apellidos":"Fowler","ciudad":"Savannah","estado":"Georgia","telefono":"1-(912)552-2771","email":"pfowler1@whitehouse.gov"},
 {"id":3,"nombre":"Dorothy","apellidos":"Dixon","ciudad":"Fort Collins","estado":"Colorado","telefono":"1-(970)942-6185","email":"ddixon2@nih.gov"},
 {"id":4,"nombre":"Kenneth","apellidos":"Sims","ciudad":"New Brunswick","estado":"New Jersey","telefono":"1-(732)573-4561","email":"ksims3@illinois.edu"},
@@ -1004,21 +997,4 @@ $scope.init = function(){
 {"id":997,"nombre":"Thomas","apellidos":"Willis","ciudad":"Amarillo","estado":"Texas","telefono":"1-(806)431-9126","email":"twillisro@prlog.org"},
 {"id":998,"nombre":"Bobby","apellidos":"Nichols","ciudad":"Davenport","estado":"Iowa","telefono":"1-(563)243-2963","email":"bnicholsrp@drupal.org"},
 {"id":999,"nombre":"Keith","apellidos":"Williamson","ciudad":"Gaithersburg","estado":"Maryland","telefono":"1-(240)897-6260","email":"kwilliamsonrq@mac.com"},
-{"id":1000,"nombre":"Larry","apellidos":"Brown","ciudad":"Fort Worth","estado":"Texas","telefono":"1-(817)624-0108","email":"lbrownrr@bloglines.com"}];
-
-$scope.usersTable = new ngTableParams({
-                page: 1,
-                count: 10
-            }, {
-                total: $scope.users.length, 
-                getData: function ($defer, params) {
-   $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
-   $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-   $defer.resolve($scope.data);
-}
-            });
-
-
-
-  $scope.init();
-};
+{"id":1000,"nombre":"Larry","apellidos":"Brown","ciudad":"Fort Worth","estado":"Texas","telefono":"1-(817)624-0108","email":"lbrownrr@bloglines.com"}]

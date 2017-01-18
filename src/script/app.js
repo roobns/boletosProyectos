@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module("recordApp", ["ngRoute"]);
+var app = angular.module("recordApp", ["ngRoute", "ngTable"]);
 require('./services');
 require('./filters');
 require('./directives');

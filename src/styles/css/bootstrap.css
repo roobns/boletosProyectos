@@ -6881,7 +6881,7 @@ x}
   padding:8px;
 }
 .textoInfoBoletos{
-  color: #8c1700 !important;
+  color: #ce0906 !important;
   font-size: 14px !important;
   margin-top:10px;
   margin-bottom: -10px;
@@ -6894,4 +6894,8 @@ x}
   font-size: 14px !important;
   font-weight: bold;
   margin-top:-15px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+  font-size: 14px;
+  font-weight: bolder;
 }

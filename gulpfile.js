@@ -28,7 +28,7 @@ var config = {
     output:'./build/views'
   },
   script:{
-      main:'./src/script/main.js',
+      main:'./src/script/app.js',
       watch:'./src/script/**/*.js',
       output:'./build/js'
   },
