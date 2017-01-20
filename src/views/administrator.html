@@ -1,0 +1,73 @@
+<div class="row" style="max-width:960px; margin:0 auto;">
+    <div class="col-md-7">
+        <img alt="Logo" src="img/banner.png" responsive/>
+        <div class="clearfix"></div>
+        <br>
+        <p class="userWelcome">
+            Bienvenido "Admin"
+        </p>
+        <p class="registerDateLimit">
+            Fecha límite para registrar tus boletos: <span class="textoInfoBoletos">28 de enero de 2017</span>
+        </p>
+    </div>
+    <div class="col-md-5 ">
+        <img alt="Banner" src="img/logo.jpg" />
+    </div>
+</div>
+
+
+<div class="row" style="max-width:960px; margin:0 auto;">
+
+    <div class="col-md-12">
+            <a class="btn btn-primary" ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="test.csv">Export to CSV</a>
+        <div class="loginBox" style="margin-top:50px;">
+
+            <div class="loginBoxHeader">
+                <i class="fa fa-ticket" aria-hidden="true"></i> Vendedores
+
+            </div>
+            <div class="loginBoxBody">
+               
+                <br>
+            
+                <table ng-table="usersTable" class="table table-striped"  export-csv="csv" show-filter="true">
+                    <tr ng-repeat="user in data">
+                        <td data-title="'Id'"   sortable="'id'" filter="{ id: 'text'}">
+                            <span class="registerDateLimit"   ng-if="!user.$edit">{{user.id}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.id"  /></div>
+                        </td>
+                        <td data-title="'Nombre'" sortable="'nombre'" filter="{ nombre: 'text'}">
+                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.nombre}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.nombre" /></div>
+                        </td>
+                        <td data-title="'Apellidos'" sortable="'apellidos'" filter="{ apellidos: 'text'}">
+                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.apellidos}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.apellidos" /></div>
+                        </td>
+                        <td data-title="'Ciudad'" sortable="'ciudad'" filter="{ ciudad: 'text'}">
+                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.ciudad}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.ciudad" /></div>
+                        </td>
+                        <td data-title="'Estado'" sortable="'estado'" filter="{ estado: 'text'}">
+                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.estado}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.estado" /></div>
+                        </td>
+                        <td data-title="'Teléfono'" sortable="'telefono'" filter="{ telefono: 'text'}">
+                            <span class="registerDateLimit" ng-if="!user.$edit" >{{user.telefono}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.telefono" /></div>
+                        </td>
+                        <td data-title="'E-Mail'" sortable="'email'" filter="{ email: 'text'}">
+                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.email}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.email" /></div>
+                        </td>
+                        <td data-title="'Acciones'" >
+                            <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Editar</a>
+                            <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guardar</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

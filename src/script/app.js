@@ -11,6 +11,9 @@ app.config(function($routeProvider) {
     .when('/indexPrivado', {
       templateUrl: 'views/indexPrivado.html',
       controller: 'indexPrivado'
+    }).when('/administrator', {
+      templateUrl: 'views/administrator.html',
+      controller: 'administratorCtrl'
     })
     .when('/login', {
       templateUrl: 'views/login.html',
