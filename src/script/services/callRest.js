@@ -5,13 +5,21 @@ var callRest = ["$q", "$http", function ($q, $http) {
             post: post
         };
         function get(url) {
-            var defered = $q.defer();
-            $http.get(url).success(function (data) {
-                defered.resolve(data);
-            }).error(function (err) {
-                defered.reject(err);
-            });
-            return defered.promise;
+          
+
+            var deferred = $q.defer();
+          $http.get(url).then(onSuccess, onFailure);
+
+          function onSuccess(response) {
+            deferred.resolve(response);
+          }
+
+          function onFailure(response) {
+            deferred.reject(response);
+          }
+          return deferred.promise;
+
+
         };
         function post(url, params) {
             var defered = $q.defer();

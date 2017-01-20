@@ -30,8 +30,8 @@
                
                 <br>
             
-                <table ng-table="usersTable" class="table table-striped"  export-csv="csv" show-filter="true">
-                    <tr ng-repeat="user in data">
+                <table ng-table="usersTable" class="table table-striped"   show-filter="true">
+                    <tr ng-repeat="user in $data">
                         <td data-title="'Id'"   sortable="'id'" filter="{ id: 'text'}">
                             <span class="registerDateLimit"   ng-if="!user.$edit">{{user.id}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.id"  /></div>

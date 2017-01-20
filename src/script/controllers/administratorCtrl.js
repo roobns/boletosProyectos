@@ -9,18 +9,32 @@ $scope.init = function(){
          async: false,
             
         }).done(function (data, textStatus, xhr) {
+             
+             $scope.$watch(data, function () {
+                  $scope.usersTable.reload();
+                });
+
             $scope.users=data;
             $scope.usersTable = new ngTableParams({
                 page: 1,
-                count: 10
+                count: 100
             }, {
+               
                 total: $scope.users.length, 
+
                 getData: function ($defer, params) {
-			   $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
-			   $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-			   $defer.resolve($scope.data);
-			}
-			            });
+      			      // use build-in angular filter
+                            var orderedData = params.sorting() ?
+                                    $filter('orderBy')(data, params.orderBy()) :
+                                    data;
+                            orderedData = params.filter() ?
+                                    $filter('filter')(orderedData, params.filter()) :
+                                    orderedData;
+
+                            params.total(orderedData.length);
+                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+			      } 
+			   });
         }).fail(function (data, textStatus, xhr) {
             console.log("failure Validate POST");
             //console.log("operationToken-BursanetRestful: " + xhr.getResponseHeader("X-CSRF-TOKEN"));

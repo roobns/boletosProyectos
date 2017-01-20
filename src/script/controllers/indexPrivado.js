@@ -21,6 +21,8 @@ $rootScope.logout = function(){
 
 $scope.getTickes = function(){
 	$scope.user = JSON.parse(sessionStorage.usuario);
+	$scope.asignados = 0;
+	$scope.disponibles = 0;
 	 
 	 	 $('#addSell').attr('disabled', false);
 		$.ajax({
@@ -36,8 +38,8 @@ $scope.getTickes = function(){
 	            	if(Number($scope.user.numBoletos) === $scope.users.length){
 	            		$('#addSell').attr('disabled', true);
 	            	}
-
-		            $scope.asignados = Number($scope.user.numBoletos) - $scope.users.length;
+	            	$scope.asignados = $scope.users.length;
+		            $scope.disponibles = Number($scope.user.numBoletos) - $scope.users.length;
 		            $scope.usersTable = new ngTableParams({
 		                page: 1,
 		                count: 10

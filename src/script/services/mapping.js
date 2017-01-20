@@ -2,9 +2,12 @@
 module.exports = function () {
     var serverPath = "";
     var services = {
-        issuerByStockExchange: {
-            getPath: "/CapitalMarketRest/cmc01"
+        getTickes: {
+            getPath: "celebra-back/getTickes"
+        },getUsers: {
+            getPath: "celebra-back/getUsers"
         }
+
     };
 
     var buildParams = function (params) {
@@ -12,8 +15,7 @@ module.exports = function () {
         params.forEach(function (entry) {
             paramsStr += "/" + entry;
         });
-        if (params.length > 0)
-            paramsStr += "?language=SPA";
+
         return paramsStr;
     };
 
@@ -21,7 +23,7 @@ module.exports = function () {
         return serverPath + services[service].getPath;
     };
     this.pathGet = function (service, params) {
-        return serverPath + services[service].getPath + buildParams(params);
+        return "http://celebrausana.com/" + services[service].getPath + buildParams(params);
     };
 
 };
