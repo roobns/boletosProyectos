@@ -1,6 +1,6 @@
-<div class="row" style="max-width:960px; margin:0 auto;">
+<div class="row" style="max-width:1200px; margin:0 auto;">
     <div class="col-md-7">
-        <img alt="Logo" src="img/banner.png" responsive/>
+        <img style="float: left;" alt="Logo" src="img/banner.png" responsive/>
         <div class="clearfix"></div>
         <br>
         <p class="userWelcome">
@@ -11,16 +11,18 @@
         </p>
     </div>
     <div class="col-md-5 ">
-        <img alt="Banner" src="img/logo.jpg" />
+        <img style="float: right;" alt="Banner" src="img/logo.jpg" />
     </div>
 </div>
 
 
-<div class="row" style="max-width:960px; margin:0 auto;">
+<div class="row" style="max-width:1200px; margin:0 auto;">
 
     <div class="col-md-12">
-            <a class="btn btn-primary" ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="test.csv">Export to CSV</a>
-        <div class="loginBox" style="margin-top:50px;">
+            
+             <button class="btn btn-primary" ng-json-export-excel data="users" report-fields="{id: 'ID', nombre: 'Nombre', apellidos: 'Apellidos',  'ciudad': 'Ciudad', 'estado': 'Estado','telefono': 'Teléfono','email': 'E-Mail','numBoletos': 'Boletos'}" >Exportar</button>
+    
+        <div class="loginBox" style="margin-top:20px;">
 
             <div class="loginBoxHeader">
                 <i class="fa fa-ticket" aria-hidden="true"></i> Vendedores
@@ -31,38 +33,44 @@
                 <br>
             
                 <table ng-table="usersTable" class="table table-striped"   show-filter="true">
-                    <tr ng-repeat="user in $data">
-                        <td data-title="'Id'"   sortable="'id'" filter="{ id: 'text'}">
-                            <span class="registerDateLimit"   ng-if="!user.$edit">{{user.id}}</span>
+                    <tr ng-repeat="user in $data"  >
+                        <td data-title="'Id'"    sortable="'id'" filter="{ id: 'text'}">
+                            <span class=""   ng-if="!user.$edit">{{user.id}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.id"  /></div>
                         </td>
                         <td data-title="'Nombre'" sortable="'nombre'" filter="{ nombre: 'text'}">
-                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.nombre}}</span>
+                            <span class="" ng-if="!user.$edit">{{user.nombre}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.nombre" /></div>
                         </td>
                         <td data-title="'Apellidos'" sortable="'apellidos'" filter="{ apellidos: 'text'}">
-                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.apellidos}}</span>
+                            <span class="" ng-if="!user.$edit">{{user.apellidos}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.apellidos" /></div>
                         </td>
                         <td data-title="'Ciudad'" sortable="'ciudad'" filter="{ ciudad: 'text'}">
-                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.ciudad}}</span>
+                            <span class="" ng-if="!user.$edit">{{user.ciudad}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.ciudad" /></div>
                         </td>
                         <td data-title="'Estado'" sortable="'estado'" filter="{ estado: 'text'}">
-                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.estado}}</span>
+                            <span class="" ng-if="!user.$edit">{{user.estado}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.estado" /></div>
                         </td>
                         <td data-title="'Teléfono'" sortable="'telefono'" filter="{ telefono: 'text'}">
-                            <span class="registerDateLimit" ng-if="!user.$edit" >{{user.telefono}}</span>
+                            <span class="" ng-if="!user.$edit" >{{user.telefono}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.telefono" /></div>
                         </td>
                         <td data-title="'E-Mail'" sortable="'email'" filter="{ email: 'text'}">
-                            <span class="registerDateLimit" ng-if="!user.$edit">{{user.email}}</span>
+                            <span class="" ng-if="!user.$edit">{{user.email}}</span>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.email" /></div>
                         </td>
+                        <td data-title="'#'" sortable="'numBoletos'" filter="{ numBoletos: 'text'}">
+                            <span  style="{{user.imagen === null ? '':'color:red;font-weight:bold'}}" class=""  ng-if="!user.$edit">{{user.numBoletos}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.numBoletos" /></div>
+                        </td>
+
                         <td data-title="'Acciones'" >
-                            <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Editar</a>
-                            <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guardar</a>
+                            <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita Vendedor</a>
+                            <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guarda</a>
+                            <a  href="" class="btn btn-default btn-xs"  ng-click="getTickes(user.id)" role="button"  data-toggle="modal" data-target="#myModal" >Boletos</a>
                         </td>
                     </tr>
                 </table>
@@ -71,3 +79,70 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+
+
+
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Boletos asignados</h4>
+      </div>
+
+         <table ng-table="usersTickets" class="table-responsive" >
+
+                    <tr ng-repeat="userTicket in data"  style="cursor: pointer;">
+                        <input type="hidden" name="id" value="{{userTicket.folio}}">
+                        
+                        
+                         <td data-title="'Nombre'" sortable="'nombre'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.nombre}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.nombre" /></div>
+                        </td>
+
+                       
+                        <td data-title="'Apellidos'" sortable="'apellidos'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.apellidos}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.apellidos" /></div>
+                        </td>
+
+                        <td data-title="'Ciudad'" sortable="'ciudad'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.ciudad}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.ciudad" /></div>
+                        </td>
+                        
+                         <td data-title="'Estado'" sortable="'estado'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.estado}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.estado" /></div>
+                        </td>
+                        
+                        <td data-title="'Teléfono'" sortable="'telefono'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.telefono}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.telefono" /></div>
+                        </td>
+                        <td data-title="'E-Mail'" sortable="'email'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.email}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.email" /></div>
+                        </td>
+
+                       
+
+                         <td data-title="'Acciones'" >
+                            <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="userTicket.$editado = true">Edita Boleto</a>
+                            <a ng-if="userTicket.$editado" href="" class="btn btn-primary btn-xs" ng-click="userTicket.$editado = false;updateDataTicket(userTicket)">Actualiza</a>
+                            
+
+                             
+
+                        </td>
+                    </tr>
+                </table>
+     
+    </div>
+  </div>
+</div>

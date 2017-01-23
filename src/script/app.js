@@ -1,9 +1,10 @@
 'use strict';
-var app = angular.module("recordApp", ["ngRoute", "ngTable"]);
+var app = angular.module("recordApp", ["ngRoute", "ngTable","ngJsonExportExcel"]);
 require('./services');
 require('./filters');
 require('./directives');
 require('./controllers');
+
 
 
 app.config(function($routeProvider) {

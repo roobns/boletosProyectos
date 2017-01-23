@@ -2,13 +2,38 @@
 
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
 
+
+
 $scope.init = function(){
+ $scope.dataList = [
+                    {
+                        id: 1,
+                        name: 'github',
+                        price: '200$',
+                        publisher: {
+                            name: 'hieutran',
+                            company: 'Dtag-VN'
+                        }
+                    },
+                    {
+                        id: 2,
+                        name: 'google',
+                        price: '300$',
+                        publisher: {
+                            name: 'tran',
+                            company: 'Vietname'
+                        }
+                    }
+                ];
+  
+
 	$.ajax({
 		url: "http://celebrausana.com/celebra-back/getUsers",
         method: "GET",
          async: false,
             
         }).done(function (data, textStatus, xhr) {
+          console.log(data);
              
              $scope.$watch(data, function () {
                   $scope.usersTable.reload();
@@ -56,6 +81,54 @@ $scope.updateUser = function(data){
 
 
 }
+
+
+$scope.getTickes = function(user){
+  $scope.user = user
+     
+    $.ajax({
+      url: "http://celebrausana.com/celebra-back/getTickes",
+          method: "GET",
+          data: { idUsuario: $scope.user},
+           async: false,
+              
+          }).done(function (data, textStatus, xhr) {
+              $scope.users = data;
+              if($scope.users.length != undefined){
+              
+              $scope.usersTickets = new ngTableParams({
+                    page: 1
+                }, {
+                    total: $scope.users.length, 
+                    getData: function ($defer, params) {
+                       $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
+                       $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                       $defer.resolve($scope.data);
+                    }
+              });
+            }else{
+              $scope.data = { };
+            }
+
+              
+          }).fail(function (data, textStatus, xhr) {
+            $scope.users = [];
+              console.log("failure Validate POST");
+          
+          });
+}
+
+
+$scope.updateDataTicket = function(data){
+  delete data['$editado'];
+  delete data['$$hashKey'];
+  console.log(data);
+  $.post( "http://celebrausana.com/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
+  .done(function( data ) {
+    console.log( "Data Loaded: " + data );
+  });
+};
+
 
 
   $scope.init();

@@ -10,6 +10,7 @@ var uglify = require('gulp-uglify');
 var babelify = require('babelify');
 var htmlmin = require('gulp-html-minifier');
 var imageop = require('gulp-image-optimization');
+var concat = require('gulp-concat');
 
 
 
@@ -30,7 +31,8 @@ var config = {
   script:{
       main:'./src/script/app.js',
       watch:'./src/script/**/*.js',
-      output:'./build/js'
+      output:'./build/js',
+      libs:'./src/script/librerias/*.*'
   },
   image:{
       watch:['./src/img/*.*'],
@@ -63,7 +65,7 @@ gulp.task('build:js',function (){
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        .pipe(uglify({mangle: false}))
+        /*.pipe(uglify({mangle: false}))*/
         .pipe(gulp.dest(config.script.output));
 });
 
@@ -106,11 +108,17 @@ gulp.task('images',function (){
 });
 
 
+gulp.task('librerias', function() {
+    return gulp.src('./src/script/librerias/*.*')
+        .pipe(concat('lib.js'))
+        .pipe(gulp.dest('./build/js'));
+});
+
 gulp.task('fonts', function() {
     return gulp.src([
                     './src/styles/css/fonts/*.*'])
             .pipe(gulp.dest('./build/css/fonts/'));});
 
-gulp.task('build', ['build:css','build:js','views','indexMain','images','fonts']);
+gulp.task('build', ['build:css','build:js','views','indexMain','images','librerias','fonts']);
 
 gulp.task('default',['server','watch','build']);
