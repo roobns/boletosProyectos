@@ -114,11 +114,19 @@ gulp.task('librerias', function() {
         .pipe(gulp.dest('./build/js'));
 });
 
+
+gulp.task('cssLoader',function () {
+  gulp.src('./src/styles/css/loading-bar.min.css')
+    .pipe(cleanCSS({keepSpecialComments:0}))
+    .pipe(gulp.dest('./build/css/'));
+});
+
+
 gulp.task('fonts', function() {
     return gulp.src([
                     './src/styles/css/fonts/*.*'])
             .pipe(gulp.dest('./build/css/fonts/'));});
 
-gulp.task('build', ['build:css','build:js','views','indexMain','images','librerias','fonts']);
+gulp.task('build', ['build:css','build:js','views','indexMain','images','librerias','cssLoader','fonts']);
 
 gulp.task('default',['server','watch','build']);

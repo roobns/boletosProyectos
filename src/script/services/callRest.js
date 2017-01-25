@@ -7,7 +7,7 @@ var callRest = ["$q", "$http", function ($q, $http) {
         function get(url) {
           
 
-            var deferred = $q.defer();
+         var deferred = $q.defer();
           $http.get(url).then(onSuccess, onFailure);
 
           function onSuccess(response) {
@@ -29,11 +29,9 @@ var callRest = ["$q", "$http", function ($q, $http) {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 }
-            }).success(function (data) {
+            }).then(function (data) {
                 defered.resolve(data);
-            }).error(function (err) {
-                defered.reject(err);
-            });
+            })
             return defered.promise;
         };
     }];

@@ -3,6 +3,9 @@
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
 
 $scope.init = function(){
+	var foobarElement = document.body;
+	foobarElement.style.backgroundColor = '#F6F6F5';
+	foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
 
 	$scope.showUploadFile = false;
 	$scope.styleSquare = "max-width:100px;background-color: red;margin-right:5px;";
@@ -12,10 +15,11 @@ $scope.init = function(){
 	}else
 		window.location.href = "#!/login";    
 
+	
+
 };
  
 $rootScope.logout = function(){
-	
 	sessionStorage.clear();
 	 window.location.href = "#!/login";
 }

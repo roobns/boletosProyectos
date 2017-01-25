@@ -30873,7 +30873,7 @@ module.exports = angular;
 
 },{"./angular":1}],3:[function(require,module,exports){
 'use strict';
-var app = angular.module("recordApp", ["ngRoute", "ngTable","ngJsonExportExcel"]);
+var app = angular.module("recordApp", ["ngRoute", "ngTable","ngJsonExportExcel","angular-loading-bar"]);
 require('./services');
 require('./filters');
 require('./directives');
@@ -30889,6 +30889,9 @@ app.config(function($routeProvider) {
     }).when('/administrator', {
       templateUrl: 'views/administrator.html',
       controller: 'administratorCtrl'
+    }).when('/correo', {
+      templateUrl: 'views/correo.html',
+      controller: 'correoCtrl'
     })
     .when('/login', {
       templateUrl: 'views/login.html',
@@ -30903,7 +30906,7 @@ app.config(function($routeProvider) {
     });
 });
 
-},{"./controllers":5,"./directives":8,"./filters":9,"./services":12}],4:[function(require,module,exports){
+},{"./controllers":6,"./directives":9,"./filters":10,"./services":13}],4:[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
@@ -30911,35 +30914,71 @@ module.exports = function($scope, $filter, dataServices, callRestFactory, errorM
 
 
 $scope.init = function(){
- $scope.dataList = [
-                    {
-                        id: 1,
-                        name: 'github',
-                        price: '200$',
-                        publisher: {
-                            name: 'hieutran',
-                            company: 'Dtag-VN'
-                        }
-                    },
-                    {
-                        id: 2,
-                        name: 'google',
-                        price: '300$',
-                        publisher: {
-                            name: 'tran',
-                            company: 'Vietname'
-                        }
-                    }
-                ];
-  
 
-	$.ajax({
-		url: "http://celebrausana.com/celebra-back/getUsers",
-        method: "GET",
-         async: false,
-            
-        }).done(function (data, textStatus, xhr) {
-          console.log(data);
+var foobarElement = document.body;
+foobarElement.style.backgroundColor = '#F6F6F5';
+foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
+
+$scope.user = JSON.parse(sessionStorage.usuario);
+
+    callRestFactory.get(dataServices.pathGet('getUsers', []))
+            .then(function (datos) {
+                var data = datos.data;
+
+                      callRestFactory.get(dataServices.pathGet('getWrongUser', []))
+                      .then(function (dataWrongData) {
+
+                          var dataWrong = dataWrongData.data;
+                            for (var key in dataWrong) {
+                                      for (var keydata in data) {
+                                            if(data[keydata].id ===  dataWrong[key].idUsuario)
+                                                data[keydata].documento = "error";
+                                             
+
+                                         // data[keydata].numBoletos;
+                                          //$scope.asignados = data[keydata].numBoletos;
+                                          //$scope.disponibles = Number($scope.user.numBoletos) - $scope.users.length;
+
+                                          //ata[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
+                                      }
+                            }
+                      
+                      })
+                      .catch(function () {
+                        console.log('Error getUsers', false);
+                      });
+
+
+                        callRestFactory.get(dataServices.pathGet('getSelling', []))
+                      .then(function (dataSelling) {
+
+                          var dataSelling = dataSelling.data;
+                            for (var key in dataSelling) {
+                                      for (var keydata in data) {
+                                            if(data[keydata].id ===  dataSelling[key].idusiario){
+
+                                         // data[keydata].numBoletos;
+                                          $scope.asignados = Number(dataSelling[key].vendidos)
+                                          $scope.disponibles = Number(data[keydata].numBoletos) - Number(dataSelling[key].vendidos);
+
+                                          data[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
+                
+                                            }
+                                                
+                                             
+
+                                      }
+                            }
+                      
+                      })
+                      .catch(function () {
+                        console.log('Error getUsers', false);
+                      });
+
+
+
+                      http://celebrausana.com/celebra-back/getSelling
+
              
              $scope.$watch(data, function () {
                   $scope.usersTable.reload();
@@ -30948,13 +30987,13 @@ $scope.init = function(){
             $scope.users=data;
             $scope.usersTable = new ngTableParams({
                 page: 1,
-                count: 100
+                count: 10
             }, {
                
                 total: $scope.users.length, 
 
                 getData: function ($defer, params) {
-      			      // use build-in angular filter
+                  // use build-in angular filter
                             var orderedData = params.sorting() ?
                                     $filter('orderBy')(data, params.orderBy()) :
                                     data;
@@ -30964,22 +31003,49 @@ $scope.init = function(){
 
                             params.total(orderedData.length);
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-			      } 
-			   });
-        }).fail(function (data, textStatus, xhr) {
-            console.log("failure Validate POST");
-            //console.log("operationToken-BursanetRestful: " + xhr.getResponseHeader("X-CSRF-TOKEN"));
-            //sessionStorage.setItem("operationToken-BursanetRestful", xhr.getResponseHeader("X-CSRF-TOKEN"));
-        });
+            } 
+         });
+               
+            })
+            .catch(function () {
+                console.log('Error callBPC25', false);
+            });
+
+
+
+  
+
 
 };
  
+$rootScope.logout = function(){
+  sessionStorage.clear();
+   window.location.href = "#!/login";
+}
+
+
+$scope.showImage = function(data,userTicket){
+ 
+  $scope.pathImage = 'uploads/'+ data;
+   var idUser = userTicket.idUsuario;
+  
+      $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
+      .done(function( datos ) {
+        $("#squareCount"+idUser).css("background-color","green");
+        console.log( "Update Estatus" + datos );
+      });
+  
+}
 
 $scope.updateUser = function(data){
   console.log(data);
   
   delete data['$edit'];
   delete data['$$hashKey'];
+  delete data['imagen'];
+  delete data['imagen2'];
+  delete data['documento'];
+  
    $.post( "http://celebrausana.com/celebra-back/updateUser", { parameters: JSON.stringify(data) })
   .done(function( data ) {
     console.log( "Data Loaded: " + data );
@@ -30990,8 +31056,8 @@ $scope.updateUser = function(data){
 
 
 $scope.getTickes = function(user){
-  $scope.user = user
-     
+  $scope.user = user.id
+    
     $.ajax({
       url: "http://celebrausana.com/celebra-back/getTickes",
           method: "GET",
@@ -30999,29 +31065,54 @@ $scope.getTickes = function(user){
            async: false,
               
           }).done(function (data, textStatus, xhr) {
-              $scope.users = data;
-              if($scope.users.length != undefined){
-              
-              $scope.usersTickets = new ngTableParams({
-                    page: 1
-                }, {
-                    total: $scope.users.length, 
-                    getData: function ($defer, params) {
-                       $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
-                       $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                       $defer.resolve($scope.data);
-                    }
-              });
-            }else{
-              $scope.data = { };
-            }
+                  $scope.users = data;
 
-              
+                  var nBoletos = Number(user.numBoletos);
+                  
+                  if(data.status === "Failed"){
+                      var nbolresgis = 0;
+                      $scope.users = [];
+                  }else{
+                    var nbolresgis = $scope.users.length;
+                  }
+
+
+                  var faltante = (nBoletos -  nbolresgis  );
+                  
+                  for(var x=0;x<faltante;x++){
+                      $scope.users.push({apellidos:null,ciudad:null,email:null,estado:null,folio:null,idUsuario:null,imagen:null,imagen2:null,nombre:null,telefono:null});
+
+                    }
+
+
+                  if($scope.users.length != undefined){
+                  
+                  $scope.usersTickets = new ngTableParams({
+                        page: 1,
+                        count: 10
+                    }, {
+                        total: $scope.users.length, 
+                        getData: function ($defer, params) {
+                           $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
+                           $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                           
+                           
+
+                           $defer.resolve($scope.data);
+
+
+                        }
+                  });
+                }else{
+                  $scope.data = { };
+                }
           }).fail(function (data, textStatus, xhr) {
-            $scope.users = [];
-              console.log("failure Validate POST");
+                $scope.users = [];
+                console.log("failure Validate POST");
           
           });
+          
+          
 }
 
 
@@ -31029,10 +31120,18 @@ $scope.updateDataTicket = function(data){
   delete data['$editado'];
   delete data['$$hashKey'];
   console.log(data);
+  var idUser = data.idUsuario;
+  
   $.post( "http://celebrausana.com/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
   .done(function( data ) {
-    console.log( "Data Loaded: " + data );
+      $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
+      .done(function( datos ) {
+        $("#squareCount"+idUser).css("background-color","green");
+        console.log( "Update Estatus" + datos );
+      });
   });
+
+
 };
 
 
@@ -31043,16 +31142,61 @@ $scope.updateDataTicket = function(data){
 
 },{}],5:[function(require,module,exports){
 'use strict';
+
+module.exports = function($scope, $http, $filter,dataServices, callRestFactory, errorMessageHandler,$rootScope) {
+
+$scope.init = function(){
+    var foobarElement = document.body;
+  foobarElement.style.backgroundColor = '#F6F6F5';
+  foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
+    
+    /*if(sessionStorage.usuario){
+        console.log(sessionStorage.usuario);
+        window.location.href = "#!/indexPrivado";
+    }*/        
+};
+
+
+$scope.sendMail = function () {
+
+  console.log("Enviando mail.....");
+  var data = {
+               email: $scope.correo
+            };
+
+   callRestFactory.post(dataServices.pathGet('sendMail', []),data)
+            .then(function (datos) {
+                 console.log(datos);
+               
+  }).catch(function () {
+      $scope.showMessage('Error callBPC25', false);
+  });
+
+
+};
+
+    
+
+
+  $scope.init();
+};
+
+},{}],6:[function(require,module,exports){
+'use strict';
 var app = angular.module('recordApp');
 app.controller('indexPrivado', require('./indexPrivado'));
 app.controller('administratorCtrl', require('./administratorCtrl'));
+app.controller('correoCtrl', require('./correoCtrl'));
 app.controller('loginCtrl', require('./loginCtrl'));
-},{"./administratorCtrl":4,"./indexPrivado":6,"./loginCtrl":7}],6:[function(require,module,exports){
+},{"./administratorCtrl":4,"./correoCtrl":5,"./indexPrivado":7,"./loginCtrl":8}],7:[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
 
 $scope.init = function(){
+	var foobarElement = document.body;
+	foobarElement.style.backgroundColor = '#F6F6F5';
+	foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
 
 	$scope.showUploadFile = false;
 	$scope.styleSquare = "max-width:100px;background-color: red;margin-right:5px;";
@@ -31062,10 +31206,11 @@ $scope.init = function(){
 	}else
 		window.location.href = "#!/login";    
 
+	
+
 };
  
 $rootScope.logout = function(){
-	
 	sessionStorage.clear();
 	 window.location.href = "#!/login";
 }
@@ -31273,13 +31418,17 @@ $scope.limpiar = function(){
 
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, $http, $filter,dataServices, callRestFactory, errorMessageHandler,$rootScope) {
 
 $scope.init = function(){
-    
+var foobarElement = document.body;
+foobarElement.style.backgroundColor = '#000';
+foobarElement.style.backgroundImage = "url('../img/background-photo.jpg')";
+
+
     if(sessionStorage.usuario){
         console.log(sessionStorage.usuario);
         window.location.href = "#!/indexPrivado";
@@ -31289,22 +31438,32 @@ $scope.init = function(){
 
 $scope.login = function () {
 
-  $.post( "http://celebrausana.com/celebra-back/login", { email: $scope.email,pwd: $scope.pwd})
-    .done(function( data ) {
-      if(data.status == "Failed"){ 
-          $("#alertLogin").fadeIn( "fast" );
-          setTimeout(function(){ $("#alertLogin").fadeOut(); }, 2000);
-      }else{
-            sessionStorage.usuario = data.user;
-            if(JSON.parse(data.user).rol == "1"){ 
-              window.location.href = "#!/administrator";
-            }else{ 
+     var data = {
+               email: $scope.email,pwd: $scope.pwd
+            };
+        
+    callRestFactory.post(dataServices.pathGet('login', []),data)
+            .then(function (datos) {
+                 var data = datos.data;
+                     if(data.status == "Failed"){ 
+                        $("#alertLogin").fadeIn( "fast" );
+                        setTimeout(function(){ $("#alertLogin").fadeOut(); }, 2000);
+                    }else{
+                          sessionStorage.usuario = data.user;
+                          if(JSON.parse(data.user).rol == "1"){ 
+                            window.location.href = "#!/administrator";
+                          }else{ 
 
-              window.location.href = "#!/indexPrivado";
-            }
-              
-      }
-  });
+                            window.location.href = "#!/indexPrivado";
+                          }
+                            
+                    }
+               
+            })
+            .catch(function () {
+                $scope.showMessage('Error callBPC25', false);
+            });
+           
 };
 
     
@@ -31313,7 +31472,7 @@ $scope.login = function () {
   $scope.init();
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 var app = angular.module('recordApp');
 
@@ -31404,7 +31563,7 @@ var app = angular.module('recordApp');
                 }
             };
         });
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31413,7 +31572,7 @@ var app = angular.module('recordApp');
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 var callRest = ["$q", "$http", function ($q, $http) {
         return {
@@ -31423,7 +31582,7 @@ var callRest = ["$q", "$http", function ($q, $http) {
         function get(url) {
           
 
-            var deferred = $q.defer();
+         var deferred = $q.defer();
           $http.get(url).then(onSuccess, onFailure);
 
           function onSuccess(response) {
@@ -31445,24 +31604,22 @@ var callRest = ["$q", "$http", function ($q, $http) {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 }
-            }).success(function (data) {
+            }).then(function (data) {
                 defered.resolve(data);
-            }).error(function (err) {
-                defered.reject(err);
-            });
+            })
             return defered.promise;
         };
     }];
 module.exports = callRest;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 var contextPath = {
     'contextPath': '..' + (location.pathname).replace("/index.html", "/")
 };
 module.exports = contextPath;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 var app = require('angular').module('recordApp');
 app.service('dataServices', require('./mapping'));
@@ -31470,7 +31627,7 @@ app.factory('callRestFactory', require('./callRest'));
 app.factory('contextPath',require('./contextPath'));
 app.factory('errorMessageHandler',require('./messageHandler'));
 
-},{"./callRest":10,"./contextPath":11,"./mapping":13,"./messageHandler":14,"angular":2}],13:[function(require,module,exports){
+},{"./callRest":11,"./contextPath":12,"./mapping":14,"./messageHandler":15,"angular":2}],14:[function(require,module,exports){
 'use strict';
 module.exports = function () {
     var serverPath = "";
@@ -31479,7 +31636,18 @@ module.exports = function () {
             getPath: "celebra-back/getTickes"
         },getUsers: {
             getPath: "celebra-back/getUsers"
+        },getWrongUser: {
+            getPath: "celebra-back/getWrongUser"
+        },getSelling: {
+            getPath: "celebra-back/getSelling"
+        },sendMail: {
+            getPath: "celebra-back/sendMail"
+        },login: {
+            getPath: "celebra-back/login"
         }
+        
+
+        
 
     };
 
@@ -31493,7 +31661,7 @@ module.exports = function () {
     };
 
     this.pathPost = function (service) {
-        return serverPath + services[service].getPath;
+        return "http://celebrausana.com/" + services[service].getPath;
     };
     this.pathGet = function (service, params) {
         return "http://celebrausana.com/" + services[service].getPath + buildParams(params);
@@ -31501,7 +31669,7 @@ module.exports = function () {
 
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 module.exports = function () {
             var flagShowMessage = false;

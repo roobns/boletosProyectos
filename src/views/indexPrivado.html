@@ -1,26 +1,38 @@
-<div class="row" style="max-width:960px; margin:0 auto;">
+<div class="row" style="max-width:1200px; margin:0 auto;">
+
+  <div class="col-md-12">
+      <div class="col-md-6">
+        <img style="float: left;" alt="Logo" src="img/banner.png" responsive/>
+        
+    </div>
+    <div class="col-md-6 ">
+        <img style="float: right;" alt="Banner" src="img/logo.jpg" />
+    </div>
+  </div>
+
     <div class="col-md-7">
-        <img alt="Logo" src="img/banner.png" responsive/>
+        
         <div class="clearfix"></div>
         <br>
         <p class="userWelcome">
             Bienvenido <b>{{user.nombre}}  {{user.apellidos}}</b>
         </p>
         <p class="registerDateLimit">
-            Fecha límite para registrar tus boletos: <span class="textoInfoBoletos">28 de enero de 2017</span>
+            Fecha límite para registrar tus boletos: <span class="textoInfoBoletos">28 de Febrero de 2017</span>
         </p>
     </div>
-    <div class="col-md-5">
-        <img alt="Banner" src="img/logo.jpg" />
-    </div>
+    
 </div>
 
 
 <div class="row" style="max-width:960px; margin:0 auto;">
 
+   <div class="col-md-12">
+   <button id="addSell"  class="btn btn-primary btn-lg pull-right"  role="button"  data-toggle="modal" data-target="#myModal" >Asignar boletos</button>
+   </div>
     <div class="col-md-12">
 
-        <button id="addSell"  class="btn btn-primary btn-lg pull-right"  role="button"  data-toggle="modal" data-target="#myModal" >Asignar boletos</button>
+        
 
 
         <div class="loginBox" style="margin-top:50px;">
@@ -45,10 +57,13 @@
                         <div class="col-md12 col-xs-12 col-sm-12 text-center" >
                             <h3 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{user.numBoletos}}</span></h3>
                          </div> 
-                         <div class="col-md6 col-xs-6 col-sm-6 text-center" >
+                         <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
                             <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{asignados}}</span></h5>
                          </div>
-                         <div class="col-md6 col-xs-6 col-sm-6 text-center" >
+                         <div class="col-md2 col-xs-2 col-sm-2 text-center" style="margin:0;padding:0">
+                            <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">-</span></h5>
+                         </div>
+                         <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
                             <h5 style="margin:0;padding:0" ><span style="color:black;font-weight:bold">{{disponibles}}</span></h5>
                          </div>
                        </div>
@@ -56,31 +71,45 @@
                     </div>
                 </div>
                 <br>
-              
-                <table ng-table="usersTable" class="table table-striped table-hover" >
+                <div class="table-responsive">
+                    <table ng-table="usersTable" class="table table-striped table-hover" >
 
-                    <tr ng-repeat="user in data" ng-dblclick="showModalData(user);" style="cursor: pointer;">
-                        <input type="hidden" name="id" value="{{user.folio}}">
-                        <td data-title="'Nombre'" sortable="'nombre'">
-                            <span class="registerDateLimit">{{user.nombre}}</span>
-                        </td>
-                        <td data-title="'Apellidos'">
-                            <span class="registerDateLimit">{{user.apellidos}}</span>
-                        </td>
-                        <td data-title="'Ciudad'">
-                            <span class="registerDateLimit">{{user.ciudad}}</span>
-                        </td>
-                        <td data-title="'Estado'">
-                            <span class="registerDateLimit">{{user.estado}}</span>
-                        </td>
-                        <td data-title="'Teléfono'">
-                            <span class="registerDateLimit">{{user.telefono}}</span>
-                        </td>
-                        <td data-title="'E-Mail'">
-                            <span class="registerDateLimit">{{user.email}}</span>
-                        </td>
-                    </tr>
-                </table>
+                        <tr ng-repeat="user in data" ng-dblclick="showModalData(user);" style="cursor: pointer;">
+                            <input type="hidden" name="id" value="{{user.folio}}">
+                            
+                            <td data-title="'Id'" sortable="'folio'">
+                                <span class="registerDateLimit">{{user.folio}}</span>
+                            </td>  
+
+                            <td data-title="'Nombre'" sortable="'nombre'">
+                                <span class="registerDateLimit">{{user.nombre}}</span>
+                            </td>
+                            <td data-title="'Apellidos'">
+                                <span class="registerDateLimit">{{user.apellidos}}</span>
+                            </td>
+                            <td data-title="'Ciudad'">
+                                <span class="registerDateLimit">{{user.ciudad}}</span>
+                            </td>
+                            <td data-title="'Estado'">
+                                <span class="registerDateLimit">{{user.estado}}</span>
+                            </td>
+                            <td data-title="'Teléfono'">
+                                <span class="registerDateLimit">{{user.telefono}}</span>
+                            </td>
+                            <td data-title="'E-Mail'">
+                                <span class="registerDateLimit">{{user.email}}</span>
+                            </td>
+                            <td data-title="'Documento 1'">
+                                 <img style="width: 80px; height: 30px;" ng-show="user.imagen != null" src="uploads/{{user.imagen}}">
+                            </td>
+                            <td data-title="'Documento 2'">
+                                <img style="width: 80px; height: 30px;" ng-show="user.imagen2 != null" src="uploads/{{user.imagen2}}">
+                            </td>
+
+                            
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

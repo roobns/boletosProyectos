@@ -6,7 +6,18 @@ module.exports = function () {
             getPath: "celebra-back/getTickes"
         },getUsers: {
             getPath: "celebra-back/getUsers"
+        },getWrongUser: {
+            getPath: "celebra-back/getWrongUser"
+        },getSelling: {
+            getPath: "celebra-back/getSelling"
+        },sendMail: {
+            getPath: "celebra-back/sendMail"
+        },login: {
+            getPath: "celebra-back/login"
         }
+        
+
+        
 
     };
 
@@ -20,7 +31,7 @@ module.exports = function () {
     };
 
     this.pathPost = function (service) {
-        return serverPath + services[service].getPath;
+        return "http://celebrausana.com/" + services[service].getPath;
     };
     this.pathGet = function (service, params) {
         return "http://celebrausana.com/" + services[service].getPath + buildParams(params);

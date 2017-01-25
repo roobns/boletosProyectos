@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module("recordApp", ["ngRoute", "ngTable","ngJsonExportExcel"]);
+var app = angular.module("recordApp", ["ngRoute", "ngTable","ngJsonExportExcel","angular-loading-bar"]);
 require('./services');
 require('./filters');
 require('./directives');
@@ -15,6 +15,9 @@ app.config(function($routeProvider) {
     }).when('/administrator', {
       templateUrl: 'views/administrator.html',
       controller: 'administratorCtrl'
+    }).when('/correo', {
+      templateUrl: 'views/correo.html',
+      controller: 'correoCtrl'
     })
     .when('/login', {
       templateUrl: 'views/login.html',
