@@ -12,6 +12,8 @@ module.exports = function () {
             getPath: "celebra-back/getSelling"
         },sendMail: {
             getPath: "celebra-back/sendMail"
+        },getTicketValidate: {
+            getPath: "celebra-back/getTicketValidate"
         },login: {
             getPath: "celebra-back/login"
         }

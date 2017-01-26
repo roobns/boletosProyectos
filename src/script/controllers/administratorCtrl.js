@@ -3,7 +3,6 @@
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
 
 
-
 $scope.init = function(){
 
 var foobarElement = document.body;
@@ -16,45 +15,41 @@ $scope.user = JSON.parse(sessionStorage.usuario);
             .then(function (datos) {
                 var data = datos.data;
 
-                      callRestFactory.get(dataServices.pathGet('getWrongUser', []))
-                      .then(function (dataWrongData) {
-
-                          var dataWrong = dataWrongData.data;
-                            for (var key in dataWrong) {
-                                      for (var keydata in data) {
-                                            if(data[keydata].id ===  dataWrong[key].idUsuario)
-                                                data[keydata].documento = "error";
-                                             
-
-                                         // data[keydata].numBoletos;
-                                          //$scope.asignados = data[keydata].numBoletos;
-                                          //$scope.disponibles = Number($scope.user.numBoletos) - $scope.users.length;
-
-                                          //ata[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
-                                      }
-                            }
-                      
-                      })
-                      .catch(function () {
-                        console.log('Error getUsers', false);
-                      });
+                        callRestFactory.get(dataServices.pathGet('getTicketValidate', []))
+                         .then(function (dataValidate) {
+                           var datav = dataValidate.data;
+                              for (var key in datav) {
+                                  for (var keydata in data) {
+                                         if(data[keydata].id ===  datav[key].idUsuario)
+                                              if((Number(data[keydata].numBoletos) - Number(  datav[key].vendidos)) ==0)
+                                                  data[keydata].documento = "success";
+                                              
+                                          }
+                                }
+                          
+                          })
+                          .catch(function () {
+                            console.log('Error getTicketValidate', false);
+                          });
 
 
-                        callRestFactory.get(dataServices.pathGet('getSelling', []))
+                      callRestFactory.get(dataServices.pathGet('getSelling', []))
                       .then(function (dataSelling) {
 
                           var dataSelling = dataSelling.data;
                             for (var key in dataSelling) {
+
                                       for (var keydata in data) {
                                             if(data[keydata].id ===  dataSelling[key].idusiario){
 
-                                         // data[keydata].numBoletos;
-                                          $scope.asignados = Number(dataSelling[key].vendidos)
-                                          $scope.disponibles = Number(data[keydata].numBoletos) - Number(dataSelling[key].vendidos);
+                                               // data[keydata].numBoletos;
+                                                $scope.asignados = Number(dataSelling[key].vendidos)
+                                                $scope.disponibles = Number(data[keydata].numBoletos) - Number(dataSelling[key].vendidos);
+                                                data[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
+                                                
 
-                                          data[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
-                
-                                            }
+
+                                        }
                                                 
                                              
 
@@ -68,34 +63,34 @@ $scope.user = JSON.parse(sessionStorage.usuario);
 
 
 
-                      http://celebrausana.com/celebra-back/getSelling
+                      
 
              
-             $scope.$watch(data, function () {
-                  $scope.usersTable.reload();
-                });
+                         $scope.$watch(data, function () {
+                              $scope.usersTable.reload();
+                            });
 
-            $scope.users=data;
-            $scope.usersTable = new ngTableParams({
-                page: 1,
-                count: 10
-            }, {
-               
-                total: $scope.users.length, 
+                        $scope.users=data;
+                        $scope.usersTable = new ngTableParams({
+                            page: 1,
+                            count: 10
+                        }, {
+                           
+                            total: $scope.users.length, 
 
-                getData: function ($defer, params) {
-                  // use build-in angular filter
-                            var orderedData = params.sorting() ?
-                                    $filter('orderBy')(data, params.orderBy()) :
-                                    data;
-                            orderedData = params.filter() ?
-                                    $filter('filter')(orderedData, params.filter()) :
-                                    orderedData;
+                            getData: function ($defer, params) {
+                              // use build-in angular filter
+                                        var orderedData = params.sorting() ?
+                                                $filter('orderBy')(data, params.orderBy()) :
+                                                data;
+                                        orderedData = params.filter() ?
+                                                $filter('filter')(orderedData, params.filter()) :
+                                                orderedData;
 
-                            params.total(orderedData.length);
-                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            } 
-         });
+                                        params.total(orderedData.length);
+                                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                          } 
+                       });
                
             })
             .catch(function () {
@@ -136,6 +131,7 @@ $scope.updateUser = function(data){
   delete data['imagen'];
   delete data['imagen2'];
   delete data['documento'];
+  delete data['distTiecket'];
   
    $.post( "http://celebrausana.com/celebra-back/updateUser", { parameters: JSON.stringify(data) })
   .done(function( data ) {
@@ -156,19 +152,18 @@ $scope.getTickes = function(user){
            async: false,
               
           }).done(function (data, textStatus, xhr) {
-                  $scope.users = data;
+                  $scope.users = JSON.parse(data);
 
                   var nBoletos = Number(user.numBoletos);
                   
-                  if(data.status === "Failed"){
+                  if(data.status === "Failed" || $scope.users.tipo=== "0"){
                       var nbolresgis = 0;
                       $scope.users = [];
                   }else{
                     var nbolresgis = $scope.users.length;
                   }
 
-
-                  var faltante = (nBoletos -  nbolresgis  );
+                 var faltante = (nBoletos -  nbolresgis  );
                   
                   for(var x=0;x<faltante;x++){
                       $scope.users.push({apellidos:null,ciudad:null,email:null,estado:null,folio:null,idUsuario:null,imagen:null,imagen2:null,nombre:null,telefono:null});
@@ -178,6 +173,8 @@ $scope.getTickes = function(user){
 
                   if($scope.users.length != undefined){
                   
+                  
+
                   $scope.usersTickets = new ngTableParams({
                         page: 1,
                         count: 10
@@ -224,6 +221,39 @@ $scope.updateDataTicket = function(data){
 
 
 };
+
+$scope.deleteDataTicket = function(data){
+  
+  var folio = data.folio;
+    $.post( "http://celebrausana.com/celebra-back/deleteDataTicket", { folio: folio })
+      .done(function( datos ) {
+//        $("#squareCount"+idUser).css("background-color","green");
+          console.log( "Update Estatus" + datos );
+          $scope.getTickes (data.idUsuario);
+
+          
+
+           
+          var x=0;
+           $("#tr_"+data.folio+" td").each(function(a){
+              if(x<=8)
+                $(this).html("");
+              x=x+1;
+          });
+
+           
+          $('#tr_'+data.folio).removeClass("success").addClass("danger");
+
+        
+           
+
+
+      });
+  
+
+
+};
+
 
 
 

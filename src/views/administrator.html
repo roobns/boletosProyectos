@@ -77,7 +77,7 @@
                         </td>
                         <td data-title="'#'" sortable="'numBoletos'" filter="{ numBoletos: 'text'}">
                           
-                            <div id="squareCount{{user.id}}" class="row pull-right" style="{{user.estatus === '1' ? 'max-width:100px;background-color: green;margin-right:5px;':'max-width:100px;background-color: red;margin-right:5px;'}}">
+                            <div id="squareCount{{user.id}}" ng-if="!user.$edit" class="row pull-right" style="{{user.documento === 'success' ? 'max-width:100px;background-color: green;margin-right:5px;':'max-width:100px;background-color: red;margin-right:5px;'}}">
                               <div class="col-md12 col-xs-12 col-sm-12 text-center" >
                                   <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{user.numBoletos}}</span></h5>
                                </div> 
@@ -172,7 +172,7 @@
         <div class="table-responsive">
               <table ng-table="usersTickets" class="table table-striped" >
 
-                    <tr ng-repeat="userTicket in data"  style="cursor: pointer;" class="{{(userTicket.nombre === null || userTicket.imagen != null)? 'danger':'success'}}">
+                    <tr id="tr_{{userTicket.folio}}" ng-repeat="userTicket in data"  style="cursor: pointer;" class="{{(userTicket.nombre === null || userTicket.imagen != null)? 'danger':'success'}}">
                         <input type="hidden" name="id" value="{{userTicket.folio}}">
                         
                         
@@ -218,6 +218,7 @@
 
                          <td data-title="'Acciones'" >
                             <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="userTicket.$editado = true">Edita Boleto</a>
+                            <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="deleteDataTicket(userTicket)">Borra</a>
                             <a ng-if="userTicket.$editado" href="" class="btn btn-primary btn-xs" ng-click="userTicket.$editado = false;updateDataTicket(userTicket)">Actualiza</a>
                         </td>
                     </tr>

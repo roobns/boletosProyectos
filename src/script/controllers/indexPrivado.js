@@ -15,7 +15,26 @@ $scope.init = function(){
 	}else
 		window.location.href = "#!/login";    
 
-	
+	$.ajax({
+			url: "http://celebrausana.com/celebra-back/getNumberTickets",
+	        method: "GET",
+	        data: { id: $scope.user.id},
+	         async: true,
+	            
+	        }).done(function (data, textStatus, xhr) {
+	            $scope.user.numBoletos =  JSON.parse(data)[0].numBoletos;
+
+	            //sessionStorage.usuario = data.user;
+
+	           
+	        }).fail(function (data, textStatus, xhr) {
+	            console.log("failure Validate POST");
+	            //console.log("operationToken-BursanetRestful: " + xhr.getResponseHeader("X-CSRF-TOKEN"));
+	            //sessionStorage.setItem("operationToken-BursanetRestful", xhr.getResponseHeader("X-CSRF-TOKEN"));
+	        });
+
+
+
 
 };
  
@@ -35,10 +54,11 @@ $scope.getTickes = function(){
 			url: "http://celebrausana.com/celebra-back/getTickes",
 	        method: "GET",
 	        data: { idUsuario: $scope.user.id},
-	         async: false,
+	         async: true,
 	            
 	        }).done(function (data, textStatus, xhr) {
-	            $scope.users = data;
+	            $scope.users = JSON.parse(data);
+
 	            if($scope.users.length != undefined){
 
 	            	if(Number($scope.user.numBoletos) === $scope.users.length){
@@ -50,16 +70,21 @@ $scope.getTickes = function(){
 		            if($scope.disponibles == 0) {
 						$scope.styleSquare = "max-width:100px;background-color: green;margin-right:5px;";
 		            }
+
+		            $scope.$watch($scope.users, function () {
+		                  $scope.usersTable.reload();
+		                });
+
 		            $scope.usersTable = new ngTableParams({
 		                page: 1,
 		                count: 10
 		            }, {
 		                total: $scope.users.length, 
 		                getData: function ($defer, params) {
-					   $scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
-					   $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-					   $defer.resolve($scope.data);
-					}
+					   		$scope.data = params.sorting() ? $filter('orderBy')($scope.users, params.orderBy()) : $scope.users;
+					   		$scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+					   		$defer.resolve($scope.data);
+						}
 					});
 	        	}
 	        }).fail(function (data, textStatus, xhr) {
@@ -139,16 +164,17 @@ $scope.saveTicket = function(){
 	$.ajax({
         url: "http://celebrausana.com/celebra-back/newTicket",
         type: "post",
-        data: { parameters: "{\"nombre\": \""+$scope.nombre+"\", \"apellidos\": \""+$scope.apellidos+"\",\"ciudad\": \""+$scope.ciudad+"\", \"estado\": \""+$scope.estado+"\", \"telefono\": \""+$scope.telefono+"\",\"email\": \""+$scope.email+"\", \"idUsuario\": \""+$scope.user.id+"\", \"imagen\": \"null\", \"imagen2\": \"null\"}" } ,
+        data: { parameters: "{\"nombre\": \""+$scope.nombre+"\", \"apellidos\": \""+$scope.apellidos+"\",\"ciudad\": \""+$scope.ciudad+"\", \"estado\": \""+$scope.estado+"\", \"telefono\": \""+$scope.telefono+"\",\"email\": \""+$scope.email+"\", \"idUsuario\": \""+$scope.user.id+"\", \"foliom\": \""+$scope.foliom+"\", \"imagen\": \"null\", \"imagen2\": \"null\"}" } ,
         success: function (data) {
+        	
         	$('#myModal').modal('hide');
         	$scope.getTickes();
 
-	    	$("#alertSell").fadeIn( "fast" );
-	        setTimeout(function(){ $("#alertLogin").fadeOut(); }, 2000);
-	        $('#btnSaveTicket').attr('disabled', false);          
-	        
-        },
+	    	//$("#alertSell").fadeIn( "fast" );
+	        //setTimeout(function(){ $("#alertLogin").fadeOut(); }, 2000);
+	        $('#btnSaveTicket').attr('disabled', false);    
+	        location.reload();      
+	    },
         error: function(jqXHR, textStatus, errorThrown) {
         	$('#myModal').modal('hide');
             $scope.getTickes();
@@ -156,6 +182,7 @@ $scope.saveTicket = function(){
 
 
     });
+    $scope.limpiar();
 };
 
 $scope.showModalData= function(data){
@@ -218,6 +245,7 @@ $scope.limpiar = function(){
 	$scope.ciudad  = "";
 	$scope.apellidos  = "";
 	$scope.nombre  = "";
+	$scope.foliom  = "";
 }
 
 

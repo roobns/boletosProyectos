@@ -75,10 +75,10 @@
                     <table ng-table="usersTable" class="table table-striped table-hover" >
 
                         <tr ng-repeat="user in data" ng-dblclick="showModalData(user);" style="cursor: pointer;">
-                            <input type="hidden" name="id" value="{{user.folio}}">
+                            <input type="hidden" name="id" value="{{user.folio}}"/>
                             
                             <td data-title="'Id'" sortable="'folio'">
-                                <span class="registerDateLimit">{{user.folio}}</span>
+                                <span class="registerDateLimit">{{user.foliom}}</span>
                             </td>  
 
                             <td data-title="'Nombre'" sortable="'nombre'">
@@ -101,10 +101,15 @@
                             </td>
                             <td data-title="'Documento 1'">
                                  <img style="width: 80px; height: 30px;" ng-show="user.imagen != null" src="uploads/{{user.imagen}}">
+                                 <br>
+                                 <button id=""  class="btn btn-default btn-xs"  ng-dblclick="showModalData(user);"  >doble click</button>
                             </td>
                             <td data-title="'Documento 2'">
                                 <img style="width: 80px; height: 30px;" ng-show="user.imagen2 != null" src="uploads/{{user.imagen2}}">
+                                <br>
+                                <button id=""  class="btn btn-default btn-xs"  ng-dblclick="showModalData(user);"  >doble click</button>
                             </td>
+                           
 
                             
                         </tr>
@@ -178,6 +183,18 @@
                 </div>
               </div> 
 
+              <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="foliom">id</label>
+                            <input  ng-disabled="showUploadFile" required type="text" class="form-control" id="foliom" placeholder="Id" ng-model="foliom">
+                          </div>
+                    </div>
+                
+              </div> 
+
+
+
                 <div class="row" ng-show="showUploadFile">
                   <div class="col-md-6 ">
                     <div class="form-group">
@@ -193,7 +210,7 @@
                   <div class="col-md-6 ">
                       <div class="form-group">
                       <label for="exampleInputFile">Documento 2</label>
-                      <input id="inputFileToLoad2"  name="inputFileToLoad2" type="file" n  ng-model="nImagen2" />
+                      <input id="inputFileToLoad2"  name="inputFileToLoad2" type="file"   ng-model="nImagen2" />
                       <div id="imgTest2">
                           <img src="uploads/{{imagen2}}">
                       </div>
@@ -210,7 +227,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+        <button type="button" class="btn btn-default" ng-click="limpiar();" data-dismiss="modal" >Cerrar</button>
         <button type="button" id="btnSaveTicket" class="btn btn-primary" ng-click="saveTicket();" ng-disabled="userForm.$invalid"  ng-show="!showUploadFile">Guardar</button
         >
         <button type="button" class="btn btn-primary" ng-click="uploadFile();" ng-show="showUploadFile" >Cargar</button

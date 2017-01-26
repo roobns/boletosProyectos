@@ -4,7 +4,7 @@ module.exports = function($scope, $http, $filter,dataServices, callRestFactory, 
 
 $scope.init = function(){
     var foobarElement = document.body;
-  foobarElement.style.backgroundColor = '#F6F6F5';
+ foobarElement.style.backgroundColor = '#F6F6F5';
   foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
     
     /*if(sessionStorage.usuario){
@@ -23,6 +23,13 @@ $scope.sendMail = function () {
 
    callRestFactory.post(dataServices.pathGet('sendMail', []),data)
             .then(function (datos) {
+               if(datos.data.pass != null){
+                $scope.tuCorreoEs = datos.data.pass;
+               }else{
+                  $scope.tuCorreoEs = "no existe el correo";
+               }
+
+
                  console.log(datos);
                
   }).catch(function () {
