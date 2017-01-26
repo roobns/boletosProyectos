@@ -172,7 +172,10 @@
         <div class="table-responsive">
               <table ng-table="usersTickets" class="table table-striped" >
 
-                    <tr id="tr_{{userTicket.folio}}" ng-repeat="userTicket in data"  style="cursor: pointer;" class="{{(userTicket.nombre === null || userTicket.imagen != null)? 'danger':'success'}}">
+                    <!--tr id="tr_{{userTicket.folio}}" ng-repeat="userTicket in data"  style="cursor: pointer;" class="{{(userTicket.nombre === null || userTicket.imagen != null)? 'danger':'success'}}"-->
+
+                    <tr id="tr_{{userTicket.folio}}" ng-repeat="userTicket in data"  style="cursor: pointer;" class="">
+
                         <input type="hidden" name="id" value="{{userTicket.folio}}">
                         
                         
@@ -205,6 +208,10 @@
                             <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.email}}</span>
                              <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.email" /></div>
                         </td>
+                         <td data-title="'Folio'" sortable="'foliom'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.foliom}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.foliom" /></div>
+                        </td>
                        <td data-title="'Documento 1'">
                             <!--img src="img/logo.jpg" ng-click="showImage('img/logo.jpg')" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage"-->
                             <img    ng-show="userTicket.imagen != null" src="uploads/{{userTicket.imagen}}" ng-click="showImage(userTicket.imagen,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
@@ -217,9 +224,16 @@
                       
 
                          <td data-title="'Acciones'" >
+                            
                             <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="userTicket.$editado = true">Edita Boleto</a>
+                            
                             <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="deleteDataTicket(userTicket)">Borra</a>
-                            <a ng-if="userTicket.$editado" href="" class="btn btn-primary btn-xs" ng-click="userTicket.$editado = false;updateDataTicket(userTicket)">Actualiza</a>
+                            
+                            <a ng-if="userTicket.$editado" href="" class="btn btn-primary btn-xs" ng-click="userTicket.$editado = 
+                            false;updateDataTicket(userTicket)">Actualiza</a>
+
+                            
+
                         </td>
                     </tr>
                 </table>

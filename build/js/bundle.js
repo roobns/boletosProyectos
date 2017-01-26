@@ -31019,6 +31019,12 @@ $rootScope.logout = function(){
 }
 
 
+
+
+
+
+
+
 $scope.showImage = function(data,userTicket){
  
   $scope.pathImage = 'uploads/'+ data;
@@ -31075,7 +31081,7 @@ $scope.getTickes = function(user){
                  var faltante = (nBoletos -  nbolresgis  );
                   
                   for(var x=0;x<faltante;x++){
-                      $scope.users.push({apellidos:null,ciudad:null,email:null,estado:null,folio:null,idUsuario:null,imagen:null,imagen2:null,nombre:null,telefono:null});
+                      $scope.users.push({apellidos:null,ciudad:null,email:null,estado:null,folio:null,idUsuario:$scope.user,imagen:null,imagen2:null,nombre:null,telefono:null});
 
                     }
 
@@ -31114,22 +31120,66 @@ $scope.getTickes = function(user){
 
 
 $scope.updateDataTicket = function(data){
+  
   delete data['$editado'];
   delete data['$$hashKey'];
-  console.log(data);
+  
   var idUser = data.idUsuario;
   
-  $.post( "http://celebrausana.com/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
-  .done(function( data ) {
-      $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
-      .done(function( datos ) {
-        $("#squareCount"+idUser).css("background-color","green");
-        console.log( "Update Estatus" + datos );
+  if(data.folio != null){
+      $.post( "http://celebrausana.com/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
+      .done(function( data ) {
+          $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
+          .done(function( datos ) {
+            $("#squareCount"+idUser).css("background-color","green");
+            console.log( "Update Estatus" + datos );
+          });
       });
-  });
+
+  }else{
+      $scope.saveTicket (data);
+  }
+
+    
 
 
 };
+
+
+
+$scope.saveTicket = function(userTicket){
+  
+  var param = {};
+  param.nombre = userTicket.nombre;
+  param.apellidos = userTicket.apellidos;
+  param.ciudad = userTicket.ciudad;
+  param.estado = userTicket.estado;
+  param.telefono = userTicket.telefono;
+  param.email = userTicket.email;
+  param.idUsuario = userTicket.idUsuario;
+  param.foliom = userTicket.foliom;
+  param.imagen = "NULL";
+  param.imagen2 = "NULL";
+  console.log(param);
+
+  $.ajax({
+        url: "http://celebrausana.com/celebra-back/newTicket",
+        type: "post",
+        data: { parameters: JSON.stringify(param) } ,
+        success: function (data) {
+          console.log(data);
+          $scope.getTickes(userTicket.idUsuario)
+      },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Error saveTicket");
+        }
+
+
+    });
+  
+};
+
+
 
 $scope.deleteDataTicket = function(data){
   
@@ -31139,10 +31189,6 @@ $scope.deleteDataTicket = function(data){
 //        $("#squareCount"+idUser).css("background-color","green");
           console.log( "Update Estatus" + datos );
           $scope.getTickes (data.idUsuario);
-
-          
-
-           
           var x=0;
            $("#tr_"+data.folio+" td").each(function(a){
               if(x<=8)
