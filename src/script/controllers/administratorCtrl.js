@@ -38,22 +38,14 @@ $scope.user = JSON.parse(sessionStorage.usuario);
 
                           var dataSelling = dataSelling.data;
                             for (var key in dataSelling) {
-
-                                      for (var keydata in data) {
-                                            if(data[keydata].id ===  dataSelling[key].idusiario){
-
-                                               // data[keydata].numBoletos;
-                                                $scope.asignados = Number(dataSelling[key].vendidos)
-                                                $scope.disponibles = Number(data[keydata].numBoletos) - Number(dataSelling[key].vendidos);
-                                                data[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
-                                                
-
-
+                                  for (var keydata in data) {
+                                        if(data[keydata].id ===  dataSelling[key].idusiario){
+                                          // data[keydata].numBoletos;
+                                          $scope.asignados = Number(dataSelling[key].vendidos)
+                                          $scope.disponibles = Number(data[keydata].numBoletos) - Number(dataSelling[key].vendidos);
+                                          data[keydata].distTiecket = { numBoletos:data[keydata].numBoletos ,asignados:$scope.asignados,disponibles:$scope.disponibles };
                                         }
-                                                
-                                             
-
-                                      }
+                                    }
                             }
                       
                       })
@@ -110,14 +102,8 @@ $rootScope.logout = function(){
 }
 
 
-
-
-
-
-
-
 $scope.showImage = function(data,userTicket){
- 
+
   $scope.pathImage = 'uploads/'+ data;
    var idUser = userTicket.idUsuario;
   
@@ -220,6 +206,10 @@ $scope.updateDataTicket = function(data){
   if(data.folio != null){
       $.post( "http://celebrausana.com/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
       .done(function( data ) {
+            $scope.validateUertTickets(idUser);
+
+
+
           $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
           .done(function( datos ) {
             $("#squareCount"+idUser).css("background-color","green");
@@ -258,16 +248,50 @@ $scope.saveTicket = function(userTicket){
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
-          console.log(data);
-          $scope.getTickes(userTicket.idUsuario)
+            
+              $scope.validateUertTickets(userTicket.idUsuario);
+
+          
       },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log("Error saveTicket");
         }
-
-
-    });
+  });
   
+};
+
+
+$scope.validateUertTickets = function(idUsuario){
+    $.ajax({
+          url: "http://celebrausana.com/celebra-back/getSellingByIdUsuario",
+          type: "get",
+          data: { idUsuario:idUsuario} ,
+          success: function (data) {
+              $.ajax({
+                    url: "http://celebrausana.com/celebra-back/getTicketValidateByIdUser",
+                    type: "get",
+                    data: { idUsuario:idUsuario} ,
+                    success: function (information) {
+                        var vendidos = Number(JSON.parse(data)[0].vendidos);
+                        var bn = Number($("#nboletos"+idUsuario).text());
+      
+                        $("#asignados"+idUsuario).text(vendidos);
+                        $("#disponibles"+idUsuario).text(bn - vendidos);
+
+                        if(bn != Number(JSON.parse(information)[0].vendidos))
+                          $("#squareCount"+idUsuario).css("background-color", "red");
+                        else
+                          $("#squareCount"+idUsuario).css("background-color", "green");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("Error saveTicket");
+                    }
+              });
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              console.log("Error saveTicket");
+                }
+          });
 };
 
 
@@ -290,8 +314,7 @@ $scope.deleteDataTicket = function(data){
            
           $('#tr_'+data.folio).removeClass("success").addClass("danger");
 
-        
-           
+           $scope.validateUertTickets(data.idUsuario);
 
 
       });

@@ -53,18 +53,18 @@
                         <p class="textoInfoBoletos" >Disponibles: <span style="color:black;font-weight:bold">{{disponibles}}</span></p>
                     </div>
                     <div class="col-md5 col-xs-3 col-sm-3">
-                       <div class="row pull-right" style="{{styleSquare}}">
+                       <div class="row pull-right" id="squareCount{{user.id}}"  style="{{styleSquare}}">
                         <div class="col-md12 col-xs-12 col-sm-12 text-center" >
-                            <h3 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{user.numBoletos}}</span></h3>
+                            <h3 style="margin:0;padding:0" ><span id="nboletos{{user.id}}" style="color:white;font-weight:bold">{{user.numBoletos}}</span></h3>
                          </div> 
                          <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
-                            <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{asignados}}</span></h5>
+                            <h5 style="margin:0;padding:0" ><span id="asignados{{user.id}}" style="color:white;font-weight:bold">{{asignados}}</span></h5>
                          </div>
                          <div class="col-md2 col-xs-2 col-sm-2 text-center" style="margin:0;padding:0">
                             <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">-</span></h5>
                          </div>
                          <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
-                            <h5 style="margin:0;padding:0" ><span style="color:black;font-weight:bold">{{disponibles}}</span></h5>
+                            <h5 style="margin:0;padding:0" ><span id="disponibles{{user.id}}" style="color:black;font-weight:bold">{{disponibles}}</span></h5>
                          </div>
                        </div>
 
@@ -74,7 +74,7 @@
                 <div class="table-responsive">
                     <table ng-table="usersTable" class="table table-striped table-hover" >
 
-                        <tr ng-repeat="user in data" ng-dblclick="showModalData(user);" style="cursor: pointer;">
+                        <tr ng-repeat="user in $data" ng-dblclick="showModalData(user);" style="cursor: pointer;">
                             <input type="hidden" name="id" value="{{user.folio}}"/>
                             
                             <td data-title="'Id'" sortable="'folio'">
@@ -187,7 +187,9 @@
                   <div class="col-md-6 ">
                         <div class="form-group">
                             <label for="foliom">id</label>
-                            <input  ng-disabled="showUploadFile" required type="text" class="form-control" id="foliom" placeholder="Id" ng-model="foliom">
+                            <input  ng-disabled="showUploadFile" required type="text" class="form-control" id="foliom" placeholder="Id" 
+                            ng-model="foliom">
+                            <h6>Si no cuentas con id por favor coloca "Invitado"</h6>
                           </div>
                     </div>
                 

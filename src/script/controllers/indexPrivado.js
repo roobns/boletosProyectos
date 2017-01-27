@@ -37,6 +37,42 @@ $scope.init = function(){
 
 
 };
+
+
+$scope.validateUertTickets = function(idUsuario){
+    $.ajax({
+          url: "http://celebrausana.com/celebra-back/getSellingByIdUsuario",
+          type: "get",
+          data: { idUsuario:idUsuario} ,
+          success: function (data) {
+              $.ajax({
+                    url: "http://celebrausana.com/celebra-back/getTicketValidateByIdUser",
+                    type: "get",
+                    data: { idUsuario:idUsuario} ,
+                    success: function (information) {
+                        var vendidos = Number(JSON.parse(data)[0].vendidos);
+                        var bn = Number($("#nboletos"+idUsuario).text());
+      
+                        $("#asignados"+idUsuario).text(vendidos);
+                        $("#disponibles"+idUsuario).text(bn - vendidos);
+
+                        if(bn != Number(JSON.parse(information)[0].vendidos))
+                          $("#squareCount"+idUsuario).css("background-color", "red");
+                        else
+                          $("#squareCount"+idUsuario).css("background-color", "green");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("Error saveTicket");
+                    }
+              });
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              console.log("Error saveTicket");
+                }
+          });
+};
+
+
  
 $rootScope.logout = function(){
 	sessionStorage.clear();
@@ -86,12 +122,19 @@ $scope.getTickes = function(){
 					   		$defer.resolve($scope.data);
 						}
 					});
+
+					$scope.usersTable.reload();
 	        	}
 	        }).fail(function (data, textStatus, xhr) {
 	            console.log("failure Validate POST");
 	            //console.log("operationToken-BursanetRestful: " + xhr.getResponseHeader("X-CSRF-TOKEN"));
 	            //sessionStorage.setItem("operationToken-BursanetRestful", xhr.getResponseHeader("X-CSRF-TOKEN"));
 	        });
+
+
+	        
+    		
+
 }
 
 
@@ -170,10 +213,9 @@ $scope.saveTicket = function(){
         	$('#myModal').modal('hide');
         	$scope.getTickes();
 
-	    	//$("#alertSell").fadeIn( "fast" );
-	        //setTimeout(function(){ $("#alertLogin").fadeOut(); }, 2000);
 	        $('#btnSaveTicket').attr('disabled', false);    
-	        location.reload();      
+	        //location.reload();      
+	        $scope.validateUertTickets($scope.user.id);
 	    },
         error: function(jqXHR, textStatus, errorThrown) {
         	$('#myModal').modal('hide');

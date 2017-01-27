@@ -79,16 +79,16 @@
                           
                             <div id="squareCount{{user.id}}" ng-if="!user.$edit" class="row pull-right" style="{{user.documento === 'success' ? 'max-width:100px;background-color: green;margin-right:5px;':'max-width:100px;background-color: red;margin-right:5px;'}}">
                               <div class="col-md12 col-xs-12 col-sm-12 text-center" >
-                                  <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{user.numBoletos}}</span></h5>
+                                  <h5 style="margin:0;padding:0" ><span id="nboletos{{user.id}}" style="color:white;font-weight:bold">{{user.numBoletos}}</span></h5>
                                </div> 
                                <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
-                                  <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">{{user.distTiecket.asignados}}</span></h5>
+                                  <h5 style="margin:0;padding:0" ><span id="asignados{{user.id}}" style="color:white;font-weight:bold">{{user.distTiecket.asignados}}</span></h5>
                                </div>
                                <div class="col-md2 col-xs-2 col-sm-2 text-center" style="margin:0;padding:0">
                                   <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">-</span></h5>
                                </div>
                                <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
-                                  <h5 style="margin:0;padding:0" ><span style="color:black;font-weight:bold">{{user.distTiecket.disponibles}}</span></h5>
+                                  <h5 style="margin:0;padding:0" ><span id="disponibles{{user.id}}"  style="color:black;font-weight:bold">{{user.distTiecket.disponibles}}</span></h5>
                                </div>
                              </div>
                              <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.numBoletos" /></div>
@@ -158,10 +158,10 @@
     </div>
 </div>
 
-<style>.modal-dialog {width: 700px;} </style>
+<style>.modal-dialog {width: 90%;} </style>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
 
     <div class="modal-content">
       <div class="modal-header">
@@ -177,7 +177,10 @@
                     <tr id="tr_{{userTicket.folio}}" ng-repeat="userTicket in data"  style="cursor: pointer;" class="">
 
                         <input type="hidden" name="id" value="{{userTicket.folio}}">
-                        
+                        <td data-title="'Id'" sortable="'foliom'" >
+                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.foliom}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.foliom" /></div>
+                        </td>
                         
                          <td data-title="'Nombre'" sortable="'nombre'" >
                             <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.nombre}}</span>
@@ -208,10 +211,7 @@
                             <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.email}}</span>
                              <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.email" /></div>
                         </td>
-                         <td data-title="'Folio'" sortable="'foliom'" >
-                            <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.foliom}}</span>
-                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.foliom" /></div>
-                        </td>
+                         
                        <td data-title="'Documento 1'">
                             <!--img src="img/logo.jpg" ng-click="showImage('img/logo.jpg')" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage"-->
                             <img    ng-show="userTicket.imagen != null" src="uploads/{{userTicket.imagen}}" ng-click="showImage(userTicket.imagen,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
@@ -247,7 +247,7 @@
 
 <!-- Modal -->
 <div class="modal fade"  id="myModalImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
 
     <div class="modal-content">
       <div class="modal-header">
