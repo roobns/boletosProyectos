@@ -23,11 +23,12 @@ app.config(function($routeProvider) {
       templateUrl: 'views/login.html',
       controller: 'loginCtrl'
     })
-    /*.when('/scordValue', {
-      templateUrl: 'views/scordvalue.html',
-      controller: 'MainCtrl'
-    })*/
     .otherwise({
       redirectTo: '/indexPrivado'
     });
 });
+
+
+app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);

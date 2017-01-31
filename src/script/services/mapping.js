@@ -4,6 +4,8 @@ module.exports = function () {
     var services = {
         getTickes: {
             getPath: "celebra-back/getTickes"
+        },updateEstatus: {
+            getPath: "celebra-back/updateEstatus"
         },getUsers: {
             getPath: "celebra-back/getUsers"
         },getWrongUser: {
@@ -16,12 +18,12 @@ module.exports = function () {
             getPath: "celebra-back/getTicketValidate"
         },login: {
             getPath: "celebra-back/login"
+        },updateUser: {
+            getPath: "celebra-back/updateUser"
         }
-        
 
         
-
-    };
+};
 
     var buildParams = function (params) {
         var paramsStr = '';
@@ -33,10 +35,10 @@ module.exports = function () {
     };
 
     this.pathPost = function (service) {
-        return "http://celebrausana.com/" + services[service].getPath;
+        return sessionStorage.path + "/" + services[service].getPath;
     };
     this.pathGet = function (service, params) {
-        return "http://celebrausana.com/" + services[service].getPath + buildParams(params);
+        return sessionStorage.path + "/" + services[service].getPath + buildParams(params);
     };
 
 };
