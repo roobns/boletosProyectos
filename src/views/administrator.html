@@ -30,6 +30,13 @@
     <div class="col-md-12">
             
              <button class="btn btn-primary" ng-json-export-excel data="users" report-fields="{id: 'ID', nombre: 'Nombre', apellidos: 'Apellidos',  'ciudad': 'Ciudad', 'estado': 'Estado','telefono': 'Teléfono','email': 'E-Mail','numBoletos': 'Boletos','noOrden':'Numero orden','rango':'Rango' ,'avanceRango' : 'Avance de rango','motivadorPlatino':'Motivador platino','motivadorPlatinoPremier' :'Moytivador platino premier','ejecutivo':'Ejecutivo','chf' :'CHF','transferencia':'Transferencia', 'accesoEntrenamiento':'Acceso al entranamiento','accesoSalaEjecutiva':'Acceso a sala ejecutiva'}" >Exportar</button>
+
+
+             <button class="btn btn-primary" role="button"  data-toggle="modal" data-target="#myModalTitular" >Agregar titular</button>
+
+             
+
+
     
         <div class="loginBox" style="margin-top:20px;">
 
@@ -146,6 +153,7 @@
 
                         <td data-title="'Acciones'" >
                             <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita titular</a>
+                            <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar titular</a>
                             <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guarda</a>
                             <a  href="" class="btn btn-default btn-xs"  ng-click="getTickes(user)" role="button"  data-toggle="modal" data-target="#myModal" >Boletos</a>
                         </td>
@@ -247,22 +255,131 @@
 
 <!-- Modal -->
 <div class="modal fade"  id="myModalImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Imagen</h4>
+          </div>
+          <div class="table-responsive">
 
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Imagen</h4>
-      </div>
-      <div class="table-responsive">
-
-        <img src="{{pathImage}}" >
-      </div>
-        
-       
+            <img src="{{pathImage}}" >
+          </div>
+        </div>
     </div>
-
-  
-  </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade"  id="myModalTitular" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Agregar titular</h4>
+          </div>
+          <div class="table-responsive">
+                <form id="userForm" name="titularForm" method="post" enctype="multipart/form-data">
+                    
+                    <div class="modal-body">
+                          <div class="row">
+                              <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="nombre">Id</label>
+                                        <input  required type="number" class="form-control" id="id" placeholder="Id" ng-model="id">
+                                    </div>
+                                </div>
+                              <div class="col-md-6 ">
+                                  <div class="form-group">
+                                    <label for="apellidos">Nombre</label>
+                                    <input required type="text" class="form-control" id="nombre" placeholder="Nombre" ng-model="nombre">
+                                  </div>
+
+                              </div>
+
+                              <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="apellidos">Apellidos</label>
+                                        <input  required type="text" class="form-control" id="apellidos" placeholder="Apellidos" ng-model="apellidos">
+                                    </div>
+                                </div>
+                              <div class="col-md-6 ">
+                                  <div class="form-group">
+                                    <label for="ciudad">Ciudad</label>
+                                    <input required type="text" class="form-control" id="ciudad" placeholder="Ciudad" ng-model="ciudad">
+                                  </div>
+
+                              </div>
+                               <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="estado">Estado</label>
+                                        <input  required type="text" class="form-control" id="estado" placeholder="Estado" ng-model="estado">
+                                    </div>
+                                </div>
+                              <div class="col-md-6 ">
+                                  <div class="form-group">
+                                    <label for="telefono">Teléfono</label>
+                                    <input required type="text" class="form-control" id="telefono" placeholder="Teléfono" ng-model="telefono">
+                                  </div>
+
+                              </div>
+                              <div class="col-md-6 ">
+                                    <div class="form-group"  ng-class="{ 'has-error': titularForm.email.$invalid }">
+                                        <label for="email">Email</label>
+                                        <input  required type="email" class="form-control" id="email" placeholder="Correo" ng-model="email">
+                                    </div>
+                                </div>
+                              <div class="col-md-6 ">
+                                  <div class="form-group">
+                                    <label for="noOrden">No orden</label>
+                                    <input required type="number" class="form-control" id="noOrden" placeholder="Número de orden" ng-model="noOrden">
+                                  </div>
+
+
+
+                              </div>
+                               <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="numBoletos"># Boletos</label>
+                                        <input  required type="number" class="form-control" id="numBoletos" placeholder="Número de boletos" ng-model="numBoletos">
+                                    </div>
+                                </div>
+                             
+                          </div>
+             </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="" data-dismiss="modal" >Cerrar</button>
+                    <button type="button" id="btnSaveTitular" class="btn btn-primary" ng-click="saveTitutlar();" ng-disabled="titularForm.$invalid" >Guardar</button
+                    >
+                    
+                  </div>
+            </form>
+            
+          </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal confirma-->
+<div class="modal fade"  id="myModalConfirmar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document" style="width: 30%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Borrar titular</h4>
+          </div>
+          <div class="table-responsive">
+
+          ¿Realmente desea borrar el titular?
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="" data-dismiss="modal" >Cerrar</button>
+                    <button type="button" id="btnDeleteTitular" class="btn btn-primary" ng-click="deleteTitutlar();" >Confirmar</button
+                    >
+                    
+                  </div>
+            
+          </div>
+        </div>
+    </div>
+</div>

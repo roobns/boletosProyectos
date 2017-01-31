@@ -5,13 +5,19 @@ module.exports = function($scope, $filter, dataServices, callRestFactory, errorM
 
 $scope.init = function(){
 
-var foobarElement = document.body;
-foobarElement.style.backgroundColor = '#F6F6F5';
-foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
+    var foobarElement = document.body;
+    foobarElement.style.backgroundColor = '#F6F6F5';
+    foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
 
-$scope.user = JSON.parse(sessionStorage.usuario);
+    $scope.user = JSON.parse(sessionStorage.usuario);
 
-    callRestFactory.get(dataServices.pathGet('getUsers', []))
+    $scope.getTitulares();
+
+};
+
+
+$scope.getTitulares = function(){
+  callRestFactory.get(dataServices.pathGet('getUsers', []))
             .then(function (datos) {
                 var data = datos.data;
 
@@ -29,7 +35,7 @@ $scope.user = JSON.parse(sessionStorage.usuario);
                           
                           })
                           .catch(function () {
-                            console.log('Error getTicketValidate', false);
+                            //console.log('Error getTicketValidate', false);
                           });
 
 
@@ -50,12 +56,9 @@ $scope.user = JSON.parse(sessionStorage.usuario);
                       
                       })
                       .catch(function () {
-                        console.log('Error getUsers', false);
+                        //console.log('Error getUsers', false);
                       });
-
-
-
-                      
+                   
 
              
                          $scope.$watch(data, function () {
@@ -81,20 +84,20 @@ $scope.user = JSON.parse(sessionStorage.usuario);
 
                                         params.total(orderedData.length);
                                         $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                                        $defer.resolve($scope.data);
                           } 
                        });
+
+                        $scope.usersTable.reload();
                
             })
             .catch(function () {
-                console.log('Error callBPC25', false);
+                //console.log('Error callBPC25', false);
             });
 
 
+}
 
-  
-
-
-};
  
 $rootScope.logout = function(){
   sessionStorage.clear();
@@ -110,13 +113,13 @@ $scope.showImage = function(data,userTicket){
       $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
       .done(function( datos ) {
         $("#squareCount"+idUser).css("background-color","green");
-        console.log( "Update Estatus" + datos );
+        //console.log( "Update Estatus" + datos );
       });
   
 }
 
 $scope.updateUser = function(data){
-  console.log(data);
+  //console.log(data);
   
   delete data['$edit'];
   delete data['$$hashKey'];
@@ -127,7 +130,7 @@ $scope.updateUser = function(data){
   
    $.post( "http://celebrausana.com/celebra-back/updateUser", { parameters: JSON.stringify(data) })
   .done(function( data ) {
-    console.log( "Data Loaded: " + data );
+    //console.log( "Data Loaded: " + data );
   });
 
 
@@ -188,7 +191,7 @@ $scope.getTickes = function(user){
                 }
           }).fail(function (data, textStatus, xhr) {
                 $scope.users = [];
-                console.log("failure Validate POST");
+                //console.log("failure Validate POST");
           
           });
           
@@ -213,7 +216,7 @@ $scope.updateDataTicket = function(data){
           $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
           .done(function( datos ) {
             $("#squareCount"+idUser).css("background-color","green");
-            console.log( "Update Estatus" + datos );
+            //console.log( "Update Estatus" + datos );
           });
       });
 
@@ -241,7 +244,7 @@ $scope.saveTicket = function(userTicket){
   param.foliom = userTicket.foliom;
   param.imagen = "NULL";
   param.imagen2 = "NULL";
-  console.log(param);
+  //console.log(param);
 
   $.ajax({
         url: "http://celebrausana.com/celebra-back/newTicket",
@@ -254,10 +257,60 @@ $scope.saveTicket = function(userTicket){
           
       },
         error: function(jqXHR, textStatus, errorThrown) {
-          console.log("Error saveTicket");
+          //console.log("Error saveTicket");
         }
   });
   
+};
+
+
+$scope.saveTitutlar = function(){
+var param = {};
+param.id =$scope.id;
+param.nombre =$scope.nombre;
+param.apellidos =$scope.apellidos; 
+param.ciudad =$scope.ciudad;
+param.estado =$scope.estado;
+param.telefono =$scope.telefono; 
+param.email =$scope.email;
+param.noOrden =$scope.noOrden; 
+param.numBoletos =$scope.numBoletos;
+
+  $('#btnSaveTicket').attr('disabled', true);
+  $.ajax({
+        url: "http://celebrausana.com/celebra-back/insertTitular",
+        type: "post",
+        data: { parameters: JSON.stringify(param) } ,
+        success: function (data) {
+           $scope.getTitulares(); 
+           //console.log(data); 
+          $('#myModalTitular').modal('hide');
+       
+ 
+          
+      },
+        error: function(jqXHR, textStatus, errorThrown) {
+          //console.log(data);
+          $('#myModalTitular').modal('hide');
+            
+        }
+
+
+    });
+    $scope.clearFieldsTitual();
+};
+
+$scope.clearFieldsTitual = function(){
+    $scope.id ="";
+    $scope.nombre ="";
+    $scope.apellidos =""; 
+    $scope.ciudad ="";
+    $scope.estado ="";
+    $scope.telefono =""; 
+    $scope.email ="";
+    $scope.noOrden =""; 
+    $scope.numBoletos ="";
+
 };
 
 
@@ -284,12 +337,12 @@ $scope.validateUertTickets = function(idUsuario){
                           $("#squareCount"+idUsuario).css("background-color", "green");
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.log("Error saveTicket");
+                        //console.log("Error saveTicket");
                     }
               });
           },
           error: function(jqXHR, textStatus, errorThrown) {
-              console.log("Error saveTicket");
+              //console.log("Error saveTicket");
                 }
           });
 };
@@ -302,7 +355,7 @@ $scope.deleteDataTicket = function(data){
     $.post( "http://celebrausana.com/celebra-back/deleteDataTicket", { folio: folio })
       .done(function( datos ) {
 //        $("#squareCount"+idUser).css("background-color","green");
-          console.log( "Update Estatus" + datos );
+          //console.log( "Update Estatus" + datos );
           $scope.getTickes (data.idUsuario);
           var x=0;
            $("#tr_"+data.folio+" td").each(function(a){
@@ -322,6 +375,32 @@ $scope.deleteDataTicket = function(data){
 
 
 };
+
+
+$scope.selecTitular = function(idUsuario){
+  $scope.idTitularDelete = idUsuario;
+};
+
+
+$scope.deleteTitutlar = function(idUsuario){
+
+  //console.log('borrar'+$scope.idTitularDelete);
+   $.ajax({
+                    url: "http://celebrausana.com/celebra-back/deleteTitular",
+                    type: "post",
+                    data: { idUsuario:$scope.idTitularDelete} ,
+                    success: function (information) {
+                        //console.log(information);
+                        $('#myModalTitular').modal('hide');
+                        $scope.getTitulares();
+                          
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        //console.log("Error saveTicket");
+                    }
+              });
+};
+
 
 
 

@@ -33,10 +33,11 @@ module.exports = function () {
     };
 
     this.pathPost = function (service) {
-        return "http://celebrausana.com/" + services[service].getPath;
+        console.log(sessionStorage.path + "/" + services[service].getPath);
+        return sessionStorage.path + "/" + services[service].getPath;
     };
     this.pathGet = function (service, params) {
-        return "http://celebrausana.com/" + services[service].getPath + buildParams(params);
+        return sessionStorage.path + "/" + services[service].getPath + buildParams(params);
     };
 
 };

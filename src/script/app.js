@@ -31,3 +31,8 @@ app.config(function($routeProvider) {
       redirectTo: '/indexPrivado'
     });
 });
+
+
+app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
