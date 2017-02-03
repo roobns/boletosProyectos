@@ -20,7 +20,10 @@ module.exports = function () {
             getPath: "celebra-back/login"
         },updateUser: {
             getPath: "celebra-back/updateUser"
+        },getDataReport: {
+            getPath: "celebra-back/getDataReport"
         }
+        
 
         
 };

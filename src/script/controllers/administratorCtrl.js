@@ -10,7 +10,7 @@ $scope.init = function(){
     foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
 
     $scope.user = JSON.parse(sessionStorage.usuario);
-
+    $scope.isEnabledDownload = false;
     $scope.getTitulares();
 
 };
@@ -99,6 +99,26 @@ $scope.getTitulares = function(){
 }
 
  
+$scope.getReporte= function(){
+       $scope.isEnabledDownload = true;
+    
+
+      callRestFactory.get(dataServices.pathGet('getDataReport', []))
+            .then(function (datos) {
+              $scope.dataCVS = datos.data;
+                setTimeout(function () {                
+                  $("#exportaCVS" ).trigger( "click" );
+                }, 2000);
+
+            
+                
+             })
+            .catch(function () {
+                //console.log('Error callBPC25', false);
+            });
+
+}
+
 $rootScope.logout = function(){
   sessionStorage.clear();
    window.location.href = "#!/login";
@@ -392,6 +412,8 @@ $scope.deleteTitutlar = function(idUsuario){
                     success: function (information) {
                         //console.log(information);
                         $('#myModalTitular').modal('hide');
+                        $('#myModalConfirmar').modal('hide');
+                        
                         $scope.getTitulares();
                           
                     },

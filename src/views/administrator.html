@@ -29,7 +29,9 @@
 
     <div class="col-md-12">
             
-             <button class="btn btn-primary" ng-json-export-excel data="users" report-fields="{id: 'ID', nombre: 'Nombre', apellidos: 'Apellidos',  'ciudad': 'Ciudad', 'estado': 'Estado','telefono': 'Teléfono','email': 'E-Mail','numBoletos': 'Boletos','noOrden':'Numero orden','rango':'Rango' ,'avanceRango' : 'Avance de rango','motivadorPlatino':'Motivador platino','motivadorPlatinoPremier' :'Moytivador platino premier','ejecutivo':'Ejecutivo','chf' :'CHF','transferencia':'Transferencia', 'accesoEntrenamiento':'Acceso al entranamiento','accesoSalaEjecutiva':'Acceso a sala ejecutiva'}" >Exportar</button>
+            <button ng-disabled="isEnabledDownload" class="btn btn-primary" ng-click="getReporte();" >Exportar</button>
+
+            <button  style="width: 1px;height: 1px; visibility: hidden;" id="exportaCVS"  ng-click="isEnabledDownload=false;" ng-json-export-excel data="dataCVS" report-fields="{id: 'ID', nombre: 'Nombre', apellidos: 'Apellidos',  'ciudad': 'Ciudad', 'estado': 'Estado','telefono': 'Teléfono','email': 'E-Mail','numBoletos': 'Boletos','noOrden':'Numero orden','rango':'Rango' ,'avanceRango' : 'Avance de rango','motivadorPlatino':'Motivador platino','motivadorPlatinoPremier' :'Moytivador platino premier','ejecutivo':'Ejecutivo','chf' :'CHF','transferencia':'Transferencia', 'accesoEntrenamiento':'Acceso al entranamiento','accesoSalaEjecutiva':'Acceso a sala ejecutiva'}" ></button>
 
 
              <button class="btn btn-primary" role="button"  data-toggle="modal" data-target="#myModalTitular" >Agregar titular</button>
@@ -219,6 +221,59 @@
                             <span class="registerDateLimit" ng-if="!userTicket.$editado">{{userTicket.email}}</span>
                              <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.email" /></div>
                         </td>
+
+                        <td data-title="'Rango'" sortable="'rango'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.rango}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.rango" /></div>
+                        </td>
+
+                         <td data-title="'Avance de rango'" sortable="'avanceRango'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.avanceRango}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.avanceRango" /></div>
+                        </td>
+
+                        <td data-title="'Motivador platino'" sortable="'motivadorPlatino'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.motivadorPlatino}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.motivadorPlatino" /></div>
+                        </td>
+
+                        <td data-title="'Moytivador platino premier'" sortable="'motivadorPlatinoPremier'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.motivadorPlatinoPremier}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.motivadorPlatinoPremier" /></div>
+                        </td>
+
+                        <td data-title="'Ejecutivo'" sortable="'ejecutivo'" filter="{ ejecutivo: 'text'}">
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.ejecutivo}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.ejecutivo" /></div>
+                        </td>
+
+                        <td data-title="'CHF'" sortable="'chf'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.chf}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.chf" /></div>
+                        </td>
+
+                        <td data-title="'Transferencia'" sortable="'transferencia'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.transferencia}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.transferencia" /></div>
+                        </td>
+
+                         <td data-title="'Acceso al entranamiento'" sortable="'accesoEntrenamiento'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.accesoEntrenamiento}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.accesoEntrenamiento" /></div>
+                        </td>
+
+                         <td data-title="'Acceso a sala ejecutiva'" sortable="'accesoSalaEjecutiva'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.accesoSalaEjecutiva}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.accesoSalaEjecutiva" /></div>
+                        </td>
+
+                        <td data-title="'Observaciones'" sortable="'observaciones'" >
+                            <span   class="registerDateLimit"  ng-if="!userTicket.$editado">{{userTicket.observaciones}}</span>
+                             <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.observaciones" /></div>
+                        </td>
+
+
+
                          
                        <td data-title="'Documento 1'">
                             <!--img src="img/logo.jpg" ng-click="showImage('img/logo.jpg')" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage"-->
@@ -264,6 +319,8 @@
           <div class="table-responsive">
 
             <img src="{{pathImage}}" >
+            <br>
+            <a href="{{pathImage}}"  download="documento.png">descarga</a>
           </div>
         </div>
     </div>
