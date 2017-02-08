@@ -125,9 +125,9 @@ $rootScope.logout = function(){
 }
 
 
-$scope.showImage = function(data,userTicket){
+$scope.showImage = function(userTicket){
 
-  $scope.pathImage = 'uploads/'+ data;
+  
    var idUser = userTicket.idUsuario;
   
       $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })

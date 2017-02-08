@@ -277,12 +277,12 @@
                          
                        <td data-title="'Documento 1'">
                             <!--img src="img/logo.jpg" ng-click="showImage('img/logo.jpg')" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage"-->
-                            <img    ng-show="userTicket.imagen != null" src="uploads/{{userTicket.imagen}}" ng-click="showImage(userTicket.imagen,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
+                            <img    ng-show="userTicket.imagen != null" src="uploads/{{userTicket.imagen}}"  width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
                             
                         </td>
                         <td data-title="'Documento 2'">
                             <!--img src="img/logo.jpg" width="10" height="10"-->
-                            <img ng-show="userTicket.imagen2 != null" src="uploads/{{userTicket.imagen2}}" ng-click="showImage(userTicket.imagen2,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
+                            <img ng-show="userTicket.imagen2 != null" src="uploads/{{userTicket.imagen2}}"  width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
                         </td>
                       
 
@@ -293,7 +293,7 @@
                             <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="deleteDataTicket(userTicket)">Borra</a>
                             
                             <a ng-if="userTicket.$editado" href="" class="btn btn-primary btn-xs" ng-click="userTicket.$editado = 
-                            false;updateDataTicket(userTicket)">Actualiza</a>
+                            false;updateDataTicket(userTicket);">Actualiza</a>
 
                             
 
