@@ -100,12 +100,12 @@
                                 <span class="registerDateLimit">{{user.email}}</span>
                             </td>
                             <td data-title="'Documento 1'">
-                                 <img style="width: 80px; height: 30px;" ng-show="user.imagen != null" src="uploads/{{user.imagen}}">
+                                 <img style="width: 80px; height: 30px;" ng-if="user.imagen !== ''" src="uploads/{{user.imagen}}">
                                  <br>
                                  <button id=""  class="btn btn-default btn-xs"  ng-dblclick="showModalData(user);"  >doble click</button>
                             </td>
                             <td data-title="'Documento 2'">
-                                <img style="width: 80px; height: 30px;" ng-show="user.imagen2 != null" src="uploads/{{user.imagen2}}">
+                                <img style="width: 80px; height: 30px;" ng-if="user.imagen2 !== ''" src="uploads/{{user.imagen2}}">
                                 <br>
                                 <button id=""  class="btn btn-default btn-xs"  ng-dblclick="showModalData(user);"  >doble click</button>
                             </td>
@@ -130,7 +130,7 @@
       </div>
 
       <form id="userForm" name="userForm" action="upload.php" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="folio" value="{{folio}}" ng-model="folio"">
+        <input type="hidden" name="folio" value="{{folio}}" ng-model="folio">
         <div class="modal-body">
               <div class="row">
                   <div class="col-md-6 ">
@@ -204,7 +204,8 @@
                         
                         <input id="inputFileToLoad"  name="inputFileToLoad" type="file"   ng-model="nImagen" />
                         <div id="imgTest">
-                          <img src="uploads/{{imagen1}}">
+                        
+                          <img src="uploads/{{imagen1}}" ng-if="imagen1 !== ''">
                         </div>
 
                       </div>      
@@ -214,7 +215,7 @@
                       <label for="exampleInputFile">Documento 2</label>
                       <input id="inputFileToLoad2"  name="inputFileToLoad2" type="file"   ng-model="nImagen2" />
                       <div id="imgTest2">
-                          <img src="uploads/{{imagen2}}">
+                          <img src="uploads/{{imagen2}}" ng-if="imagen2 !== ''">
                       </div>
                       
                     </div>       

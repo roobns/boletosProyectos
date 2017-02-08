@@ -3,6 +3,8 @@
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
 
 $scope.init = function(){
+	$scope.imagen1  = null;
+	$scope.imagen2  = null;
 	var foobarElement = document.body;
 	foobarElement.style.backgroundColor = '#F6F6F5';
 	foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
@@ -16,7 +18,7 @@ $scope.init = function(){
 		window.location.href = "#!/login";    
 
 	$.ajax({
-			url: "http://celebrausana.com/celebra-back/getNumberTickets",
+			url: sessionStorage.path+"/celebra-back/getNumberTickets",
 	        method: "GET",
 	        data: { id: $scope.user.id},
 	         async: true,
@@ -41,12 +43,12 @@ $scope.init = function(){
 
 $scope.validateUertTickets = function(idUsuario){
     $.ajax({
-          url: "http://celebrausana.com/celebra-back/getSellingByIdUsuario",
+          url: sessionStorage.path+"/celebra-back/getSellingByIdUsuario",
           type: "get",
           data: { idUsuario:idUsuario} ,
           success: function (data) {
               $.ajax({
-                    url: "http://celebrausana.com/celebra-back/getTicketValidateByIdUser",
+                    url: sessionStorage.path+"/celebra-back/getTicketValidateByIdUser",
                     type: "get",
                     data: { idUsuario:idUsuario} ,
                     success: function (information) {
@@ -87,7 +89,7 @@ $scope.getTickes = function(){
 	 
 	 	 $('#addSell').attr('disabled', false);
 		$.ajax({
-			url: "http://celebrausana.com/celebra-back/getTickes",
+			url: sessionStorage.path+"/celebra-back/getTickes",
 	        method: "GET",
 	        data: { idUsuario: $scope.user.id},
 	         async: true,
@@ -205,7 +207,7 @@ control.addEventListener("change", function(event) {
 $scope.saveTicket = function(){
 	$('#btnSaveTicket').attr('disabled', true);
 	$.ajax({
-        url: "http://celebrausana.com/celebra-back/newTicket",
+        url: sessionStorage.path+"/celebra-back/newTicket",
         type: "post",
         data: { parameters: "{\"nombre\": \""+$scope.nombre+"\", \"apellidos\": \""+$scope.apellidos+"\",\"ciudad\": \""+$scope.ciudad+"\", \"estado\": \""+$scope.estado+"\", \"telefono\": \""+$scope.telefono+"\",\"email\": \""+$scope.email+"\", \"idUsuario\": \""+$scope.user.id+"\", \"foliom\": \""+$scope.foliom+"\", \"imagen\": \"null\", \"imagen2\": \"null\"}" } ,
         success: function (data) {
@@ -248,7 +250,7 @@ $scope.uploadFile = function(){
 	var formData = new FormData(document.getElementsByName('userForm')[0]);// yourForm: form selector        
         $.ajax({
             type: "POST",
-            url: "upload.php",// where you wanna post
+            url: sessionStorage.path+"/upload.php",// where you wanna post
             data: formData,
             processData: false,
             contentType: false,
@@ -256,7 +258,12 @@ $scope.uploadFile = function(){
                   console.log(errorMessage); // Optional
               },
                success: function(data) {
-               	$scope.updatePathFile({folio:$scope.folio,imagen:"img_"+$scope.folio+"_1"+$scope.extimg1,imagen2:"img_"+$scope.folio+"_2"+$scope.extimg2});
+               	if($scope.extimg1!== undefined)
+               		$scope.updatePathFile({folio:$scope.folio,imagen:"img_"+$scope.folio+"_1"+$scope.extimg1});
+               	
+               	if($scope.extimg2!== undefined)
+               		$scope.updatePathFile({folio:$scope.folio,imagen2:"img_"+$scope.folio+"_2"+$scope.extimg2});
+               	  $scope.getTickes();
                	$('#myModal').modal('hide');
                	console.log(data)
 
@@ -270,7 +277,7 @@ $scope.updatePathFile = function(data){
   console.log(data);
   
   
-   $.post( "http://celebrausana.com/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
+   $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
   .done(function( data ) {
     console.log( "Data Loaded: " + data );
   });

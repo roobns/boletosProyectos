@@ -127,15 +127,12 @@ $rootScope.logout = function(){
 
 $scope.showImage = function(userTicket){
 
-  
-   var idUser = userTicket.idUsuario;
-  
-      $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
+  var idUser = userTicket.idUsuario;
+  $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
       .done(function( datos ) {
         $("#squareCount"+idUser).css("background-color","green");
         //console.log( "Update Estatus" + datos );
       });
-  
 }
 
 $scope.updateUser = function(data){
@@ -148,7 +145,7 @@ $scope.updateUser = function(data){
   delete data['documento'];
   delete data['distTiecket'];
   
-   $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(data) })
+  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(data) })
   .done(function( data ) {
     //console.log( "Data Loaded: " + data );
   });
@@ -229,15 +226,13 @@ $scope.updateDataTicket = function(data){
   if(data.folio != null){
       $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
       .done(function( data ) {
-            $scope.validateUertTickets(idUser);
-
-
-
-          $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
+        $scope.validateUertTickets(idUser);
+        
+        $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
           .done(function( datos ) {
             $("#squareCount"+idUser).css("background-color","green");
             //console.log( "Update Estatus" + datos );
-          });
+        });
       });
 
   }else{
