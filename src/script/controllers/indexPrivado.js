@@ -105,9 +105,22 @@ $scope.getTickes = function(){
 	            	$scope.asignados = $scope.users.length;
 		            $scope.disponibles = Number($scope.user.numBoletos) - $scope.users.length;
 
-		            if($scope.disponibles == 0) {
-						$scope.styleSquare = "max-width:100px;background-color: green;margin-right:5px;";
-		            }
+                if($scope.user.estatus === '1' ){
+                    $scope.styleSquare = "max-width:100px;background-color: green;margin-right:5px;";
+      		            
+                }else{
+                    if($scope.disponibles == 0) {
+                        $scope.styleSquare = "max-width:100px;background-color: green;margin-right:5px;";
+                      }
+                      var elementos = $scope.users;
+                     for (var item=0;item< elementos.length;item++)
+                      {
+                        if(elementos[item].imagen !=='' || elementos[item].imagen2 !=='') {
+                          $scope.styleSquare = "max-width:100px;background-color: red;margin-right:5px;";
+                        }
+                      }
+
+                }
 
 		            $scope.$watch($scope.users, function () {
 		                  $scope.usersTable.reload();

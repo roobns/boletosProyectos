@@ -26,7 +26,10 @@ $scope.getTitulares = function(){
                            var datav = dataValidate.data;
                               for (var key in datav) {
                                   for (var keydata in data) {
-                                         if(data[keydata].id ===  datav[key].idUsuario)
+
+                                        if(data[keydata].estatus === '1'){
+                                          data[keydata].documento = "success";
+                                        }else if(data[keydata].id ===  datav[key].idUsuario)
                                               if((Number(data[keydata].numBoletos) - Number(  datav[key].vendidos)) ==0)
                                                   data[keydata].documento = "success";
                                               
@@ -125,15 +128,21 @@ $rootScope.logout = function(){
 }
 
 
-$scope.showImage = function(userTicket){
 
-  var idUser = userTicket.idUsuario;
-  $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
-      .done(function( datos ) {
-        $("#squareCount"+idUser).css("background-color","green");
+
+$scope.showImage = function(data,userTicket){
+
+  $scope.pathImage = 'uploads/'+ data;
+  
+  /*var idUser = userTicket.idUsuario;
+  $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
+    .done(function( datos ) {
+      $("#squareCount"+idUser).css("background-color","green");
         //console.log( "Update Estatus" + datos );
-      });
+  });*/
+  
 }
+
 
 $scope.updateUser = function(data){
   //console.log(data);
@@ -226,11 +235,12 @@ $scope.updateDataTicket = function(data){
   if(data.folio != null){
       $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
       .done(function( data ) {
-        $scope.validateUertTickets(idUser);
+        //$scope.validateUertTickets(idUser);
         
         $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
           .done(function( datos ) {
             $("#squareCount"+idUser).css("background-color","green");
+          
             //console.log( "Update Estatus" + datos );
         });
       });
