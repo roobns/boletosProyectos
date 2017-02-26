@@ -65,7 +65,7 @@ gulp.task('build:js',function (){
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        .pipe(uglify({mangle: false}))
+        /*.pipe(uglify({mangle: false}))*/
         .pipe(gulp.dest(config.script.output));
 });
 

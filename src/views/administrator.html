@@ -38,7 +38,6 @@
 
              
 
-
     
         <div class="loginBox" style="margin-top:20px;">
 
@@ -50,117 +49,205 @@
                
                 <br>
               <div class="table-responsive">
-                <table ng-table="usersTable" class="table table-striped"   show-filter="true">
-                    <tr ng-repeat="user in $data"  >
-                        <td data-title="'Id'"    sortable="'id'" filter="{ id: 'text'}">
-                            <span class=""   ng-if="!user.$edit">{{user.id}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.id"  /></div>
+               <table ng-table="tableParams" class="table" >
+                    <tbody ng-repeat="group in $groups"  ng-init="group.$hideRows = true">
+                    <tr class="ng-table-group success">
+                        <td >
+                            <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                                <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                                <strong>{{ group.value }}</strong>
+                            </a>
                         </td>
                         <td data-title="'Nombre'" sortable="'nombre'" filter="{ nombre: 'text'}">
-                            <span class="" ng-if="!user.$edit">{{user.nombre}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.nombre" /></div>
+                            <span class="" ng-if="!user.$edit">{{group.data[0].nombre}}</span>
                         </td>
                         <td data-title="'Apellidos'" sortable="'apellidos'" filter="{ apellidos: 'text'}">
-                            <span class="" ng-if="!user.$edit">{{user.apellidos}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.apellidos" /></div>
+                            <span class="" ng-if="!user.$edit">{{group.data[0].apellidos}}</span>
+                                         
                         </td>
                         <td data-title="'Ciudad'" sortable="'ciudad'" filter="{ ciudad: 'text'}">
-                            <span class="" ng-if="!user.$edit">{{user.ciudad}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.ciudad" /></div>
+                        <span class="" ng-if="!user.$edit">{{group.data[0].ciudad}}</span>
+                                         
                         </td>
                         <td data-title="'Estado'" sortable="'estado'" filter="{ estado: 'text'}">
-                            <span class="" ng-if="!user.$edit">{{user.estado}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.estado" /></div>
+                            <span class="" ng-if="!user.$edit">{{group.data[0].estado}}</span>
+                                         
                         </td>
                         <td data-title="'Teléfono'" sortable="'telefono'" filter="{ telefono: 'text'}">
-                            <span class="" ng-if="!user.$edit" >{{user.telefono}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.telefono" /></div>
+                            <span class="" ng-if="!user.$edit" >{{group.data[0].telefono}}</span>
+                                         
                         </td>
                         <td data-title="'E-Mail'" sortable="'email'" filter="{ email: 'text'}">
-                            <span class="" ng-if="!user.$edit">{{user.email}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.email" /></div>
+                            <span class="" ng-if="!user.$edit">{{group.data[0].email}}</span>
+                                         
                         </td>
                         <td data-title="'Numero orden'" sortable="'noOrden'" filter="{ noOrden: 'text'}">
-                            <span   class=""  ng-if="!user.$edit">{{user.noOrden}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.noOrden" /></div>
+                            <span   class=""  ng-if="!user.$edit">{{group.data[0].noOrden}}</span>
+                                         
                         </td>
                         <td data-title="'#'" sortable="'numBoletos'" filter="{ numBoletos: 'text'}">
-                          
-                            <div id="squareCount{{user.id}}" ng-if="!user.$edit" class="row pull-right" style="{{user.documento === 'success' ? 'max-width:100px;background-color: green;margin-right:5px;':'max-width:100px;background-color: red;margin-right:5px;'}}">
-                              <div class="col-md12 col-xs-12 col-sm-12 text-center" >
-                                  <h5 style="margin:0;padding:0" ><span id="nboletos{{user.id}}" style="color:white;font-weight:bold">{{user.numBoletos}}</span></h5>
-                               </div> 
-                               <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
-                                  <h5 style="margin:0;padding:0" ><span id="asignados{{user.id}}" style="color:white;font-weight:bold">{{user.distTiecket.asignados}}</span></h5>
-                               </div>
-                               <div class="col-md2 col-xs-2 col-sm-2 text-center" style="margin:0;padding:0">
-                                  <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">-</span></h5>
-                               </div>
-                               <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
-                                  <h5 style="margin:0;padding:0" ><span id="disponibles{{user.id}}"  style="color:black;font-weight:bold">{{user.distTiecket.disponibles}}</span></h5>
-                               </div>
-                             </div>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.numBoletos" /></div>
+                                      {{group.data[0].documento}}
+                            <div id="squareCount{{group.data[0].idUsuario}}" ng-if="!user.$edit" class="row pull-right" style="{{group.data[0].documento === 'success' ? 'max-width:100px;background-color: green;margin-right:5px;':'max-width:100px;background-color: red;margin-right:5px;'}}">
+                                <div class="col-md12 col-xs-12 col-sm-12 text-center" >
+                                    <h5 style="margin:0;padding:0" ><span id="nboletos{{group.data[0].idUsuario}}" style="color:white;font-weight:bold">{{group.data[0].numBoletos}}</span></h5>
+                                </div> 
+                                <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
+                                    <h5 style="margin:0;padding:0" ><span id="asignados{{user.idUsuario}}" style="color:white;font-weight:bold">{{group.data[0].distTiecket.asignados}}</span></h5>
+                                </div>
+                                <div class="col-md2 col-xs-2 col-sm-2 text-center" style="margin:0;padding:0">
+                                    <h5 style="margin:0;padding:0" ><span style="color:white;font-weight:bold">-</span></h5>
+                                </div>
+                                <div class="col-md5 col-xs-5 col-sm-5 text-center" style="margin:0;padding:0">
+                                    <h5 style="margin:0;padding:0" ><span id="disponibles{{user.idUsuario}}"  style="color:black;font-weight:bold">{{group.data[0].distTiecket.disponibles}}</span></h5>
+                                </div>
+                            </div>
                         </td>
 
                         <td data-title="'Rango'" sortable="'rango'" filter="{ rango: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.rango}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.rango" /></div>
                         </td>
 
-                         <td data-title="'Avance de rango'" sortable="'avanceRango'" filter="{ avanceRango: 'text'}">
+                        <td data-title="'Avance de rango'" sortable="'avanceRango'" filter="{ avanceRango: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.avanceRango}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.avanceRango" /></div>
                         </td>
 
                         <td data-title="'Motivador platino'" sortable="'motivadorPlatino'" filter="{ motivadorPlatino: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.motivadorPlatino}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.motivadorPlatino" /></div>
                         </td>
 
                         <td data-title="'Moytivador platino premier'" sortable="'motivadorPlatinoPremier'" filter="{ motivadorPlatinoPremier: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.motivadorPlatinoPremier}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.motivadorPlatinoPremier" /></div>
                         </td>
 
                         <td data-title="'Ejecutivo'" sortable="'ejecutivo'" filter="{ ejecutivo: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.ejecutivo}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.ejecutivo" /></div>
                         </td>
 
                         <td data-title="'CHF'" sortable="'chf'" filter="{ chf: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.chf}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.chf" /></div>
                         </td>
 
                         <td data-title="'Transferencia'" sortable="'transferencia'" filter="{ transferencia: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.transferencia}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.transferencia" /></div>
                         </td>
 
-                         <td data-title="'Acceso al entranamiento'" sortable="'accesoEntrenamiento'" filter="{ accesoEntrenamiento: 'text'}">
+                        <td data-title="'Acceso al entranamiento'" sortable="'accesoEntrenamiento'" filter="{ accesoEntrenamiento: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.accesoEntrenamiento}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.accesoEntrenamiento" /></div>
                         </td>
 
-                         <td data-title="'Acceso a sala ejecutiva'" sortable="'accesoSalaEjecutiva'" filter="{ accesoSalaEjecutiva: 'text'}">
+                        <td data-title="'Acceso a sala ejecutiva'" sortable="'accesoSalaEjecutiva'" filter="{ accesoSalaEjecutiva: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.accesoSalaEjecutiva}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.accesoSalaEjecutiva" /></div>
                         </td>
 
                         <td data-title="'Observaciones'" sortable="'observaciones'" filter="{ observaciones: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.observaciones}}</span>
-                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.observaciones" /></div>
                         </td>
 
-                        <td data-title="'Acciones'" >
-                            <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita titular</a>
-                            <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar titular</a>
-                            <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guarda</a>
-                            <a  href="" class="btn btn-default btn-xs"  ng-click="getTickes(user)" role="button"  data-toggle="modal" data-target="#myModal" >Boletos</a>
-                        </td>
+                                    <td data-title="'Acciones'" >
+                                        <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita titular</a>
+                                        <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar titular</a>
+                                        <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guarda</a>
+                                        <a  href="" class="btn btn-default btn-xs"  ng-click="getTickes(user)" role="button"  data-toggle="modal" data-target="#myModal" >Boletos</a>
+                                    </td>
                     </tr>
+                   <tr  ng-hide="group.$hideRows" ng-repeat="user  in group.data"  >
+                                    <td data-title="'Id'"    sortable="'id'" filter="{ id: 'text'}">
+                                        <span class=""   ng-if="!user.$edit">{{user.id}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.id"  /></div>
+                                    </td>
+                                    <td data-title="'Nombre'" sortable="'nombre'" filter="{ nombre: 'text'}">
+                                        <span class="" ng-if="!user.$edit">{{user.nombre}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.nombre" /></div>
+                                    </td>
+                                    <td data-title="'Apellidos'" sortable="'apellidos'" filter="{ apellidos: 'text'}">
+                                        <span class="" ng-if="!user.$edit">{{user.apellidos}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.apellidos" /></div>
+                                    </td>
+                                    <td data-title="'Ciudad'" sortable="'ciudad'" filter="{ ciudad: 'text'}">
+                                        <span class="" ng-if="!user.$edit">{{user.ciudad}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.ciudad" /></div>
+                                    </td>
+                                    <td data-title="'Estado'" sortable="'estado'" filter="{ estado: 'text'}">
+                                        <span class="" ng-if="!user.$edit">{{user.estado}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.estado" /></div>
+                                    </td>
+                                    <td data-title="'Teléfono'" sortable="'telefono'" filter="{ telefono: 'text'}">
+                                        <span class="" ng-if="!user.$edit" >{{user.telefono}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.telefono" /></div>
+                                    </td>
+                                    <td data-title="'E-Mail'" sortable="'email'" filter="{ email: 'text'}">
+                                        <span class="" ng-if="!user.$edit">{{user.email}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.email" /></div>
+                                    </td>
+                                    <td data-title="'Numero orden'" sortable="'noOrden'" filter="{ noOrden: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.noOrden}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.noOrden" /></div>
+                                    </td>
+                                    <td data-title="'#'" sortable="'numBoletos'" filter="{ numBoletos: 'text'}">
+                                      
+                                        
+                                    </td>
+
+                                    <td data-title="'Rango'" sortable="'rango'" filter="{ rango: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.rango}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.rango" /></div>
+                                    </td>
+
+                                     <td data-title="'Avance de rango'" sortable="'avanceRango'" filter="{ avanceRango: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.avanceRango}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.avanceRango" /></div>
+                                    </td>
+
+                                    <td data-title="'Motivador platino'" sortable="'motivadorPlatino'" filter="{ motivadorPlatino: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.motivadorPlatino}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.motivadorPlatino" /></div>
+                                    </td>
+
+                                    <td data-title="'Moytivador platino premier'" sortable="'motivadorPlatinoPremier'" filter="{ motivadorPlatinoPremier: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.motivadorPlatinoPremier}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.motivadorPlatinoPremier" /></div>
+                                    </td>
+
+                                    <td data-title="'Ejecutivo'" sortable="'ejecutivo'" filter="{ ejecutivo: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.ejecutivo}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.ejecutivo" /></div>
+                                    </td>
+
+                                    <td data-title="'CHF'" sortable="'chf'" filter="{ chf: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.chf}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.chf" /></div>
+                                    </td>
+
+                                    <td data-title="'Transferencia'" sortable="'transferencia'" filter="{ transferencia: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.transferencia}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.transferencia" /></div>
+                                    </td>
+
+                                     <td data-title="'Acceso al entranamiento'" sortable="'accesoEntrenamiento'" filter="{ accesoEntrenamiento: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.accesoEntrenamiento}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.accesoEntrenamiento" /></div>
+                                    </td>
+
+                                     <td data-title="'Acceso a sala ejecutiva'" sortable="'accesoSalaEjecutiva'" filter="{ accesoSalaEjecutiva: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.accesoSalaEjecutiva}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.accesoSalaEjecutiva" /></div>
+                                    </td>
+
+                                    <td data-title="'Observaciones'" sortable="'observaciones'" filter="{ observaciones: 'text'}">
+                                        <span   class=""  ng-if="!user.$edit">{{user.observaciones}}</span>
+                                         <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.observaciones" /></div>
+                                    </td>
+
+                                    <td data-title="'Acciones'" >
+                                        <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita titular</a>
+                                        <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar titular</a>
+                                        <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateUser(user);">Guarda</a>
+                                        <a  href="" class="btn btn-default btn-xs"  ng-click="getTickes(user)" role="button"  data-toggle="modal" data-target="#myModal" >Boletos</a>
+                                    </td>
+                                </tr>
+                    </tbody>
                 </table>
+
 
              </div>   
             </div>

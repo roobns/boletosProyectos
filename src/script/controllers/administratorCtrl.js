@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, ngTableParams,$rootScope) {
+module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, NgTableParams,$rootScope) {
 
 
 $scope.init = function(){
@@ -11,12 +11,63 @@ $scope.init = function(){
 
     $scope.user = JSON.parse(sessionStorage.usuario);
     $scope.isEnabledDownload = false;
-    $scope.getTitulares();
+    //getTitulares();
+    getTickesWithTitular();
+
+ 
+
+                    
+
+
 
 };
 
 
-$scope.getTitulares = function(){
+function getTickesWithTitular(){
+  callRestFactory.get(dataServices.pathGet('getTickesWithTitular', []))
+            .then(function (rows) {
+              console.log(rows.data);
+              var data = rows.data;
+
+              
+
+              //*******************************
+
+
+
+              $scope.groupby = 'role'; //Default order IF null get table without groups(not possible ?)
+
+                    //dinamic grouping
+                    $scope.tableParams = new NgTableParams({
+                        page: 1,            // show first page
+                        count: 5          // count per page
+                    }, {
+                        groupBy: $scope.groupby,
+                        total: function () { return data.length; }, // length of data
+                        getData: function($defer, params) {
+                            var orderedData = params.sorting() ?
+                                    $filter('orderBy')(data, $scope.tableParams.orderBy()) :   data;
+
+                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        }
+                    });
+                     $scope.$watch('groupby', function(value){
+                        $scope.tableParams.settings().groupBy = 'role';
+                        console.log('Scope Value', $scope.groupby);
+                        //console.log('Watch value', this.last);
+                        //console.log('new table',$scope.tableParams);
+                        $scope.tableParams.reload();
+                    });
+
+            })
+            .catch(function () {
+      //console.log('Error callBPC25', false);
+    });
+
+}
+
+
+ function getTitulares(){
   callRestFactory.get(dataServices.pathGet('getUsers', []))
             .then(function (datos) {
                 var data = datos.data;
@@ -69,7 +120,7 @@ $scope.getTitulares = function(){
                             });
 
                         $scope.users=data;
-                        $scope.usersTable = new ngTableParams({
+                        $scope.usersTable = new NgTableParams({
                             page: 1,
                             count: 10
                         }, {
@@ -103,23 +154,17 @@ $scope.getTitulares = function(){
 
  
 $scope.getReporte= function(){
-       $scope.isEnabledDownload = true;
-    
-
-      callRestFactory.get(dataServices.pathGet('getDataReport', []))
-            .then(function (datos) {
-              $scope.dataCVS = datos.data;
-                setTimeout(function () {                
-                  $("#exportaCVS" ).trigger( "click" );
-                }, 2000);
-
-            
-                
-             })
-            .catch(function () {
-                //console.log('Error callBPC25', false);
-            });
-
+  $scope.isEnabledDownload = true;
+  callRestFactory.get(dataServices.pathGet('getDataReport', []))
+    .then(function (datos) {
+      $scope.dataCVS = datos.data;
+      setTimeout(function () {                
+        $("#exportaCVS" ).trigger( "click" );
+      }, 2000);
+    })
+    .catch(function () {
+      //console.log('Error callBPC25', false);
+    });
 }
 
 $rootScope.logout = function(){
@@ -196,7 +241,7 @@ $scope.getTickes = function(user){
                   
                   
 
-                  $scope.usersTickets = new ngTableParams({
+                  $scope.usersTickets = new NgTableParams({
                         page: 1,
                         count: 10
                     }, {
@@ -307,7 +352,7 @@ param.numBoletos =$scope.numBoletos;
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
-           $scope.getTitulares(); 
+           getTitulares(); 
            //console.log(data); 
           $('#myModalTitular').modal('hide');
        
@@ -419,7 +464,7 @@ $scope.deleteTitutlar = function(idUsuario){
                         $('#myModalTitular').modal('hide');
                         $('#myModalConfirmar').modal('hide');
                         
-                        $scope.getTitulares();
+                        getTitulares();
                           
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

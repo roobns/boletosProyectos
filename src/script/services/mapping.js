@@ -22,6 +22,8 @@ module.exports = function () {
             getPath: "celebra-back/updateUser"
         },getDataReport: {
             getPath: "celebra-back/getDataReport"
+        },getTickesWithTitular: {
+            getPath: "celebra-back/getTickesWithTitular"
         }
         
 
