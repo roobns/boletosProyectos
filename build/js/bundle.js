@@ -33212,6 +33212,9 @@ function getTickesWithTitular(){
 
               $scope.groupby = 'role'; //Default order IF null get table without groups(not possible ?)
 
+                      $scope.$watch("filter.$", function () {
+                      $scope.tableParams.reload();
+                    });
                     //dinamic grouping
                     $scope.tableParams = new NgTableParams({
                         page: 1,            // show first page
@@ -33220,8 +33223,9 @@ function getTickesWithTitular(){
                         groupBy: $scope.groupby,
                         total: function () { return data.length; }, // length of data
                         getData: function($defer, params) {
+                            var filteredData = $filter('filter')(data, $scope.filter);
                             var orderedData = params.sorting() ?
-                                    $filter('orderBy')(data, $scope.tableParams.orderBy()) :   data;
+                                    $filter('orderBy')(filteredData, $scope.tableParams.orderBy()) :   filteredData;
 
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         }
@@ -33374,7 +33378,31 @@ $scope.updateUser = function(data){
   delete data['documento'];
   delete data['distTiecket'];
   
-  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(data) })
+      var  dataUpdate = {};
+      dataUpdate.id=data.role;
+      dataUpdate.nombre=data.nombred;
+      dataUpdate.apellidos=data.apellidosd;
+      dataUpdate.ciudad=data.ciudadd;
+      dataUpdate.estado=data.estadod;
+      dataUpdate.telefono=data.telefonod;
+      dataUpdate.email=data.emaild;
+      
+      dataUpdate.numBoletos=data.numBoletosd ;
+      dataUpdate.noOrden=data.noOrdend == '' ? 'null':data.noOrdend;
+      dataUpdate.rango=data.rangod;
+      dataUpdate.avanceRango=data.avanceRangod;
+      dataUpdate.motivadorPlatino=data.motivadorPlatinod;
+      dataUpdate.motivadorPlatinoPremier=data.motivadorPlatinoPremierd;
+      dataUpdate.ejecutivo=data.ejecutivod;
+      dataUpdate.chf=data.chfd;
+      dataUpdate.transferencia=data.transferenciad;
+      dataUpdate.accesoEntrenamiento=data.accesoEntrenamientod;
+      dataUpdate.accesoSalaEjecutiva=data.accesoSalaEjecutivad;
+      dataUpdate.observaciones=data.observacionesd;
+
+ 
+  
+  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(dataUpdate) })
   .done(function( data ) {
     //console.log( "Data Loaded: " + data );
   });
@@ -33445,15 +33473,40 @@ $scope.getTickes = function(user){
 }
 
 
-$scope.updateDataTicket = function(data){
+$scope.updateDataTicket = function(data,type){
   
   delete data['$editado'];
   delete data['$$hashKey'];
   
   var idUser = data.idUsuario;
+
+ var dataUpdate = {};
+  if(type == 'ticket'){
+      dataUpdate.folio=data.folio;
+      dataUpdate.nombre=data.nombre;
+      dataUpdate.apellidos=data.apellidos;
+      dataUpdate.ciudad=data.ciudad;
+      dataUpdate.estado=data.estado;
+      dataUpdate.telefono=data.telefono;
+      dataUpdate.email=data.email;
+      dataUpdate.foliom=data.foliom;
+      dataUpdate.noOrden=data.noOrden == '' ? 'null':data.noOrden;
+      dataUpdate.rango=data.rango;
+      dataUpdate.avanceRango=data.avanceRango;
+      dataUpdate.motivadorPlatino=data.motivadorPlatino;
+      dataUpdate.motivadorPlatinoPremier=data.motivadorPlatinoPremier;
+      dataUpdate.ejecutivo=data.ejecutivo;
+      dataUpdate.chf=data.chf;
+      dataUpdate.transferencia=data.transferencia;
+      dataUpdate.accesoEntrenamiento=data.accesoEntrenamiento;
+      dataUpdate.accesoSalaEjecutiva=data.accesoSalaEjecutiva;
+      dataUpdate.observaciones=data.observaciones;
+}
+
+
   
   if(data.folio != null){
-      $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
+      $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(dataUpdate) })
       .done(function( data ) {
         //$scope.validateUertTickets(idUser);
         
@@ -34085,6 +34138,107 @@ $scope.init();
 },{}],9:[function(require,module,exports){
 'use strict';
 var app = angular.module('recordApp');
+
+
+app.directive('myRow', function () {
+     return {
+        restrict : 'A',
+        replace : true,
+        scope : { 
+                  id: '@id',
+                  nombre : '@nombre',
+                  apellidos : '@apellidos',
+                  ciudad: '@ciudad',
+                  estado: '@estado',
+                  telefono: '@telefono',
+                  email: '@email',
+                  noOrden: '@noOrden',
+                  rango: '@rango',
+                  avanceRango: '@avanceRango',
+                  motivadorPlatino: '@motivadorPlatino',
+                  motivadorPlatinoPremier: '@motivadorPlatinoPremier',
+                  ejecutivo: '@ejecutivo',
+                  chf: '@chf',
+                  transferencia: '@transferencia',
+                  accesoEntrenamiento: '@accesoEntrenamiento',
+                  accesoSalaEjecutiva: '@accesoSalaEjecutiva',
+                  observaciones: '@observaciones'   },
+        template : '<tbody> '+
+        '<tr class=" ">'+
+            '<td data-title="\'Nombre\'" sortable="\'nombre\'" filter="{ nombre: \'text\'}">'+
+            '   Nombre:</br><input type="text" name="" value="{{nombre}}" >'+
+            '</td>'+
+            '<td data-title="\'Apellidos\'" sortable="\'apellidos\'" filter="{ apellidos: \'text\'}">'+
+            '    Apellidos:</br><input type="text" name="" value="{{apellidos}}" >    '+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Ciudad\'" sortable="\'ciudad\'" filter="{ ciudad: \'text\'}">'+
+            '    Ciudad:</br><input type="text" name="" value="{{ciudad}}" >'+
+            '</td>'+
+            '<td data-title="\'Estado\'" sortable="\'estado\'" filter="{ estado: \'text\'}">'+
+            '    Estado:</br><input type="text" name="" value="{{estado}}" >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Teléfono\'" sortable="\'telefono\'" filter="{ telefono: \'text\'}">'+
+            '    Teléfono:</br><input type="text" name="" value="{{telefono}}"  >'+
+            '</td>'+
+            '<td data-title="\'E-Mail\'" sortable="\'email\'" filter="{ email: \'text\'}">'+
+            '    E-Mail:</br><input type="text" name="" value="{{email}}" >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Numero orden\'" sortable="\'noOrden\'" filter="{ noOrden: \'text\'}">'+
+            '    Numero orden:</br><input type="text" name="" value="{{noOrden}}"   >'+
+            '</td>'+
+            '<td data-title="\'Rango\'" sortable="\'rango\'" filter="{ rango: \'text\'}">'+
+            '    Rango:</br><input type="text" name="" value="{{rangod}}"   >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Avance de rango\'" sortable="\'avanceRango\'" filter="{ avanceRango: \'text\'}">'+
+            '    Avance de rango:</br><input type="text" name="" value="{{avanceRangod}}"   >'+
+            '</td>'+
+            '<td data-title="\'Motivador platino\'" sortable="\'motivadorPlatino\'" filter="{ motivadorPlatino: \'text\'}">'+
+            '    Motivador platino:</br><input type="text" name="" value="{{motivadorPlatinod}}"   >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Motivador platino premier\'" sortable="\'motivadorPlatinoPremier\'" filter="{ motivadorPlatinoPremier: \'text\'}">'+
+            '    Motivador platino premier:</br><input type="text" name="" value="{{motivadorPlatinoPremierd}}"   >'+
+            '</td>'+
+            '<td data-title="\'Ejecutivo\'" sortable="\'ejecutivo\'" filter="{ ejecutivo: \'text\'}">'+
+            '    Ejecutivo:</br><input type="text" name="" value="{{ejecutivod}}"   >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'CHF\'" sortable="\'chf\'" filter="{ chf: \'text\'}">'+
+            '    CHF:</br><input type="text" name="" value="{{chfd}}"   >'+
+            '</td>'+
+            '<td data-title="\'Transferencia\'" sortable="\'transferencia\'" filter="{ transferencia: \'text\'}">'+
+            '    Transferencia:</br><input type="text" name="" value="{{transferenciad}}"   >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Acceso al entrenamiento\'" sortable="\'accesoEntrenamiento\'" filter="{ accesoEntrenamiento: \'text\'}">'+
+            '    Acceso al entrenamiento:</br><input type="text" name="" value="{{accesoEntrenamientod}}"   >'+
+            '</td>'+
+            '<td data-title="\'Acceso a sala ejecutiva\'" sortable="\'accesoSalaEjecutiva\'" filter="{ accesoSalaEjecutiva: \'text\'}">'+
+            '     Acceso a sala ejecutiva:</br><input type="text" name="" value="{{accesoSalaEjecutivad}}"   >'+
+            '</td>'+
+        '</tr>'+    
+        '<tr class=" ">'+
+            '<td data-title="\'Observaciones\'" sortable="\'observaciones\'" filter="{ observaciones: \'text\'}">'+
+            '    Observaciones:</br><input type="text" name="" value="{{observacionesd}}"   >'+
+            '</td>'+
+            '<td>'+
+            '</td>'+
+
+        '</tr>'+
+        ' </tbody>' 
+     }
+ });
 
  angular.module('ngJsonExportExcel', [])
         .directive('ngJsonExportExcel', function () {

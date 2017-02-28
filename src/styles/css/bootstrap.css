@@ -6854,6 +6854,7 @@ x}
   -moz-box-shadow: 0px 0px 26px 4px rgba(0,0,0,0.15);
   box-shadow: 0px 0px 26px 4px rgba(0,0,0,0.15);
   border: 1px solid #41a8f5;
+  background-color: white;
 }
 .loginBoxHeader{
   background-color: #41a8f5;

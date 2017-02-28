@@ -37,6 +37,9 @@ function getTickesWithTitular(){
 
               $scope.groupby = 'role'; //Default order IF null get table without groups(not possible ?)
 
+                      $scope.$watch("filter.$", function () {
+                      $scope.tableParams.reload();
+                    });
                     //dinamic grouping
                     $scope.tableParams = new NgTableParams({
                         page: 1,            // show first page
@@ -45,8 +48,9 @@ function getTickesWithTitular(){
                         groupBy: $scope.groupby,
                         total: function () { return data.length; }, // length of data
                         getData: function($defer, params) {
+                            var filteredData = $filter('filter')(data, $scope.filter);
                             var orderedData = params.sorting() ?
-                                    $filter('orderBy')(data, $scope.tableParams.orderBy()) :   data;
+                                    $filter('orderBy')(filteredData, $scope.tableParams.orderBy()) :   filteredData;
 
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         }
@@ -199,7 +203,31 @@ $scope.updateUser = function(data){
   delete data['documento'];
   delete data['distTiecket'];
   
-  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(data) })
+      var  dataUpdate = {};
+      dataUpdate.id=data.role;
+      dataUpdate.nombre=data.nombred;
+      dataUpdate.apellidos=data.apellidosd;
+      dataUpdate.ciudad=data.ciudadd;
+      dataUpdate.estado=data.estadod;
+      dataUpdate.telefono=data.telefonod;
+      dataUpdate.email=data.emaild;
+      
+      dataUpdate.numBoletos=data.numBoletosd ;
+      dataUpdate.noOrden=data.noOrdend == '' ? 'null':data.noOrdend;
+      dataUpdate.rango=data.rangod;
+      dataUpdate.avanceRango=data.avanceRangod;
+      dataUpdate.motivadorPlatino=data.motivadorPlatinod;
+      dataUpdate.motivadorPlatinoPremier=data.motivadorPlatinoPremierd;
+      dataUpdate.ejecutivo=data.ejecutivod;
+      dataUpdate.chf=data.chfd;
+      dataUpdate.transferencia=data.transferenciad;
+      dataUpdate.accesoEntrenamiento=data.accesoEntrenamientod;
+      dataUpdate.accesoSalaEjecutiva=data.accesoSalaEjecutivad;
+      dataUpdate.observaciones=data.observacionesd;
+
+ 
+  
+  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(dataUpdate) })
   .done(function( data ) {
     //console.log( "Data Loaded: " + data );
   });
@@ -270,15 +298,40 @@ $scope.getTickes = function(user){
 }
 
 
-$scope.updateDataTicket = function(data){
+$scope.updateDataTicket = function(data,type){
   
   delete data['$editado'];
   delete data['$$hashKey'];
   
   var idUser = data.idUsuario;
+
+ var dataUpdate = {};
+  if(type == 'ticket'){
+      dataUpdate.folio=data.folio;
+      dataUpdate.nombre=data.nombre;
+      dataUpdate.apellidos=data.apellidos;
+      dataUpdate.ciudad=data.ciudad;
+      dataUpdate.estado=data.estado;
+      dataUpdate.telefono=data.telefono;
+      dataUpdate.email=data.email;
+      dataUpdate.foliom=data.foliom;
+      dataUpdate.noOrden=data.noOrden == '' ? 'null':data.noOrden;
+      dataUpdate.rango=data.rango;
+      dataUpdate.avanceRango=data.avanceRango;
+      dataUpdate.motivadorPlatino=data.motivadorPlatino;
+      dataUpdate.motivadorPlatinoPremier=data.motivadorPlatinoPremier;
+      dataUpdate.ejecutivo=data.ejecutivo;
+      dataUpdate.chf=data.chf;
+      dataUpdate.transferencia=data.transferencia;
+      dataUpdate.accesoEntrenamiento=data.accesoEntrenamiento;
+      dataUpdate.accesoSalaEjecutiva=data.accesoSalaEjecutiva;
+      dataUpdate.observaciones=data.observaciones;
+}
+
+
   
   if(data.folio != null){
-      $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(data) })
+      $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(dataUpdate) })
       .done(function( data ) {
         //$scope.validateUertTickets(idUser);
         
