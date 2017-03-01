@@ -188,7 +188,7 @@ $scope.showImage = function(data,userTicket){
   $scope.pathImage = 'uploads/'+ data;
   
   /*var idUser = userTicket.idUsuario;
-  $.post( "http://celebrausana.com/dev/celebra-back/updateEstatus", { idUsuario: idUser })
+  $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
     .done(function( datos ) {
       $("#squareCount"+idUser).css("background-color","green");
         //console.log( "Update Estatus" + datos );
@@ -231,7 +231,7 @@ $scope.updateUser = function(data){
 
  
   
-  $.post( sessionStorage.path+"/dev/celebra-back/updateUser", { parameters: JSON.stringify(dataUpdate) })
+  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(dataUpdate) })
   .done(function( data ) {
     //console.log( "Data Loaded: " + data );
   });
@@ -244,7 +244,7 @@ $scope.getTickes = function(user){
   $scope.user = user.id
     
     $.ajax({
-      url: sessionStorage.path+"/dev/celebra-back/getTickes",
+      url: sessionStorage.path+"/celebra-back/getTickes",
           method: "GET",
           data: { idUsuario: $scope.user},
            async: false,
@@ -335,11 +335,11 @@ $scope.updateDataTicket = function(data,type){
 
   
   if(data.folio != null){
-      $.post( sessionStorage.path+"/dev/celebra-back/updateTicket", { parameters: JSON.stringify(dataUpdate) })
+      $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(dataUpdate) })
       .done(function( data ) {
         //$scope.validateUertTickets(idUser);
         
-        $.post( sessionStorage.path+"/dev/celebra-back/updateEstatus", { idUsuario: idUser })
+        $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
           .done(function( datos ) {
             $("#squareCount"+idUser).css("background-color","green");
           
@@ -374,7 +374,7 @@ $scope.saveTicket = function(){
   //console.log(param);
 
   $.ajax({
-        url: sessionStorage.path+"/dev/celebra-back/newTicket",
+        url: sessionStorage.path+"/celebra-back/newTicket",
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
@@ -405,7 +405,7 @@ param.numBoletos =$scope.numBoletos;
 
   $('#btnSaveTicket').attr('disabled', true);
   $.ajax({
-        url: sessionStorage.path+"/dev/celebra-back/insertTitular",
+        url: sessionStorage.path+"/celebra-back/insertTitular",
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
@@ -443,12 +443,12 @@ $scope.clearFieldsTitual = function(){
 
 $scope.validateUertTickets = function(idUsuario){
     $.ajax({
-          url: sessionStorage.path+"/dev/celebra-back/getSellingByIdUsuario",
+          url: sessionStorage.path+"/celebra-back/getSellingByIdUsuario",
           type: "get",
           data: { idUsuario:idUsuario} ,
           success: function (data) {
               $.ajax({
-                    url: sessionStorage.path+"/dev/celebra-back/getTicketValidateByIdUser",
+                    url: sessionStorage.path+"/celebra-back/getTicketValidateByIdUser",
                     type: "get",
                     data: { idUsuario:idUsuario} ,
                     success: function (information) {
@@ -479,7 +479,7 @@ $scope.validateUertTickets = function(idUsuario){
 $scope.deleteDataTicket = function(data){
   
   var folio = data.folio;
-    $.post( sessionStorage.path+"/dev/celebra-back/deleteDataTicket", { folio: folio })
+    $.post( sessionStorage.path+"/celebra-back/deleteDataTicket", { folio: folio })
       .done(function( datos ) {
 //        $("#squareCount"+idUser).css("background-color","green");
           //console.log( "Update Estatus" + datos );
@@ -513,7 +513,7 @@ $scope.deleteTitutlar = function(idUsuario){
 
   //console.log('borrar'+$scope.idTitularDelete);
    $.ajax({
-      url: sessionStorage.path+"/dev/celebra-back/deleteTitular",
+      url: sessionStorage.path+"/celebra-back/deleteTitular",
       type: "post",
       data: { idUsuario:$scope.idTitularDelete} ,
                     success: function (information) {
