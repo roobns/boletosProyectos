@@ -158,7 +158,12 @@
                         </td>
 
                         <td data-title="'Acciones'" >
-                            <a ng-if="!group.$edit" href="" class="btn btn-default btn-xs" ng-click="group.$edit = true">Edita titular</a>
+                            <a  ng-if="(group.data[0].numBoletosd === group.data[0].vendidos)" href="" class="btn btn-default btn-xs" ng-disabled="group.data[0].numBoletosd === group.data[0].vendidos"  >Asigna Boleto</a>
+
+                            <a  href="" class="btn btn-default btn-xs" ng-if="!(group.data[0].numBoletosd === group.data[0].vendidos)" ng-click="putIdTitular(group.data[0].role) " data-toggle="modal" data-target="#myModalAsigna">Asigna Boleto</a>
+
+                            <a ng-if="!group.$edit" href="" class="btn btn-default btn-xs" ng-click="group.$edit = true;">Edita titular</a>
+
                             <a ng-if="group.$edit" href="" class="btn btn-primary btn-xs" ng-click="group.$edit = false;updateUser(group.data[0]);">Guarda</a>
                             <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar titular</a>
                             
@@ -242,16 +247,17 @@
                         <td data-title="'Observaciones'" sortable="'observaciones'" filter="{ observaciones: 'text'}">
                             <span   class=""  ng-if="!user.$edit">{{user.observaciones}}</span>
                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.observaciones" /></div>
-                        </td>
-                        <td>
-                            <img    ng-show="userTicket.imagen != ''" src="img/img_234415_1.jpg" ng-click="showImage(userTicket.imagen,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
-                        </td>
 
-                                    <td data-title="'Acciones'" >
+                        </td>
+                        
+                        <td data-title="'Acciones'" >
+                            <img    ng-show="userTicket.imagen != ''" src="img/img_234415_1.jpg" ng-click="showImage(userTicket.imagen,userTicket);" role="button"  data-toggle="modal" data-target="#myModalImage" style="width: 30px;height: 20px">
+                            <img    ng-show="userTicket.imagen != ''" src="img/img_234415_2.jpg" ng-click="showImage(userTicket.imagen,userTicket);" role="button"  data-toggle="modal" data-target="#myModalImage" style="width: 30px;height: 20px">
+
                                         <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita</a>
                                         <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar</a>
                                         <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateDataTicket(user,'ticket');">Guarda</a>
-                                    </td>
+                        </td>
                                 </tr>
                     </tbody>
                 </table>
@@ -539,6 +545,107 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal Asignar Boleto-->
+<div class="modal fade" id="myModalAsigna" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAsigna">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabelAsigna">Asignar boleto</h4>
+      </div>
+
+      <form id="userForm" name="userForm" action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="folio" value="{{folio}}" ng-model="folio">
+        <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input ng-disabled="showUploadFile" required type="text" class="form-control" id="nombre" placeholder="Nombre" ng-model="nombre">
+                        </div>
+                        </div>
+                  <div class="col-md-6 ">
+                      <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input ng-disabled="showUploadFile" required type="text" class="form-control" id="apellidos" placeholder="Apellidos" ng-model="apellidos">
+                      </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="ciudad">Ciudad</label>
+                            <input ng-disabled="showUploadFile" required type="text" class="form-control" id="ciudad" placeholder="Ciudad" ng-model="ciudad">
+                          </div>
+                    </div>
+                  <div class="col-md-6 ">
+                      <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <input ng-disabled="showUploadFile" required type="text" class="form-control" id="estado" placeholder="Estado" ng-model="estado">
+                      </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="telefono">Telefono</label>
+                            <input ng-disabled="showUploadFile" required type="text" class="form-control" id="telefono" placeholder="Telefono" ng-model="telefono">
+                          </div>
+                    </div>
+                  <div class="col-md-6 ">
+                      <div class="form-group">
+                        <label for="email">Email address</label>
+                        
+                        <div class="form-group" ng-class="{ 'has-error': userForm.email.$invalid }" >
+                          <input ng-disabled="showUploadFile" type="email" class="form-control" name="email"   ng-model="email" required />
+                        </div>
+
+                      </div>
+                </div>
+              </div> 
+
+              <div class="row">
+                  <div class="col-md-6 ">
+                        <div class="form-group">
+                            <label for="foliom">id</label>
+                            <input  ng-disabled="showUploadFile" required type="text" class="form-control" id="foliom" placeholder="Id" 
+                            ng-model="foliom">
+                            <h6>Si no cuentas con id por favor coloca "Invitado"</h6>
+                          </div>
+                    </div>
+                
+              </div> 
+
+
+
+                
+              
+
+              <div class="form-group">
+                <div id="alertSell" class="alert alert-success" style="display: none;" role="alert">Boleto asignado</div>
+              </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="limpiar();" data-dismiss="modal" >Cerrar</button>
+        <button type="button" id="btnSaveTicket" class="btn btn-primary" ng-click="saveTicket();" ng-disabled="userForm.$invalid"  ng-show="!showUploadFile">Guardar</button
+        >
+        
+      </div>
+</form>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 <!-- Editar Titual or Boleto-->

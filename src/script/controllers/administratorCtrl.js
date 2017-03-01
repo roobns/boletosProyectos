@@ -2,6 +2,7 @@
 
 module.exports = function($scope, $filter, dataServices, callRestFactory, errorMessageHandler, NgTableParams,$rootScope) {
 
+$scope.idTitular;
 
 $scope.init = function(){
 
@@ -13,55 +14,25 @@ $scope.init = function(){
     $scope.isEnabledDownload = false;
     //getTitulares();
     getTickesWithTitular();
-
- 
-
-                    
-
-
-
 };
+
+$scope.putIdTitular = function(data){
+  $scope.idTitular = data;
+}
 
 
 function getTickesWithTitular(){
+  var data;
+  /*if(sessionStorage.dataTable){
+    fillTable(JSON.parse(sessionStorage.dataTable));
+    return;
+  }*/
   callRestFactory.get(dataServices.pathGet('getTickesWithTitular', []))
             .then(function (rows) {
               console.log(rows.data);
-              var data = rows.data;
-
-              
-
-              //*******************************
-
-
-
-              $scope.groupby = 'role'; //Default order IF null get table without groups(not possible ?)
-
-                      $scope.$watch("filter.$", function () {
-                      $scope.tableParams.reload();
-                    });
-                    //dinamic grouping
-                    $scope.tableParams = new NgTableParams({
-                        page: 1,            // show first page
-                        count: 5          // count per page
-                    }, {
-                        groupBy: $scope.groupby,
-                        total: function () { return data.length; }, // length of data
-                        getData: function($defer, params) {
-                            var filteredData = $filter('filter')(data, $scope.filter);
-                            var orderedData = params.sorting() ?
-                                    $filter('orderBy')(filteredData, $scope.tableParams.orderBy()) :   filteredData;
-
-                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                        }
-                    });
-                     $scope.$watch('groupby', function(value){
-                        $scope.tableParams.settings().groupBy = 'role';
-                        console.log('Scope Value', $scope.groupby);
-                        //console.log('Watch value', this.last);
-                        //console.log('new table',$scope.tableParams);
-                        $scope.tableParams.reload();
-                    });
+               data = rows.data;
+               //sessionStorage.dataTable = JSON.stringify(data);
+               fillTable(data)
 
             })
             .catch(function () {
@@ -70,6 +41,39 @@ function getTickesWithTitular(){
 
 }
 
+
+function fillTable(data){
+
+
+
+              $scope.groupby = 'role'; //Default order IF null get table without groups(not possible ?)
+
+              $scope.$watch("filter.$", function () {
+                  $scope.tableParams.reload();
+              });
+                    //dinamic grouping
+              $scope.tableParams = new NgTableParams({
+                  page: 1,            // show first page
+                  count: 5          // count per page
+              }, {
+                  groupBy: $scope.groupby,
+                  total: function () { return data.length; }, // length of data
+                  getData: function($defer, params) {
+                    var filteredData = $filter('filter')(data, $scope.filter);
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, $scope.tableParams.orderBy()) :   filteredData;
+
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                  }
+              });
+              $scope.$watch('groupby', function(value){
+                $scope.tableParams.settings().groupBy = 'role';
+                console.log('Scope Value', $scope.groupby);
+                //console.log('Watch value', this.last);
+                //console.log('new table',$scope.tableParams);
+                $scope.tableParams.reload();
+              });
+}
 
  function getTitulares(){
   callRestFactory.get(dataServices.pathGet('getUsers', []))
@@ -184,7 +188,7 @@ $scope.showImage = function(data,userTicket){
   $scope.pathImage = 'uploads/'+ data;
   
   /*var idUser = userTicket.idUsuario;
-  $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
+  $.post( "http://celebrausana.com/dev/celebra-back/updateEstatus", { idUsuario: idUser })
     .done(function( datos ) {
       $("#squareCount"+idUser).css("background-color","green");
         //console.log( "Update Estatus" + datos );
@@ -227,7 +231,7 @@ $scope.updateUser = function(data){
 
  
   
-  $.post( sessionStorage.path+"/celebra-back/updateUser", { parameters: JSON.stringify(dataUpdate) })
+  $.post( sessionStorage.path+"/dev/celebra-back/updateUser", { parameters: JSON.stringify(dataUpdate) })
   .done(function( data ) {
     //console.log( "Data Loaded: " + data );
   });
@@ -240,7 +244,7 @@ $scope.getTickes = function(user){
   $scope.user = user.id
     
     $.ajax({
-      url: sessionStorage.path+"/celebra-back/getTickes",
+      url: sessionStorage.path+"/dev/celebra-back/getTickes",
           method: "GET",
           data: { idUsuario: $scope.user},
            async: false,
@@ -331,11 +335,11 @@ $scope.updateDataTicket = function(data,type){
 
   
   if(data.folio != null){
-      $.post( sessionStorage.path+"/celebra-back/updateTicket", { parameters: JSON.stringify(dataUpdate) })
+      $.post( sessionStorage.path+"/dev/celebra-back/updateTicket", { parameters: JSON.stringify(dataUpdate) })
       .done(function( data ) {
         //$scope.validateUertTickets(idUser);
         
-        $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
+        $.post( sessionStorage.path+"/dev/celebra-back/updateEstatus", { idUsuario: idUser })
           .done(function( datos ) {
             $("#squareCount"+idUser).css("background-color","green");
           
@@ -354,28 +358,28 @@ $scope.updateDataTicket = function(data,type){
 
 
 
-$scope.saveTicket = function(userTicket){
-  
+$scope.saveTicket = function(){
+
   var param = {};
-  param.nombre = userTicket.nombre;
-  param.apellidos = userTicket.apellidos;
-  param.ciudad = userTicket.ciudad;
-  param.estado = userTicket.estado;
-  param.telefono = userTicket.telefono;
-  param.email = userTicket.email;
-  param.idUsuario = userTicket.idUsuario;
-  param.foliom = userTicket.foliom;
+  param.nombre = $scope.nombre;
+  param.apellidos = $scope.apellidos;
+  param.ciudad = $scope.ciudad;
+  param.estado = $scope.estado;
+  param.telefono = $scope.telefono;
+  param.email = $scope.email;
+  param.idUsuario =$scope.idTitular;
+  param.foliom = $scope .foliom;
   param.imagen = "NULL";
   param.imagen2 = "NULL";
   //console.log(param);
 
   $.ajax({
-        url: sessionStorage.path+"/celebra-back/newTicket",
+        url: sessionStorage.path+"/dev/celebra-back/newTicket",
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
             
-              $scope.validateUertTickets(userTicket.idUsuario);
+             // $scope.validateUertTickets(userTicket.idUsuario);
 
           
       },
@@ -401,7 +405,7 @@ param.numBoletos =$scope.numBoletos;
 
   $('#btnSaveTicket').attr('disabled', true);
   $.ajax({
-        url: sessionStorage.path+"/celebra-back/insertTitular",
+        url: sessionStorage.path+"/dev/celebra-back/insertTitular",
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
@@ -439,12 +443,12 @@ $scope.clearFieldsTitual = function(){
 
 $scope.validateUertTickets = function(idUsuario){
     $.ajax({
-          url: sessionStorage.path+"/celebra-back/getSellingByIdUsuario",
+          url: sessionStorage.path+"/dev/celebra-back/getSellingByIdUsuario",
           type: "get",
           data: { idUsuario:idUsuario} ,
           success: function (data) {
               $.ajax({
-                    url: sessionStorage.path+"/celebra-back/getTicketValidateByIdUser",
+                    url: sessionStorage.path+"/dev/celebra-back/getTicketValidateByIdUser",
                     type: "get",
                     data: { idUsuario:idUsuario} ,
                     success: function (information) {
@@ -475,7 +479,7 @@ $scope.validateUertTickets = function(idUsuario){
 $scope.deleteDataTicket = function(data){
   
   var folio = data.folio;
-    $.post( sessionStorage.path+"/celebra-back/deleteDataTicket", { folio: folio })
+    $.post( sessionStorage.path+"/dev/celebra-back/deleteDataTicket", { folio: folio })
       .done(function( datos ) {
 //        $("#squareCount"+idUser).css("background-color","green");
           //console.log( "Update Estatus" + datos );
@@ -509,7 +513,7 @@ $scope.deleteTitutlar = function(idUsuario){
 
   //console.log('borrar'+$scope.idTitularDelete);
    $.ajax({
-      url: sessionStorage.path+"/celebra-back/deleteTitular",
+      url: sessionStorage.path+"/dev/celebra-back/deleteTitular",
       type: "post",
       data: { idUsuario:$scope.idTitularDelete} ,
                     success: function (information) {

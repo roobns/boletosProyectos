@@ -3,27 +3,27 @@ module.exports = function () {
     var serverPath = "";
     var services = {
         getTickes: {
-            getPath: "celebra-back/getTickes"
+            getPath: "dev/celebra-back/getTickes"
         },updateEstatus: {
-            getPath: "celebra-back/updateEstatus"
+            getPath: "dev/celebra-back/updateEstatus"
         },getUsers: {
-            getPath: "celebra-back/getUsers"
+            getPath: "dev/celebra-back/getUsers"
         },getWrongUser: {
-            getPath: "celebra-back/getWrongUser"
+            getPath: "dev/celebra-back/getWrongUser"
         },getSelling: {
-            getPath: "celebra-back/getSelling"
+            getPath: "dev/celebra-back/getSelling"
         },sendMail: {
-            getPath: "celebra-back/sendMail"
+            getPath: "dev/celebra-back/sendMail"
         },getTicketValidate: {
-            getPath: "celebra-back/getTicketValidate"
+            getPath: "dev/celebra-back/getTicketValidate"
         },login: {
-            getPath: "celebra-back/login"
+            getPath: "dev/celebra-back/login"
         },updateUser: {
-            getPath: "celebra-back/updateUser"
+            getPath: "dev/celebra-back/updateUser"
         },getDataReport: {
-            getPath: "celebra-back/getDataReport"
+            getPath: "dev/celebra-back/getDataReport"
         },getTickesWithTitular: {
-            getPath: "celebra-back/getTickesWithTitular"
+            getPath: "dev/celebra-back/getTickesWithTitular"
         }
         
 
