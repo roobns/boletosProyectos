@@ -16,6 +16,18 @@ $scope.init = function(){
     getTickesWithTitular();
 };
 
+$(document).ready(function(){
+    $(".arrow-left").click(function(){
+        console.log("leff");
+        $(".table-responsive").animate({scrollLeft: "-="+400});
+    });
+    $(".arrow-right").click(function(){
+      console.log("right");
+        $(".table-responsive").animate({scrollLeft: "+="+400});
+    });        
+});
+
+
 $scope.putIdTitular = function(data){
   $scope.idTitular = data;
 }
@@ -29,8 +41,7 @@ function getTickesWithTitular(){
   }*/
   callRestFactory.get(dataServices.pathGet('getTickesWithTitular', []))
             .then(function (rows) {
-              console.log(rows.data);
-               data = rows.data;
+              data = rows.data;
                //sessionStorage.dataTable = JSON.stringify(data);
                fillTable(data)
 
@@ -54,7 +65,7 @@ function fillTable(data){
                     //dinamic grouping
               $scope.tableParams = new NgTableParams({
                   page: 1,            // show first page
-                  count: 5          // count per page
+                  count: 10          // count per page
               }, {
                   groupBy: $scope.groupby,
                   total: function () { return data.length; }, // length of data
@@ -186,13 +197,13 @@ $rootScope.logout = function(){
 $scope.showImage = function(data,userTicket){
 
   $scope.pathImage = 'uploads/'+ data;
-  
-  /*var idUser = userTicket.idUsuario;
-  $.post( "http://celebrausana.com/celebra-back/updateEstatus", { idUsuario: idUser })
+  var idUser = userTicket.idUsuario;
+  //cambiamos el estatus para validar que ya se vio la imagen y descargo
+  $.post( sessionStorage.path+"/celebra-back/updateEstatus", { idUsuario: idUser })
     .done(function( datos ) {
       $("#squareCount"+idUser).css("background-color","green");
         //console.log( "Update Estatus" + datos );
-  });*/
+  });
   
 }
 
@@ -330,6 +341,7 @@ $scope.updateDataTicket = function(data,type){
       dataUpdate.accesoEntrenamiento=data.accesoEntrenamiento;
       dataUpdate.accesoSalaEjecutiva=data.accesoSalaEjecutiva;
       dataUpdate.observaciones=data.observaciones;
+      dataUpdate.color=data.color;
 }
 
 
@@ -356,7 +368,10 @@ $scope.updateDataTicket = function(data,type){
 
 };
 
+$scope.showDataTickets= function(gr){
+  gr.$hideRows = !gr.$hideRows
 
+}
 
 $scope.saveTicket = function(){
 
@@ -378,20 +393,24 @@ $scope.saveTicket = function(){
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
-            
-             // $scope.validateUertTickets(userTicket.idUsuario);
 
-          
+          $scope.msgToast ="El boleto se asigno correctamente!";
+          $('#myModalAsigna').modal('hide');
+          $scope.functionToast();
+          getTickesWithTitular();
+          clearFieldsTitual();
       },
         error: function(jqXHR, textStatus, errorThrown) {
           //console.log("Error saveTicket");
-        }
+      }
   });
   
 };
 
 
 $scope.saveTitutlar = function(){
+
+
 var param = {};
 param.id =$scope.id;
 param.nombre =$scope.nombre;
@@ -409,7 +428,7 @@ param.numBoletos =$scope.numBoletos;
         type: "post",
         data: { parameters: JSON.stringify(param) } ,
         success: function (data) {
-           getTitulares(); 
+           getTickesWithTitular();
            //console.log(data); 
           $('#myModalTitular').modal('hide');
        
@@ -424,10 +443,10 @@ param.numBoletos =$scope.numBoletos;
 
 
     });
-    $scope.clearFieldsTitual();
+    clearFieldsTitual();
 };
 
-$scope.clearFieldsTitual = function(){
+ function clearFieldsTitual () {
     $scope.id ="";
     $scope.nombre ="";
     $scope.apellidos =""; 
@@ -437,6 +456,7 @@ $scope.clearFieldsTitual = function(){
     $scope.email ="";
     $scope.noOrden =""; 
     $scope.numBoletos ="";
+    $scope.foliom = "";
 
 };
 
@@ -476,31 +496,20 @@ $scope.validateUertTickets = function(idUsuario){
 
 
 
-$scope.deleteDataTicket = function(data){
+$scope.selectTiecketDelete = function(data){
+  $scope.idTicketDelete = data;
+};
+
+
+$scope.deleteDataTicket = function(){
   
-  var folio = data.folio;
-    $.post( sessionStorage.path+"/celebra-back/deleteDataTicket", { folio: folio })
+    
+    $.post( sessionStorage.path+"/celebra-back/deleteDataTicket", { folio: $scope.idTicketDelete})
       .done(function( datos ) {
-//        $("#squareCount"+idUser).css("background-color","green");
-          //console.log( "Update Estatus" + datos );
-          $scope.getTickes (data.idUsuario);
-          var x=0;
-           $("#tr_"+data.folio+" td").each(function(a){
-              if(x<=8)
-                $(this).html("");
-              x=x+1;
-          });
-
-           
-          $('#tr_'+data.folio).removeClass("success").addClass("danger");
-
-           $scope.validateUertTickets(data.idUsuario);
-
-
-      });
+        $('#myModalConfirmarDeleteTicket').modal('hide');
+        getTickesWithTitular();
+    });
   
-
-
 };
 
 
@@ -517,12 +526,8 @@ $scope.deleteTitutlar = function(idUsuario){
       type: "post",
       data: { idUsuario:$scope.idTitularDelete} ,
                     success: function (information) {
-                        //console.log(information);
-                        $('#myModalTitular').modal('hide');
-                        $('#myModalConfirmar').modal('hide');
-                        
-                        getTitulares();
-                          
+                      $('#myModalConfirmar').modal('hide');
+                      getTickesWithTitular();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         //console.log("Error saveTicket");
@@ -531,6 +536,11 @@ $scope.deleteTitutlar = function(idUsuario){
 };
 
 
+$scope.functionToast = function() {
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
 
 
 

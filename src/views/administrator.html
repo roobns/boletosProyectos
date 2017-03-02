@@ -1,3 +1,6 @@
+
+
+
 <div class="row" style="max-width:1200px; margin:0 auto;">
 
   <div class="col-md-12">
@@ -49,16 +52,32 @@
                
   
                 <br>
+                
+                <span class='arrow-left glyphicon glyphicon-chevron-left gi-2x'></span>
+                <span class='arrow-right glyphicon glyphicon-chevron-right gi-2x'></span>
               <div class="table-responsive">
               <p>Busqueda: <input class="" type="text" ng-model="filter.$" /></p>
                <table ng-table="tableParams" class="table" >
                     <tbody ng-repeat="group in $groups"  ng-init="group.$hideRows = true">
-                    <tr class="ng-table-group success">
+                    <tr class="ng-table-group success"  ng-dblClick="showDataTickets(group)">
                         <td >
-                            <a href="" ng-click="group.$hideRows = !group.$hideRows">
-                                <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
-                                <strong>{{ group.value }}</strong>
-                            </a>
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                                        <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                                        
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                                
+                                        <strong>{{ group.value }}</strong>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                            
+                             
                         </td>
                        
                         <td data-title="'Nombre'" sortable="'nombre'" filter="{ nombre: 'text'}">
@@ -90,7 +109,7 @@
                              <div ng-if="group.$edit"><input class="form-control" type="text" ng-model="group.data[0].noOrdend" /></div>
                         </td>
                         <td data-title="'#'" sortable="'numBoletos'" filter="{ numBoletos: 'text'}">
-                            --{{group.data[0].estatusd }}**
+                            
                             <div id="squareCount{{group.data[0].idUsuario}}" ng-if="!group.$edit" class="row pull-right" 
                             style="{{group.data[0].estatusd == 1 ? 'max-width:100px;background-color: green;margin-right:5px;': (group.data[0].numBoletosd === group.data[0].vendidos && group.data[0].imagen =='') ? 'max-width:100px;background-color: green;margin-right:5px;':'max-width:100px;background-color: red;margin-right:5px;'}}">
                                 <div class="col-md12 col-xs-12 col-sm-12 text-center" >
@@ -158,6 +177,10 @@
                             <span   class=""  ng-if="!group.$edit">{{group.data[0].observacionesd}}</span>
                              <div ng-if="group.$edit"><input class="form-control" type="text" ng-model="group.data[0].observacionesd" /></div>
                         </td>
+                        <td data-title="'Color'" sortable="'color'" filter="{ color: 'text'}">
+                            <span   class=""  ng-if="!group.$edit"></span>
+                             
+                        </td>
 
                         <td data-title="'Acciones'" >
                             <a  ng-if="(group.data[0].numBoletosd === group.data[0].vendidos)" href="" class="btn btn-default btn-xs" ng-disabled="group.data[0].numBoletosd === group.data[0].vendidos"  >Asigna Boleto</a>
@@ -167,7 +190,7 @@
                             <a ng-if="!group.$edit" href="" class="btn btn-default btn-xs" ng-click="group.$edit = true;">Edita titular</a>
 
                             <a ng-if="group.$edit" href="" class="btn btn-primary btn-xs" ng-click="group.$edit = false;updateUser(group.data[0]);">Guarda</a>
-                            <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar titular</a>
+                            <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(group.data[0].role);">Borrar titular</a>
                             
                             
                         </td>
@@ -176,6 +199,7 @@
                    <tr  ng-hide="group.$hideRows" ng-repeat="user  in group.data"  >
                         <td data-title="'Id'"    sortable="'id'" filter="{ id: 'text'}">
                             <span class=""   ng-if="!user.$edit">{{user.foliom}}</span>
+
                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.foliom"  /></div>
                         </td>
                         <td data-title="'Nombre'" sortable="'nombre'" filter="{ nombre: 'text'}">
@@ -251,15 +275,18 @@
                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.observaciones" /></div>
 
                         </td>
+                        <td data-title="'Color'" sortable="'color'" filter="{ color: 'text'}">
+                            <span   class=""  ng-if="!user.$edit">{{user.color}}</span>
+                             <div ng-if="user.$edit"><input class="form-control" type="text" ng-model="user.color" /></div>
+                        </td>
                         
                         <td data-title="'Acciones'" >
-                        {{user.imagen}}---***
-                            <img    ng-show="userTicket.imagen != ''" src="img/{{user.imagen}}" ng-click="showImage(user.imagen,user);" role="button"  data-toggle="modal" data-target="#myModalImage" style="width: 30px;height: 20px">
-                            <img    ng-show="userTicket.imagen != ''" src="img/{{user.imagen2}}" ng-click="showImage(user.imagen2,user);" role="button"  data-toggle="modal" data-target="#myModalImage" style="width: 30px;height: 20px">
+                            <img    ng-if="user.imagen!=''" class="img-thumbnail" ng-src="uploads/{{user.imagen}}" ng-click="showImage(user.imagen,user);" role="button"  data-toggle="modal" data-target="#myModalImage" style="width: 30px;height: 20px">
+                            <img    ng-if="user.imagen2!=''" class="img-thumbnail" ng-src="uploads/{{user.imagen2}}" ng-click="showImage(user.imagen2,user);" role="button"  data-toggle="modal" data-target="#myModalImage" style="width: 30px;height: 20px">
 
-                                        <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita</a>
-                                        <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmar" ng-click="selecTitular(user.id);">Borrar</a>
-                                        <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateDataTicket(user,'ticket');">Guarda</a>
+                            <a ng-if="!user.$edit" href="" class="btn btn-default btn-xs" ng-click="user.$edit = true">Edita</a>
+                            <a  href="" class="btn btn-default btn-xs"  role="button"  data-toggle="modal" data-target="#myModalConfirmarDeleteTicket" ng-click="selectTiecketDelete(user.folio);">Borrar</a>
+                            <a ng-if="user.$edit" href="" class="btn btn-primary btn-xs" ng-click="user.$edit = false;updateDataTicket(user,'ticket');">Guarda</a>
                         </td>
                                 </tr>
                     </tbody>
@@ -376,25 +403,7 @@
                              <div ng-if="userTicket.$editado"><input class="form-control" type="text" ng-model="userTicket.observaciones" /></div>
                         </td>
 
-
-
-                         
-                      
-
-
-                        <td data-title="'Documento 1'">
-                            <!--img src="img/logo.jpg" ng-click="showImage('img/logo.jpg')" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage"-->
-                            <img    ng-show="userTicket.imagen != ''" src="uploads/{{userTicket.imagen}}" ng-click="showImage(userTicket.imagen,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
-                            
-                        </td>
-                        <td data-title="'Documento 2'">
-                            <!--img src="img/logo.jpg" width="10" height="10"-->
-                            <img ng-show="userTicket.imagen2 != ''" src="uploads/{{userTicket.imagen2}}" ng-click="showImage(userTicket.imagen2,userTicket);" width="10" height="10" role="button"  data-toggle="modal" data-target="#myModalImage">
-                        </td>
-
-                      
-
-                         <td data-title="'Acciones'" >
+                        <td data-title="'Acciones'" >
                             
                             <a ng-if="!userTicket.$editado" href="" class="btn btn-default btn-xs" ng-click="userTicket.$editado = true">Edita Boleto</a>
                             
@@ -402,9 +411,6 @@
                             
                             <a ng-if="userTicket.$editado" href="" class="btn btn-primary btn-xs" ng-click="userTicket.$editado = 
                             false;updateDataTicket(userTicket);">Actualiza</a>
-
-                            
-
                         </td>
                     </tr>
                 </table>
@@ -426,7 +432,7 @@
           </div>
           <div class="table-responsive">
 
-            <img src="{{pathImage}}" >
+            <img ng-src="{{pathImage}}" >
             <br>
             <a href="{{pathImage}}"  download="documento.png">descarga</a>
           </div>
@@ -434,7 +440,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Agrega titular-->
 <div class="modal fade"  id="myModalTitular" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -477,7 +483,42 @@
                                <div class="col-md-6 ">
                                     <div class="form-group">
                                         <label for="estado">Estado</label>
-                                        <input  required type="text" class="form-control" id="estado" placeholder="Estado" ng-model="estado">
+                                        <!--input  required type="text" class="form-control" id="estado" placeholder="Estado" ng-model="estado"-->
+                                        <select name="estado" ng-model="estado" required  class="form-control">
+                                          <option value="no">Seleccione el estado</option>
+                                          <option value="Aguascalientes">Aguascalientes</option>
+                                          <option value="Baja California">Baja California</option>
+                                          <option value="Baja California Sur">Baja California Sur</option>
+                                          <option value="Campeche">Campeche</option>
+                                          <option value="Chiapas">Chiapas</option>
+                                          <option value="Chihuahua">Chihuahua</option>
+                                          <option value="Coahuila">Coahuila</option>
+                                          <option value="Colima">Colima</option>
+                                          <option value="Ciudad de México">Ciudad de México</option>
+                                          <option value="Durango">Durango</option>
+                                          <option value="Estado de México">Estado de México</option>
+                                          <option value="Guanajuato">Guanajuato</option>
+                                          <option value="Guerrero">Guerrero</option>
+                                          <option value="Hidalgo">Hidalgo</option>
+                                          <option value="Jalisco">Jalisco</option>
+                                          <option value="Michoacán">Michoacán</option>
+                                          <option value="Morelos">Morelos</option>
+                                          <option value="Nayarit">Nayarit</option>
+                                          <option value="Nuevo León">Nuevo León</option>
+                                          <option value="Oaxaca">Oaxaca</option>
+                                          <option value="Puebla">Puebla</option>
+                                          <option value="Querétaro">Querétaro</option>
+                                          <option value="Quintana Roo">Quintana Roo</option>
+                                          <option value="San Luis Potosí">San Luis Potosí</option>
+                                          <option value="Sinaloa">Sinaloa</option>
+                                          <option value="Sonora">Sonora</option>
+                                          <option value="Tabasco">Tabasco</option>
+                                          <option value="Tamaulipas">Tamaulipas</option>
+                                          <option value="Tlaxcala">Tlaxcala</option>
+                                          <option value="Veracruz">Veracruz</option>
+                                          <option value="Yucatán">Yucatán</option>
+                                          <option value="Zacatecas">Zacatecas</option>
+                                      </select>
                                     </div>
                                 </div>
                               <div class="col-md-6 ">
@@ -548,6 +589,29 @@
         </div>
     </div>
 </div>
+<!-- Modal confirma delete Tiecket-->
+<div class="modal fade"  id="myModalConfirmarDeleteTicket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document" style="width: 30%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Borrar titular</h4>
+          </div>
+          <div class="table-responsive">
+
+          ¿Realmente desea borrar la asignación boleto?
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="" data-dismiss="modal" >Cerrar</button>
+                    <button type="button" id="btnDeleteTitular" class="btn btn-primary" ng-click="deleteDataTicket();" >Confirmar</button
+                    >
+                    
+                  </div>
+            
+          </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -720,3 +784,5 @@
         </div>
     </div>
 </div>
+
+<div id="snackbar">{{msgToast}}</div>
