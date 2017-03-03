@@ -14,6 +14,10 @@ $scope.init = function(){
     $scope.isEnabledDownload = false;
     //getTitulares();
     getTickesWithTitular();
+
+    $scope.color = {
+        name: 'blue'
+      };
 };
 
 $(document).ready(function(){
@@ -62,6 +66,13 @@ function fillTable(data){
               $scope.$watch("filter.$", function () {
                   $scope.tableParams.reload();
               });
+
+              $scope.$watch("filter.nombre", function () {
+                  $scope.tableParams.reload();
+              });
+              $scope.$watch("filter.apellidos", function () {
+                  $scope.tableParams.reload();
+              });
                     //dinamic grouping
               $scope.tableParams = new NgTableParams({
                   page: 1,            // show first page
@@ -70,6 +81,9 @@ function fillTable(data){
                   groupBy: $scope.groupby,
                   total: function () { return data.length; }, // length of data
                   getData: function($defer, params) {
+
+                    console.log($scope.filter);
+
                     var filteredData = $filter('filter')(data, $scope.filter);
                     var orderedData = params.sorting() ?
                         $filter('orderBy')(filteredData, $scope.tableParams.orderBy()) :   filteredData;
@@ -85,6 +99,14 @@ function fillTable(data){
                 $scope.tableParams.reload();
               });
 }
+
+var fitrar = function(){
+  if  ($scope.filter =!'')
+      return $scope.filter;
+  else
+      return null;  
+}
+
 
  function getTitulares(){
   callRestFactory.get(dataServices.pathGet('getUsers', []))
@@ -341,6 +363,7 @@ $scope.updateDataTicket = function(data,type){
       dataUpdate.accesoEntrenamiento=data.accesoEntrenamiento;
       dataUpdate.accesoSalaEjecutiva=data.accesoSalaEjecutiva;
       dataUpdate.observaciones=data.observaciones;
+      dataUpdate.zonaPreferente=data.zonaPreferente;
       dataUpdate.color=data.color;
 }
 
