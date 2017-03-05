@@ -39,7 +39,7 @@ $scope.login = function () {
                
     })
     .catch(function () {
-      cosole.log("Error en login login");
+      cosole.log("Usuario inhabilitado");
     });
 };
 

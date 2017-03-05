@@ -59,18 +59,19 @@
 
 
 
-              <p>Busqueda: 
-                    <div class="checkbox">
-                      <label><input type="radio"  ng-model="busqueda.name" value="general" >General</label>
-                      <label><input type="radio"  ng-model="busqueda.name" value="particular">Particular</label>
-                    </div>
-               </p>
-               <p ng-show="busqueda.name=='general'" >     
-                    <input class="" type="text" ng-model="filter.$" />
+              <p>
+
+              Busqueda: <input id="txtgeneral" class="" type="text" ng-model="filter.$" />
+              Apellido: <input id="txtapellidos" class="" type="text" ng-model="filter.apellidos" />
+              </p>
+              
+               <p ng-show="false" >     
+                    <input id="txtgeneral" class="" type="text" ng-model="filter.$" />
                 </p>
-                <p ng-show="busqueda.name=='particular'">
-                    Nombre: <input class="" type="text" ng-model="filter.nombre" />
-                    Apellido: <input class="" type="text" ng-model="filter.apellidos" />
+                <p ng-show="false">
+
+                    Nombre: <input id="txtnombre" class="" type="text" ng-model="filter.nombre" />
+                    Apellido: <input id="txtapellidos" class="" type="text" ng-model="filter.apellidos" />
                 </p>
               
 
@@ -312,7 +313,20 @@
                                 </tr>
                     </tbody>
                 </table>
+                 <p>
+              ver # boletos:<select   name='modelid' ng-model="modelid"  ng-change="modelidchange()">
+                    
+                    <option value='100'>200</option>
+                    <option value='200'>400</option>
+                    <option value='300'>600</option>
+                    <option value='800'>800</option>
+                    <option value='1000'>1000</option>
+                    <option value='2000'>2000</option>
+                    <option value='3000'>3000</option>
+                </select>
+                    
 
+               </p>
 
              </div>   
             </div>

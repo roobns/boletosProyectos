@@ -5,7 +5,7 @@ module.exports = function($scope, $filter, dataServices, callRestFactory, errorM
 $scope.idTitular;
 
 $scope.init = function(){
-
+    $scope.busqueda ={name :'general'};
     var foobarElement = document.body;
     foobarElement.style.backgroundColor = '#F6F6F5';
     foobarElement.style.backgroundImage = "url('../img/background-white.jpg')";
@@ -15,18 +15,24 @@ $scope.init = function(){
     //getTitulares();
     getTickesWithTitular();
 
-    $scope.color = {
-        name: 'blue'
-      };
+   
 };
+
+ $scope.showFilter = function () {
+        //do stuff
+        $("#txtgeneral").val('');
+        $("#txtnombre").val('');
+        $("#txtapellidos").val('');
+    };
+
 
 $(document).ready(function(){
     $(".arrow-left").click(function(){
-        console.log("leff");
+        //console.log("leff");
         $(".table-responsive").animate({scrollLeft: "-="+400});
     });
     $(".arrow-right").click(function(){
-      console.log("right");
+      //console.log("right");
         $(".table-responsive").animate({scrollLeft: "+="+400});
     });        
 });
@@ -39,6 +45,7 @@ $scope.putIdTitular = function(data){
 
 function getTickesWithTitular(){
   var data;
+  $scope.countData;
   /*if(sessionStorage.dataTable){
     fillTable(JSON.parse(sessionStorage.dataTable));
     return;
@@ -46,6 +53,7 @@ function getTickesWithTitular(){
   callRestFactory.get(dataServices.pathGet('getTickesWithTitular', []))
             .then(function (rows) {
               data = rows.data;
+              $scope.countData =data.length; 
                //sessionStorage.dataTable = JSON.stringify(data);
                fillTable(data)
 
@@ -55,6 +63,16 @@ function getTickesWithTitular(){
     });
 
 }
+
+ $scope.modelidchange = function () {
+        console.log($scope.modelid);
+        if($scope.modelid != 'todo')
+          $scope.tableParams.count($scope.modelid);
+        else
+          $scope.tableParams.count($scope.countData);
+        
+        
+    }
 
 
 function fillTable(data){
@@ -67,23 +85,36 @@ function fillTable(data){
                   $scope.tableParams.reload();
               });
 
-              $scope.$watch("filter.nombre", function () {
+              /*$scope.$watch("filter.nombre", function () {
                   $scope.tableParams.reload();
-              });
+              });*/
               $scope.$watch("filter.apellidos", function () {
                   $scope.tableParams.reload();
               });
                     //dinamic grouping
               $scope.tableParams = new NgTableParams({
-                  page: 1,            // show first page
+                  page: 10,            // show first page
                   count: 10          // count per page
               }, {
                   groupBy: $scope.groupby,
                   total: function () { return data.length; }, // length of data
                   getData: function($defer, params) {
+                    
+                    /*if($scope.busqueda.name=='general' && $scope.filter != undefined){
+                       //delete $scope.filter['nombre'];
+                       delete $scope.filter['apellidos'];
+                       //$scope.filter={apellidos :$scope.filter.apellidos};
 
-                    console.log($scope.filter);
+                    }else if($scope.filter != undefined){
+                      delete $scope.filter['$'];
+                    }*/
+                    
 
+
+                    if($scope.busqueda.name=='general' && $scope.filter != undefined){
+                      console.log($scope.filter);   
+
+                    }
                     var filteredData = $filter('filter')(data, $scope.filter);
                     var orderedData = params.sorting() ?
                         $filter('orderBy')(filteredData, $scope.tableParams.orderBy()) :   filteredData;
