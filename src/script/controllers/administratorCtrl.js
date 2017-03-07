@@ -64,6 +64,8 @@ function getTickesWithTitular(){
 
 }
 
+
+
  $scope.modelidchange = function () {
         console.log($scope.modelid);
         if($scope.modelid != 'todo')
@@ -75,23 +77,22 @@ function getTickesWithTitular(){
     }
 
 
+
 function fillTable(data){
-
-
-
               $scope.groupby = 'role'; //Default order IF null get table without groups(not possible ?)
 
-              $scope.$watch("filter.$", function () {
+              /*$scope.$watch("filter.$", function () {
                   $scope.tableParams.reload();
-              });
+              });*/
 
               /*$scope.$watch("filter.nombre", function () {
                   $scope.tableParams.reload();
               });*/
-              $scope.$watch("filter.apellidos", function () {
+              /*$scope.$watch("filter.apellidos", function () {
                   $scope.tableParams.reload();
-              });
-                    //dinamic grouping
+              });*/
+              
+              //dinamic grouping
               $scope.tableParams = new NgTableParams({
                   page: 10,            // show first page
                   count: 10          // count per page

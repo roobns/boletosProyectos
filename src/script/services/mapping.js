@@ -24,6 +24,8 @@ module.exports = function () {
             getPath: "celebra-back/getDataReport"
         },getTickesWithTitular: {
             getPath: "celebra-back/getTickesWithTitular"
+        },getTickesWithTitularById: {
+            getPath: "celebra-back/getTickesWithTitularById"
         }
         
 

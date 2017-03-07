@@ -56,27 +56,25 @@
                 <span class='arrow-left glyphicon glyphicon-chevron-left gi-2x'></span>
                 <span class='arrow-right glyphicon glyphicon-chevron-right gi-2x'></span>
               <div class="table-responsive">
+              
+
+               
+
 
 
 
               <p>
 
-              Busqueda: <input id="txtgeneral" class="" type="text" ng-model="filter.$" />
+              Busqueda: <input id="txtgeneral" class="" type="text" ng-model="search.$" />
               Apellido: <input id="txtapellidos" class="" type="text" ng-model="filter.apellidos" />
               </p>
-              
-               <p ng-show="false" >     
-                    <input id="txtgeneral" class="" type="text" ng-model="filter.$" />
-                </p>
-                <p ng-show="false">
 
-                    Nombre: <input id="txtnombre" class="" type="text" ng-model="filter.nombre" />
-                    Apellido: <input id="txtapellidos" class="" type="text" ng-model="filter.apellidos" />
-                </p>
+              <input type="text" name="name"  ng-model="params.filter()[nombre]"  >
+              
               
 
                <table ng-table="tableParams" class="table" >
-                    <tbody ng-repeat="group in $groups"  ng-init="group.$hideRows = true">
+                    <tbody ng-repeat="group in $groups "  ng-init="group.$hideRows = true">
                     <tr class="ng-table-group success"  ng-dblClick="showDataTickets(group)">
                         <td >
                             <ul class="list-inline">
@@ -214,7 +212,7 @@
                         </td>
 
                     </tr>
-                   <tr  ng-hide="group.$hideRows" ng-repeat="user  in group.data"  >
+                   <tr  ng-hide="group.$hideRows" ng-repeat="user  in group.data | filter:search:strict"  >
                         <td data-title="'Id'"    sortable="'id'" filter="{ id: 'text'}">
                             <span class=""   ng-if="!user.$edit">{{user.foliom}}</span>
 

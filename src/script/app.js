@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module("recordApp", ["ngRoute", "ngTable","ngJsonExportExcel","angular-loading-bar"]);
+var app = angular.module("recordApp", ["ngRoute", "ngTable","angular-loading-bar"]);
 require('./services');
 require('./filters');
 require('./directives');
